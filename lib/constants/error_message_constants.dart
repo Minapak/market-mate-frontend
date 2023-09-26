@@ -1,0 +1,1 @@
+final String ERROR_ADD_EXPERT_WISHLIST = '죄송합니다. 다음에 다시 시도해주세요.';
