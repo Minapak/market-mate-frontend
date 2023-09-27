@@ -139,7 +139,7 @@ class ExpertBasicInfoView extends StatelessWidget {
                   : SizedBox.shrink(),
               middleCategories != null
                   ? Wrap(
-                  children: mainCategories!
+                  children: middleCategories!
                       .map((sub) => HashtagItemView(name: sub.name))
                       .toList())
                   : SizedBox.shrink(),
