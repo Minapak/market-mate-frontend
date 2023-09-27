@@ -17,8 +17,8 @@ import 'package:sip_app/modules/auth/widgets/signin_password_input_widget.dart';
 import 'package:sip_app/modules/auth/models/login_platform.dart';
 import 'package:sip_app/utils/jwt.dart';
 import 'package:http/http.dart' as http;
+//소셜 로그인
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
-// 애플 로그인 패키지 추가
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
 class SigninView extends StatelessWidget {
@@ -28,15 +28,15 @@ class SigninView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
         child: Container(
-      width: double.infinity,
-      color: Colors.white,
-      padding: const EdgeInsets.fromLTRB(20, 40, 20, 40),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [const SigninLogo(), SigninForm()],
-      ),
-    ));
+          width: double.infinity,
+          color: Colors.white,
+          padding: const EdgeInsets.fromLTRB(20, 40, 20, 40),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [const SigninLogo(), SigninForm()],
+          ),
+        ));
   }
 }
 
@@ -348,19 +348,19 @@ class SigninForm extends ConsumerWidget {
 
                     // 클릭 시 애플 로그인 프로바이더의 상태 업데이트
                     final result =
-                        await SignInWithApple.getAppleIDCredential(
-                          scopes: [
-                            AppleIDAuthorizationScopes.email,
-                            AppleIDAuthorizationScopes.fullName,
-                          ],
-                          webAuthenticationOptions: WebAuthenticationOptions(
-                            clientId: 'ioss.test.fluttersimple',
-                            redirectUri: Uri.parse(
-                                'https://wealthy-sedate-furniture.glitch.me/callbacks/sign_in_with_apple'),
-                          ),
-                        );
+                    await SignInWithApple.getAppleIDCredential(
+                      scopes: [
+                        AppleIDAuthorizationScopes.email,
+                        AppleIDAuthorizationScopes.fullName,
+                      ],
+                      webAuthenticationOptions: WebAuthenticationOptions(
+                        clientId: 'ioss.test.fluttersimple',
+                        redirectUri: Uri.parse(
+                            'https://wealthy-sedate-furniture.glitch.me/callbacks/sign_in_with_apple'),
+                      ),
+                    );
 
-                        print(result);
+                    print(result);
 
                     final signInWithAppleEndpoint = Uri(
                       scheme: 'https',

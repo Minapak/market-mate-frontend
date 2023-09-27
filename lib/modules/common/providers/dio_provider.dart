@@ -8,8 +8,7 @@ import 'package:sip_app/modules/common/providers/secure_provider.dart';
 
 final dioProvider = Provider<Dio>((ref) {
   final dio = Dio();
-  dio.options.contentType = 'application/x-www-form-urlencoded';
-  dio.options.contentType = Headers.formUrlEncodedContentType;
+
   final storage = ref.watch(secureStorageProvider);
 
   dio.interceptors.add(
@@ -39,7 +38,7 @@ class CustomInterceptor extends Interceptor {
   @override
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    print('[REQ] [${options.method}] ${options.uri} [${options.contentType}]');
+    print('[REQ] [${options.method}] ${options.uri}');
 
     if (options.headers['accessToken'] == 'true') {
       // 헤더 삭제
@@ -72,7 +71,7 @@ class CustomInterceptor extends Interceptor {
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     print(
-        '[RES] [${response.requestOptions.method}] ${response.requestOptions.uri}[${response.requestOptions.contentType}]');
+        '[RES] [${response.requestOptions.method}] ${response.requestOptions.uri}');
 
     return super.onResponse(response, handler);
   }
@@ -83,7 +82,7 @@ class CustomInterceptor extends Interceptor {
     // 401에러가 났을때 (status code)
     // 토큰을 재발급 받는 시도를하고 토큰이 재발급되면
     // 다시 새로운 토큰으로 요청을한다.
-    print('[ERR] [${err.requestOptions.method}] ${err.requestOptions.uri} [${err.requestOptions.contentType}]');
+    print('[ERR] [${err.requestOptions.method}] ${err.requestOptions.uri}');
 
     final refreshToken = await storage.read(key: XERK_TOKEN_KEY);
 
@@ -107,7 +106,6 @@ class CustomInterceptor extends Interceptor {
             headers: {
               'authorization': 'Bearer $refreshToken',
             },
-
           ),
         );
 

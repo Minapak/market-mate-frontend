@@ -12,7 +12,7 @@ abstract class SignupRepository {
   factory SignupRepository(Dio dio, {String baseUrl}) = _SignupRepository;
 
   // identykey check api
-  @GET('/identyKey/{identyKey}')
+  @GET('members/identyKey/{identyKey}')
   Future<ResponseModel<ResponseSuccessModel>> checkIdentyKey({
     @Path() required String identyKey,
   });
