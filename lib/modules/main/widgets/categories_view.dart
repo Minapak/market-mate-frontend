@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sip_app/constants/colors.dart';
 import 'package:sip_app/modules/category/models/main_category_model.dart';
 
@@ -43,44 +44,51 @@ class CategoryItem extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(10)),
           color: Colors.white,
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: 40,
-              height: 40,
-              child: CachedNetworkImage(
-                imageUrl: category.path ?? '',
-                imageBuilder: (context, imageProvider) => Container(
-                  margin: EdgeInsets.only(bottom: 4),
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: imageProvider,
-                      fit:
-                          BoxFit.cover, // 이미지를 적절히 크기에 맞추려면 BoxFit.cover 사용합니다.
+        child: GestureDetector(
+          onTap: () {
+          // Container를 탭했을 때 화면 이동
+          final int id = category.id;
+          context.push('/experts?mainCategoryId=$id');
+        },
+
+          child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 40,
+                    height: 40,
+                    child: CachedNetworkImage(
+                      imageUrl: category.path ?? '',
+                      imageBuilder: (context, imageProvider) => Container(
+                        margin: EdgeInsets.only(bottom: 4),
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit:
+                                BoxFit.cover, // 이미지를 적절히 크기에 맞추려면 BoxFit.cover 사용합니다.
+                          ),
+                        ),
+                      ),
+                      placeholder: (context, url) => Container(
+                          width: 40,
+                          height: 40,
+                          margin: EdgeInsets.only(bottom: 4),
+                          decoration: BoxDecoration(color: GRAY_COLOR_FONT)),
+                      errorWidget: (context, url, error) => Container(
+                          width: 40,
+                          height: 40,
+                          margin: EdgeInsets.only(bottom: 4),
+                          decoration: BoxDecoration(color: GRAY_COLOR_FONT)),
                     ),
                   ),
-                ),
-                placeholder: (context, url) => Container(
-                    width: 40,
-                    height: 40,
-                    margin: EdgeInsets.only(bottom: 4),
-                    decoration: BoxDecoration(color: GRAY_COLOR_FONT)),
-                errorWidget: (context, url, error) => Container(
-                    width: 40,
-                    height: 40,
-                    margin: EdgeInsets.only(bottom: 4),
-                    decoration: BoxDecoration(color: GRAY_COLOR_FONT)),
-              ),
-            ),
-            Text(
-              category.name,
-              style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: SECTION_FONT_COLOR),
-            )
-          ],
-        ));
+                  Text(
+                    category.name,
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: SECTION_FONT_COLOR),
+                  )
+                ],
+              )));
   }
 }
