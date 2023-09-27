@@ -1,5 +1,3 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
-
 part of 'auth_repository.dart';
 
 // **************************************************************************
@@ -10,9 +8,9 @@ part of 'auth_repository.dart';
 
 class _AuthRepository implements AuthRepository {
   _AuthRepository(
-    this._dio, {
-    this.baseUrl,
-  });
+      this._dio, {
+        this.baseUrl,
+      });
 
   final Dio _dio;
 
@@ -27,20 +25,20 @@ class _AuthRepository implements AuthRepository {
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<ResponseSuccessModel>>(Options(
-      method: 'GET',
-      headers: _headers,
-      extra: _extra,
-    )
+          method: 'GET',
+          headers: _headers,
+          extra: _extra,
+        )
             .compose(
-              _dio.options,
-              '/identyKey/${identyKey}',
-              queryParameters: queryParameters,
-              data: _data,
-            )
+          _dio.options,
+          '/identyKey/${identyKey}',
+          queryParameters: queryParameters,
+          data: _data,
+        )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<ResponseSuccessModel>.fromJson(
       _result.data!,
-      (json) => ResponseSuccessModel.fromJson(json as Map<String, dynamic>),
+          (json) => ResponseSuccessModel.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }
@@ -54,20 +52,20 @@ class _AuthRepository implements AuthRepository {
     _data.addAll(data.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<MemberModel>>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
+          method: 'POST',
+          headers: _headers,
+          extra: _extra,
+        )
             .compose(
-              _dio.options,
-              '/signup',
-              queryParameters: queryParameters,
-              data: _data,
-            )
+          _dio.options,
+          '/signup',
+          queryParameters: queryParameters,
+          data: _data,
+        )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<MemberModel>.fromJson(
       _result.data!,
-      (json) => MemberModel.fromJson(json as Map<String, dynamic>),
+          (json) => MemberModel.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }
@@ -81,20 +79,20 @@ class _AuthRepository implements AuthRepository {
     _data.addAll(data.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<AuthTokenModel>>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
+          method: 'POST',
+          headers: _headers,
+          extra: _extra,
+        )
             .compose(
-              _dio.options,
-              '/auth',
-              queryParameters: queryParameters,
-              data: _data,
-            )
+          _dio.options,
+          '/auth',
+          queryParameters: queryParameters,
+          data: _data,
+        )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<AuthTokenModel>.fromJson(
       _result.data!,
-      (json) => AuthTokenModel.fromJson(json as Map<String, dynamic>),
+          (json) => AuthTokenModel.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }
@@ -107,20 +105,20 @@ class _AuthRepository implements AuthRepository {
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<AuthTokenModel>>(Options(
-      method: 'PUT',
-      headers: _headers,
-      extra: _extra,
-    )
+          method: 'PUT',
+          headers: _headers,
+          extra: _extra,
+        )
             .compose(
-              _dio.options,
-              '/auth',
-              queryParameters: queryParameters,
-              data: _data,
-            )
+          _dio.options,
+          '/auth',
+          queryParameters: queryParameters,
+          data: _data,
+        )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<AuthTokenModel>.fromJson(
       _result.data!,
-      (json) => AuthTokenModel.fromJson(json as Map<String, dynamic>),
+          (json) => AuthTokenModel.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }

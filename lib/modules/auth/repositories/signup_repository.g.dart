@@ -33,7 +33,7 @@ class _SignupRepository implements SignupRepository {
     )
             .compose(
               _dio.options,
-              '/identyKey/${identyKey}',
+              'members/identyKey/${identyKey}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -60,7 +60,7 @@ class _SignupRepository implements SignupRepository {
     )
             .compose(
               _dio.options,
-              '/signup',
+              '/member/signup',
               queryParameters: queryParameters,
               data: _data,
             )

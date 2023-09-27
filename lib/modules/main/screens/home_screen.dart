@@ -18,6 +18,7 @@ import 'package:sip_app/modules/main/widgets/section_view.dart';
 import 'package:sip_app/modules/auth/providers/signin_provider.dart';
 import 'package:sip_app/modules/member/screens/mypage_profile_screen.dart';
 
+import '../../auth/providers/auth_provider.dart';
 import '../../member/widgets/mypage_profile_view.dart';
 import '../../my_page/widgets/mypage_view.dart';
 // ConsumerWidget을 확장하여 상태를 소비하고 UI를 빌드하는 역할
