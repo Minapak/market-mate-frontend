@@ -7,13 +7,15 @@ import 'package:sip_app/modules/category/providers/select_category_view_provider
 
 class SubCategoriesView extends ConsumerWidget {
   final String type;
+  final int mainCategoryId;
 
-  SubCategoriesView({required this.type});
+  SubCategoriesView({required this.type, required this.mainCategoryId });
+
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectCategoryPair = ref.watch(selectCategoryPairProvider(type));
-    final selectedCategoryId = selectCategoryPair.mainCategoryId;
+    final selectedCategoryId = this.mainCategoryId;
     final middleCategoryIds = selectCategoryPair.middleCategoryIds;
     final selectedMiddleCategoryId = middleCategoryIds[selectedCategoryId];
     final middleCategoriesData =
