@@ -152,7 +152,7 @@ final GoRouter goRouter = GoRouter(
         path: PATH_WHOLESALER_SEARCH,
         pageBuilder: (_, state) => NoTransitionPage(child: WholesalerSearchPage())),
     GoRoute(
-        path: '/wholesaler/detail/:id',
+        path: '/wholesale/:id',
         name: 'wholesalesDetail',
         builder: (context, state) {
           return wholesalesDetailScreen(
