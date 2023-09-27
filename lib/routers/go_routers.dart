@@ -122,7 +122,9 @@ final GoRouter goRouter = GoRouter(
         pageBuilder: (_, state) => NoTransitionPage(child: ExpertSearchPage())),
     GoRoute(
         path: PATH_EXPERTS,
-        pageBuilder: (_, state) => NoTransitionPage(child: ExpertsScreen()),
+        pageBuilder: (_, state) => NoTransitionPage(child: ExpertsScreen(
+          mainCategoryId: state.queryParameters['mainCategoryId'] ?? '',
+        )),
         routes: [
 
           // GoRoute(
