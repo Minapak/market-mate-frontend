@@ -33,7 +33,8 @@ class MarketDetailView extends ConsumerWidget {
     final market = marketData.data;
 
     return Container(
-      child: Column(children: [
+      child: SingleChildScrollView(
+        child: Column(children: [
         Stack(children: [
           CarouselSlider(
               options: CarouselOptions(
@@ -56,7 +57,7 @@ class MarketDetailView extends ConsumerWidget {
         SizedBox(height: 20),
         MarketContent(content: market.content ?? ''),
       ]),
-    );
+    ));
   }
 }
 

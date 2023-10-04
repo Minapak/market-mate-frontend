@@ -125,7 +125,7 @@ class wholesalesScreenState extends ConsumerState<wholesalesScreen> {
       ),
       appbarColor: Colors.white,
       backgroundColor: PRIMARY_BACKGROUND_COLOR,
-      bottomNavigationBar: MainBottomNavigationBar(bottomTabIndex: 1),
+      bottomNavigationBar: MainBottomNavigationBar(bottomTabIndex: 2),
       isNeedAppbar: true,
     );
   }
