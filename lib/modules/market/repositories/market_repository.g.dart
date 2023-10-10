@@ -88,4 +88,34 @@ class _MarketRepository implements MarketRepository {
     }
     return requestOptions;
   }
+
+  @override
+  Future<ResponseModel<ExpertModel>> getMarketsExpert(
+      {required int id, ExpertsPaginationParams? paginationParams = const ExpertsPaginationParams()}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ResponseModel<ResponseCheckWishModel>>(Options(
+          method: 'GET',
+          headers: _headers,
+          extra: _extra,
+        )
+            .compose(
+          _dio.options,
+          '/${id}/experts',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    print('/${id}/experts');
+    print(_result.data?.entries);
+    final value = ResponseModel<ExpertModel>.fromJson(
+      _result.data!,
+          (json) => ExpertModel.fromJson(json as Map<String, dynamic>),
+    );
+    return value;
+  }
+
 }
