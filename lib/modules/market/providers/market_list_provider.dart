@@ -3,9 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sip_app/constants/path.dart';
 import 'package:sip_app/modules/common/models/pagination.dart';
 import 'package:sip_app/modules/expert/models/experts_pagination_params.dart';
-import 'package:sip_app/modules/expert/providers/experts_provider.dart';
 import 'package:sip_app/modules/market/models/market_model.dart';
 import 'package:sip_app/modules/market/repositories/market_repository.dart';
+
+import '../../expert/providers/experts_provider.dart';
 
 final marketListNotifierProvider = StateNotifierProvider.family
   <MarketListStateNotifier, PaginationBase, CategoryPair>((ref, categoryPair) {

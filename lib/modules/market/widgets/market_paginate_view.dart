@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -7,7 +6,7 @@ import 'package:sip_app/constants/colors.dart';
 import 'package:sip_app/modules/category/providers/select_category_view_provider.dart';
 import 'package:sip_app/modules/category/widgets/sub_categories_view.dart';
 import 'package:sip_app/modules/common/models/pagination.dart';
-import 'package:sip_app/modules/expert/providers/experts_provider.dart';
+import '../../expert/providers/experts_provider.dart';
 import 'package:sip_app/modules/market/providers/market_list_provider.dart';
 import 'package:sip_app/modules/market/widgets/market_item.dart';
 

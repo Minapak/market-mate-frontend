@@ -8,11 +8,13 @@ class ExpertsPaginationParams {
   final int? mainCategoryId;
   final int? subCategoryId;
   final int? limit;
+  final int? marketId;
 
   const ExpertsPaginationParams({
     this.page,
     this.mainCategoryId,
     this.subCategoryId,
+    this.marketId,
     this.limit,
   });
 
@@ -20,12 +22,14 @@ class ExpertsPaginationParams {
     int? page,
     int? mainCategoryId,
     int? subCategoryId,
+    int? marketId,
     int? limit,
   }) {
     return ExpertsPaginationParams(
         page: page ?? this.page,
         mainCategoryId: mainCategoryId ?? this.mainCategoryId,
         subCategoryId: subCategoryId ?? this.subCategoryId,
+        marketId: marketId ?? this.marketId,
         limit: limit ?? this.limit);
   }
 
