@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
         debugPrint("*language to fallback ${supportedLocales.first}");
         return supportedLocales.first;
       },
-// home: SplashScreen(), // SplashScreen을 앱의 초기 화면으로 설정합니다.
+//home: SplashScreen(), // SplashScreen을 앱의 초기 화면으로 설정합니다.
     );
 
 

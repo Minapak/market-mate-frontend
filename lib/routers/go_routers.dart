@@ -1,12 +1,13 @@
 import 'package:go_router/go_router.dart';
 import 'package:sip_app/constants/path.dart';
 import 'package:sip_app/modules/auth/screens/forgot_password1_screen.dart';
+import 'package:sip_app/modules/auth/screens/contacts_permission.dart';
 import 'package:sip_app/modules/auth/screens/signin_screen.dart';
 import 'package:sip_app/modules/auth/screens/signup_email_screen.dart';
 import 'package:sip_app/modules/auth/screens/signup_name_screen.dart';
 import 'package:sip_app/modules/auth/screens/signup_password_screen.dart';
 import 'package:sip_app/modules/auth/screens/signup_phone_screen.dart';
-import 'package:sip_app/modules/auth/screens/onboarding_screen.dart';
+import 'package:sip_app/modules/auth/screens/on_boarding_screen.dart';
 import 'package:sip_app/modules/auth/screens/splash_screen.dart';
 import 'package:sip_app/modules/community/screens/communities_screen.dart';
 import 'package:sip_app/modules/expert/screens/expert_detail_screen.dart';
@@ -23,7 +24,7 @@ import 'package:sip_app/modules/member/screens/member_edit_nickname_screen.dart'
 import 'package:sip_app/modules/member/screens/member_edit_password_screen.dart';
 import 'package:sip_app/modules/my_page/screens/mypage_screen.dart';
 import 'package:sip_app/modules/my_page/screens/mypage_notifications_screen.dart';
-import 'package:sip_app/modules/member/screens/mypage_profile_screen.dart';
+import 'package:sip_app/modules/my_page/screens/mypage_profile_screen.dart';
 import 'package:sip_app/modules/category/screens/expert_categories_screen.dart';
 import 'package:sip_app/modules/category/screens/expert_sub_categories_screen.dart';
 import 'package:sip_app/modules/expert/screens/mypage_register_expert_screen.dart';
@@ -69,8 +70,12 @@ final GoRouter goRouter = GoRouter(
     GoRoute(
         path: PATH_SPLASH,
         pageBuilder: (_, state) => NoTransitionPage(child: SplashScreen())),
-    // PATH_SIGNIN에 대한 경로 설정
-    // PATH_SIGNIN에 대한 경로 설정
+    GoRoute(
+        path: PATH_ONBOARDING,
+        pageBuilder: (_, state) => NoTransitionPage(child: OnBoardingScreen())),
+    GoRoute(
+        path: PATH_CONTACT,
+        pageBuilder: (_, state) => NoTransitionPage(child: ContactsPermission())),
     GoRoute(
         path: PATH_SIGNIN,
         pageBuilder: (_, state) => NoTransitionPage(child: SigninScreen())),
@@ -122,7 +127,9 @@ final GoRouter goRouter = GoRouter(
         pageBuilder: (_, state) => NoTransitionPage(child: ExpertSearchPage())),
     GoRoute(
         path: PATH_EXPERTS,
-        pageBuilder: (_, state) => NoTransitionPage(child: ExpertsScreen()),
+        pageBuilder: (_, state) => NoTransitionPage(child: ExpertsScreen(
+          mainCategoryId: state.queryParameters['mainCategoryId'] ?? '',
+        )),
         routes: [
 
           // GoRoute(

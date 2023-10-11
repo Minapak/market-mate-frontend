@@ -5,6 +5,10 @@ import 'package:sip_app/modules/member/models/member_model.dart';
 import 'package:sip_app/modules/auth/providers/auth_provider.dart';
 import 'package:sip_app/modules/member/repositories/member_repository.dart';
 
+
+
+//현재 사용자의 UUID를 제공하는 프로바이더
+//사용자가 인증되지 않은 경우 예외를 throw
 final memberUUIDProvider = Provider<String>((ref) {
   final asyncMemberState = ref.watch(memberNotifierProvider);
 
@@ -20,14 +24,15 @@ final memberUUIDProvider = Provider<String>((ref) {
 });
 
 //유저 정보 저장 Notifier
+//사용자 정보를 저장하고 업데이트하는 MemberStateNotifier를 생성하는 프로바이더
+//사용자 정보에 대한 변경사항은 MemberStateNotifier를 통해 관리
 final memberNotifierProvider =
     StateNotifierProvider<MemberStateNotifier, AsyncValue<MemberModel>>((ref) {
   final Dio dio = Dio();
-  dio.options.headers['content-Type'] = 'application/json';
-  dio.options.headers["Authorization"] =
-      "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0MTg1ZUBuYXZlci5jb20iLCJhdXRoIjoiUk9MRV9BRE1JTiIsInVzZXJVVUlEIjoiMmM5ZTgxYTk4ODc5YjNlMTAxODg3OWI1MzI5ZTAwMDAiLCJpZGVudHlLZXkiOiJ0ZXN0MTg1ZUBuYXZlci5jb20iLCJleHAiOjE2OTMyNDU4MDB9.7N6KNAXrjhE_cO-3xTEu58y_4FTCyXNKdjnBOdGSEW2MHc_7Ows4QoW6aCsCoMfFL1r4oVD8-eGMVZsbhDMb4g";
+
+
   final MemberRepository repository =
-      MemberRepository(dio, baseUrl: '$SERVER_BASE_URL/users/');
+      MemberRepository(dio, baseUrl: '$SERVER_BASE_URL/members ');
 
   final userModel = ref.watch(memberFutureProvider);
   final notifier = MemberStateNotifier(repository: repository, user: userModel);
@@ -68,9 +73,7 @@ class MemberStateNotifier extends StateNotifier<AsyncValue<MemberModel>> {
 final memberFutureProvider = FutureProvider<MemberModel>((ref) async {
   try {
     final Dio dio = Dio();
-    dio.options.headers['content-Type'] = 'application/json';
-    dio.options.headers["Authorization"] =
-        "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0MTg1ZUBuYXZlci5jb20iLCJhdXRoIjoiUk9MRV9BRE1JTiIsInVzZXJVVUlEIjoiMmM5ZTgxYTk4ODc5YjNlMTAxODg3OWI1MzI5ZTAwMDAiLCJpZGVudHlLZXkiOiJ0ZXN0MTg1ZUBuYXZlci5jb20iLCJleHAiOjE2OTMyNDU4MDB9.7N6KNAXrjhE_cO-3xTEu58y_4FTCyXNKdjnBOdGSEW2MHc_7Ows4QoW6aCsCoMfFL1r4oVD8-eGMVZsbhDMb4g";
+
     final MemberRepository repository =
         MemberRepository(dio, baseUrl: '$SERVER_BASE_URL/members');
     final authModel = ref.watch(authProvider);

@@ -7,17 +7,19 @@ import 'package:sip_app/modules/category/providers/select_category_view_provider
 
 class SubCategoriesView extends ConsumerWidget {
   final String type;
+  final int mainCategoryId;
 
-  SubCategoriesView({required this.type});
+  SubCategoriesView({required this.type, required this.mainCategoryId });
+
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectCategoryPair = ref.watch(selectCategoryPairProvider(type));
-    final selectedCategoryId = selectCategoryPair.mainCategoryId;
+    final selectedCategoryId = this.mainCategoryId;
     final middleCategoryIds = selectCategoryPair.middleCategoryIds;
     final selectedMiddleCategoryId = middleCategoryIds[selectedCategoryId];
     final middleCategoriesData =
-        ref.watch(middleCategoryListProvider(selectedCategoryId));
+    ref.watch(middleCategoryListProvider(selectedCategoryId));
 
     void onSelectSubCategory(int id, bool isSelected) {
       ref
@@ -46,13 +48,13 @@ class SubCategoriesView extends ConsumerWidget {
         child: Wrap(
             children: List.generate(
                 pCategories.middleCategories.length,
-                (i) => SubCategoryItem(
-                      category: pCategories.middleCategories[i],
-                      is3n: (i + 1) % 3 == 0,
-                      onSelectItem: onSelectSubCategory,
-                      isSelected: pCategories.middleCategories[i].id ==
-                          selectedMiddleCategoryId,
-                    ))));
+                    (i) => SubCategoryItem(
+                  category: pCategories.middleCategories[i],
+                  is3n: (i + 1) % 3 == 0,
+                  onSelectItem: onSelectSubCategory,
+                  isSelected: pCategories.middleCategories[i].id ==
+                      selectedMiddleCategoryId,
+                ))));
   }
 }
 
@@ -64,10 +66,10 @@ class SubCategoryItem extends StatelessWidget {
 
   const SubCategoryItem(
       {required this.category,
-      required this.is3n,
-      required this.onSelectItem,
-      this.isSelected = false,
-      Key? key})
+        required this.is3n,
+        required this.onSelectItem,
+        this.isSelected = false,
+        Key? key})
       : super(key: key);
 
   @override
@@ -78,7 +80,7 @@ class SubCategoryItem extends StatelessWidget {
       child: OutlinedButton(
           style: OutlinedButton.styleFrom(
             backgroundColor:
-                isSelected ? NAVIGATION_TEXT_COLOR : Colors.transparent,
+            isSelected ? NAVIGATION_TEXT_COLOR : Colors.transparent,
             side: BorderSide(
                 color: isSelected
                     ? NAVIGATION_TEXT_COLOR

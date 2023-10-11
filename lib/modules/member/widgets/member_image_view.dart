@@ -47,6 +47,20 @@ class MemberImageView extends ConsumerWidget {
       print('Image cropping failed.');
     }
   }
+  Future<void> _uploadProfileImage() async {
+    final imagePicker = ImagePicker();
+
+    // 갤러리에서 이미지를 선택합니다.
+    final pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      // 이미지가 선택되었을 경우, 해당 이미지를 서버로 업로드하거나
+      // 필요한 처리를 수행하세요.
+      final imageFile = File(pickedFile.path);
+
+      // 여기에서 이미지를 업로드하거나 다른 작업을 수행할 수 있습니다.
+    }
+  }
   Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
       onTap: () {

@@ -7,7 +7,7 @@ import 'package:sip_app/modules/common/screens/default_layout.dart';
 import 'package:sip_app/constants/colors.dart';
 import 'package:sip_app/modules/common/widgets/back_appbar.dart';
 import 'package:sip_app/modules/member/widgets/member_profile_handler.dart';
-import 'package:sip_app/modules/member/widgets/mypage_profile_view.dart';
+import 'package:sip_app/modules/my_page/widgets/mypage_profile_view.dart';
 
 class MypageProfileScreen extends ConsumerWidget {
   const MypageProfileScreen({super.key});

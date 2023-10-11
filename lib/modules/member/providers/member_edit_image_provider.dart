@@ -15,9 +15,7 @@ final memberEditImageNotifierProvider = StateNotifierProvider
 <MemberEditImageNotifier, ServerStatusBase>((ref) {
   print('memberEditImageNotifierProvider');
   final Dio dio = Dio();
-  dio.options.headers['content-Type'] = 'application/json';
-  dio.options.headers["Authorization"] =
-  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0MTg1ZUBuYXZlci5jb20iLCJhdXRoIjoiUk9MRV9BRE1JTiIsInVzZXJVVUlEIjoiMmM5ZTgxYTk4ODc5YjNlMTAxODg3OWI1MzI5ZTAwMDAiLCJpZGVudHlLZXkiOiJ0ZXN0MTg1ZUBuYXZlci5jb20iLCJleHAiOjE2OTM1MjA2ODN9.M_vLns1fietL0m9VhhEuvQr7_9asmZioK7L3uRVNQSAik1vPrrjf3VBOChMo9iTUfyjT7nsu0fs-8HJY4-9KbA";
+
   final repository = MemberRepository(dio, baseUrl: '$SERVER_BASE_URL/members/');
 
   final croppedFile = ref.watch(memberEditImageViewProvider);

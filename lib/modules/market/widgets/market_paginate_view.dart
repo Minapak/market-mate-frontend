@@ -39,7 +39,7 @@ class MarketPaginateView extends ConsumerWidget {
       child: CustomScrollView(
         slivers: <Widget>[
           SliverToBoxAdapter(
-            child: SubCategoriesView(type: CATEGORY_PAIR_MARKET_TYPE),
+            child: SubCategoriesView(type: CATEGORY_PAIR_MARKET_TYPE,mainCategoryId: selectMainCategoryId),
           ),
 
           if (data is PaginationLoading)
