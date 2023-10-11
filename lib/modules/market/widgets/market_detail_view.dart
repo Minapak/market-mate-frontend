@@ -33,30 +33,30 @@ class MarketDetailView extends ConsumerWidget {
     final market = marketData.data;
 
     return Container(
-      child: Column(children: [
-        Stack(children: [
-          CarouselSlider(
-              options: CarouselOptions(
-                initialPage: 0,
-                aspectRatio: 16 / 10.65,
-                viewportFraction: 1,
-                enableInfiniteScroll: false,
-                // enlargeCenterPage: true,
-                // enlargeFactor: 0.2,
-              ),
-              items: List.generate(market.images!.length,
-                      (i) => MarketImageItem(image: market.images![i]))),
-        ]),
-        SizedBox(height: 20),
-        MarketInfo(
-          name: market.name,
-          mainCategories: market.mainCategories ?? [],
-          middleCategories: market.middleCategories ?? [],
-        ),
-        SizedBox(height: 20),
-        MarketContent(content: market.content ?? ''),
-      ]),
-    );
+        child: SingleChildScrollView(
+          child: Column(children: [
+            Stack(children: [
+              CarouselSlider(
+                  options: CarouselOptions(
+                    initialPage: 0,
+                    aspectRatio: 16 / 10.65,
+                    viewportFraction: 1,
+                    enableInfiniteScroll: false,
+                    // enlargeCenterPage: true,
+                    // enlargeFactor: 0.2,
+                  ),
+                  items: List.generate(market.images!.length,
+                          (i) => MarketImageItem(image: market.images![i]))),
+            ]),
+            SizedBox(height: 20),
+            MarketInfo(
+              name: market.name,
+              mainCategories: market.mainCategories ?? [],
+              middleCategories: market.middleCategories ?? [],
+            ),
+            SizedBox(height: 20),
+            MarketContent(content: market.content ?? ''),
+          ]),
+        ));
   }
 }
-

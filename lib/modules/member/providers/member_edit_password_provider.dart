@@ -22,10 +22,7 @@ final memberEditPasswordVerifyViewProvider = StateProvider.autoDispose<String>((
 final MemberEditPasswordNotifierProvider = StateNotifierProvider.autoDispose
 <MemberEditPasswordNotifier, ServerStatusBase>((ref) {
   final Dio dio = Dio();
-  dio.options.headers['content-Type'] = 'application/json';
-  dio.options.headers["Authorization"] =
-  "Bearer YOUR_ACCESS_TOKEN";
-  final repository = MemberRepository(dio, baseUrl: '$SERVER_BASE_URL/members/');
+   final repository = MemberRepository(dio, baseUrl: '$SERVER_BASE_URL/members/');
   final String uuid = ref.watch(memberUUIDProvider);
 
   final password = ref.watch(memberEditPasswordViewProvider);

@@ -23,6 +23,16 @@ final authProvider = StateNotifierProvider<AuthStateNotifier, AuthModel>((ref) {
   return notifier;
 });
 
+final accessTokenProvider = StateProvider<String?>((ref) {
+  // 여기에서 초기 값으로 null을 설정할 수 있습니다.
+  return null;
+});
+
+final xerkProvider = StateProvider<String?>((ref) {
+  // 여기에서 초기 값으로 null을 설정할 수 있습니다.
+  return null;
+});
+
 class AuthStateNotifier extends StateNotifier<AuthModel> {
   final ref;
   final AuthRepository repository;
@@ -41,6 +51,9 @@ class AuthStateNotifier extends StateNotifier<AuthModel> {
 
       final String? accessToken = await storage.read(key: ACCESS_TOKEN_KEY) ?? null;
       final String? xerk = await storage.read(key: XERK_TOKEN_KEY) ?? null;
+
+      print('accessToken????: $accessToken');
+      print('xerk???: $xerk');
 
       if (accessToken == null || xerk == null) {
         print('로그인 안된 유저');
@@ -61,6 +74,10 @@ class AuthStateNotifier extends StateNotifier<AuthModel> {
           // 스토리지 새 토큰으로 저장
           await storage.write(key: ACCESS_TOKEN_KEY, value: res.response.accessToken);
           await storage.write(key: XERK_TOKEN_KEY, value: res.response.xerk);
+
+          // accessTokenProvider 및 xerkProvider를 업데이트
+          ref.read(accessTokenProvider).state = res.response.accessToken;
+          ref.read(xerkProvider).state = res.response.xerk;
 
           ref.read(checkLoggedInProvider.notifier).state = true;
         } else {
@@ -91,16 +108,15 @@ class AuthStateNotifier extends StateNotifier<AuthModel> {
         role: null,
       );
 
-      // 토큰 삭제
       final storage = ref.read(secureStorageProvider);
 
       await storage.delete(key: ACCESS_TOKEN_KEY);
       await storage.delete(key: XERK_TOKEN_KEY);
 
       ref.read(checkLoggedInProvider.notifier).state = false;
-      print('success');
-    } catch(error) {
-
+      print('로그아웃 성공');
+    } catch (error) {
+      print('로그아웃 에러');
       print(error);
     }
   }

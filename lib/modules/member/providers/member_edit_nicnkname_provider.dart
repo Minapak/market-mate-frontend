@@ -17,9 +17,7 @@ final memberEditNicknameViewProvider = StateProvider<String>((ref) {
 // 닉네임 변경 API 요청 provider
 final memberEditNicknameProvider = StateNotifierProvider.autoDispose((ref) {
   final Dio dio = Dio();
-  dio.options.headers['content-Type'] = 'application/json';
-  dio.options.headers["Authorization"] =
-  "Bearer YOUR_ACCESS_TOKEN";
+
   final repository = MemberRepository(dio, baseUrl: '$SERVER_BASE_URL/members/');
   final String uuid = ref.watch(memberUUIDProvider);
 

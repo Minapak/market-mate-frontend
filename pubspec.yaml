@@ -69,6 +69,18 @@ dependencies:
   sign_in_with_apple: ^5.0.0
   http: ^0.13.3
   easy_search_bar: ^2.5.0
+  contacts_service: ^0.6.3
+  permission_handler: ^10.0.0
+  quick_actions: ^1.0.0
+  flutter_phone_direct_caller: ^2.1.1
+  call_log: ^4.0.0
+  azlistview: ^2.0.0
+  sqflite: ^2.1.0
+  path: ^1.8.2
+  path_provider: ^2.0.11
+  skeleton_text: ^3.0.1
+  share_plus: ^4.5.2
+  scrollable_positioned_list:
 
 dev_dependencies:
   flutter_test:
@@ -102,7 +114,10 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/logos/
-
+    - assets/foants/
+    - assets/images/contact_detail_screen_image/
+    - assets/images/on_boarding_screen_image/
+    - assets/images/splash_screen_image/
   fonts:
     - family: NotoSansKR
       fonts:

@@ -38,7 +38,10 @@ class CustomInterceptor extends Interceptor {
   @override
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    print('[REQ] [${options.method}] ${options.uri}');
+    print('[REQ] [${options.method}] ${options.uri}  [${options.contentType}]');
+
+    // content-Type 헤더 추가
+    options.headers['content-Type'] = 'application/json';
 
     if (options.headers['accessToken'] == 'true') {
       // 헤더 삭제
