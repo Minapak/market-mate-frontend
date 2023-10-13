@@ -89,15 +89,51 @@ class _MarketRepository implements MarketRepository {
     return requestOptions;
   }
 
+  // @override
+  // Future<ResponseModel<ExpertModel>> getMarketsExpert(
+  //     {required int id, ExpertsPaginationParams? paginationParams = const ExpertsPaginationParams()}) async {
+  //   const _extra = <String, dynamic>{};
+  //   final queryParameters = <String, dynamic>{};
+  //   final _headers = <String, dynamic>{};
+  //   final Map<String, dynamic>? _data = null;
+  //   final _result = await _dio.fetch<Map<String, dynamic>>(
+  //       _setStreamType<ResponseModel<ResponseCheckWishModel>>(Options(
+  //         method: 'GET',
+  //         headers: _headers,
+  //         extra: _extra,
+  //       )
+  //           .compose(
+  //         _dio.options,
+  //         '/${id}/experts',
+  //         queryParameters: queryParameters,
+  //         data: _data,
+  //       )
+  //           .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+  //   print('/${id}/experts');
+  //   print(_result.data?.entries);
+  //   final value = ResponseModel<ExpertModel>.fromJson(
+  //     _result.data!,
+  //         (json) => ExpertModel.fromJson(json as Map<String, dynamic>),
+  //   );
+  //   return value;
+  // }
+  //
+
+
+
   @override
-  Future<ResponseModel<ExpertModel>> getMarketsExpert(
-      {required int id, ExpertsPaginationParams? paginationParams = const ExpertsPaginationParams()}) async {
+  Future<ResponseModel<Pagination<ExpertModel>>> getMarketsExpertPagenate({
+    paginationParams = const ExpertsPaginationParams(),
+    required id,
+  }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(paginationParams?.toJson() ?? <String, dynamic>{});
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ResponseModel<ResponseCheckWishModel>>(Options(
+        _setStreamType<ResponseModel<Pagination<ExpertModel>>>(Options(
           method: 'GET',
           headers: _headers,
           extra: _extra,
@@ -109,13 +145,49 @@ class _MarketRepository implements MarketRepository {
           data: _data,
         )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    print('/${id}/experts');
-    print(_result.data?.entries);
-    final value = ResponseModel<ExpertModel>.fromJson(
+    final value = ResponseModel<Pagination<ExpertModel>>.fromJson(
       _result.data!,
-          (json) => ExpertModel.fromJson(json as Map<String, dynamic>),
+          (json) =>
+      Pagination<ExpertModel>.fromJson(
+        json as Map<String, dynamic>,
+            (json) => ExpertModel.fromJson(json as Map<String, dynamic>),
+      ),
+    );
+    return value;
+  }
+
+  @override
+  Future<ResponseModel<Pagination<wholesalerModel>>> getMarketsWholesalePagenate({ExpertsPaginationParams? paginationParams = const ExpertsPaginationParams(), required int id}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(paginationParams?.toJson() ?? <String, dynamic>{});
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ResponseModel<Pagination<wholesalerModel>>>(Options(
+          method: 'GET',
+          headers: _headers,
+          extra: _extra,
+        )
+            .compose(
+          _dio.options,
+          '/${id}/wholesale',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ResponseModel<Pagination<wholesalerModel>>.fromJson(
+      _result.data!,
+          (json) =>
+      Pagination<wholesalerModel>.fromJson(
+        json as Map<String, dynamic>,
+            (json) => wholesalerModel.fromJson(json as Map<String, dynamic>),
+      ),
     );
     return value;
   }
 
 }
+
+

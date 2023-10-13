@@ -30,10 +30,12 @@ import 'package:sip_app/modules/expert/screens/mypage_register_expert_screen.dar
 import 'package:sip_app/modules/qna/screens/qna_screen.dart';
 import 'package:sip_app/modules/review/screens/mypage_reviews_screen.dart';
 import 'package:sip_app/modules/service_center/screens/service_center_screen.dart';
+import 'package:sip_app/modules/wholesaler/screens/wholesales_market_screen.dart';
 import 'package:sip_app/modules/wishlist/screens/mypage_wishlist_screen.dart';
 
 import 'package:sip_app/modules/wholesaler/screens/wholesales_screen.dart';
 
+import '../modules/expert/screens/experts_market_screen.dart';
 import '../modules/expert/widgets/expert_search_page.dart';
 import '../modules/market/widgets/market_search_page.dart';
 import '../modules/wholesaler/screens/wholesales_detail_screen.dart';
@@ -146,6 +148,30 @@ final GoRouter goRouter = GoRouter(
           );
         }),
     GoRoute(
+        path: '/markets/:id/experts',
+        name: 'marketExpert',
+        builder: (context, state) {
+          return ExpertsMarketScreen(
+            marketId: state.pathParameters['id'] ?? '0',
+          );
+        }),
+    GoRoute(
+        path: PATH_EXPERTS_TEST,
+        pageBuilder: (_, state) => NoTransitionPage(child: ExpertsMarketScreen(
+          marketId: state.queryParameters['marketId'] ?? '1',
+        )),
+        routes: [
+
+          // GoRoute(
+          //     path: 'experts/:id/matchings',
+          //     name: 'expertMatchings',
+          //     builder: (context, state) {
+          //       return ExpertDetailScreen(
+          //         id: state.pathParameters['id'] ?? '0',
+          //       );
+          //     }),
+        ]),
+    GoRoute(
         path: PATH_WHOLESALER,
         pageBuilder: (_, state) => NoTransitionPage(child: wholesalesScreen())),
     GoRoute(
@@ -158,6 +184,14 @@ final GoRouter goRouter = GoRouter(
           return wholesalesDetailScreen(
             wholesalerId: state.pathParameters['id'] ?? '0',
             wholesalerName: state.queryParameters['name'] ?? '',
+          );
+        }),
+    GoRoute(
+        path: '/markets/:id/wholesale',
+        name: 'marketWholesale',
+        builder: (context, state) {
+          return WholesalesMarketScreen(
+            marketId: state.pathParameters['id'] ?? '0',
           );
         }),
     GoRoute(

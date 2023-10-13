@@ -10,6 +10,7 @@ final String PATH_SIGNIN = '/signin';
 final String PATH_SIGNUP = '/signup';
 final String PATH_FINDIDPW = '/findidpw';
 final String PATH_EXPERTS = '/experts';
+final String PATH_EXPERTS_TEST = '/expertsTest';
 final String PATH_EXPERTS_SEARCH = '/experts/search';
 final String PATH_EXPERTS_MATCHINGS = '/experts/matchings';
 final String PATH_WHOLESALER = '/wholesales';

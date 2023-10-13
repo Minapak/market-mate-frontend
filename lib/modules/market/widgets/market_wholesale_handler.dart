@@ -10,8 +10,8 @@ import '../../common/widgets/error_dialog_widget.dart';
 import '../../common/widgets/loading_overlay.dart';
 import '../providers/market_expert_handler.dart';
 
-class MarketExpertHandler extends ConsumerWidget {
-  MarketExpertHandler();
+class MarketWholesaleHandler extends ConsumerWidget {
+  MarketWholesaleHandler();
 
   @override
   Widget build(BuildContext context, WidgetRef ref){
@@ -20,9 +20,7 @@ class MarketExpertHandler extends ConsumerWidget {
     final isLoading = data is ServerStatusLoading;
     final isError = data is ServerStatusError;
     final isSuccess = data is ServerStatusSuccess;
-    print("isSuccess:"+isSuccess.toString());
-    print("isError:"+isError.toString());
-    print("isLoading:"+isLoading.toString());
+
 
     if (isSuccess) {
       Future.microtask(() => context.go(PATH_EXPERTS));

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sip_app/constants/colors.dart';
 
 import '../providers/market_expert_handler.dart';
@@ -18,14 +19,14 @@ class MarketButton extends ConsumerWidget {
       if (marketId == null) {
         return;
       }
-      ref.read(ShowMarketExpertProvider.notifier).onShow(marketId:marketId);
+      context.push('/markets/$marketId/experts');
     }
 
     void onTapWholesale() {
       if (marketId == null) {
         return;
       }
-     // ref.read(createExpertMatchingProvider.notifier).onMatch(expertId:expertId);
+      context.push('/markets/$marketId/wholesale');
     }
     return BottomAppBar(
         elevation: 0,
@@ -41,7 +42,7 @@ class MarketButton extends ConsumerWidget {
                     child: GestureDetector(
                         onTap: () {
                           print('도소매 보기');
-                          onTapExpert();
+                          onTapWholesale();
                         },
                         child: Container(
                           alignment: Alignment.center,
