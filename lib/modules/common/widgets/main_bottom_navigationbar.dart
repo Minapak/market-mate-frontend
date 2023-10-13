@@ -10,6 +10,7 @@ List<String> pages = [
   PATH_WHOLESALER,
   PATH_MARKETS,
   PATH_MYPAGE,
+  PATH_EXPERTS_TEST,
    PATH_SIGNIN
 ];
 
