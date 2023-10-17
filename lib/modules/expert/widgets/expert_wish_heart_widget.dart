@@ -12,8 +12,14 @@ class ExpertWishHeart extends ConsumerWidget {
   ExpertWishHeart({required this.expertId});
 
   Widget build(BuildContext context, WidgetRef ref) {
-    final checkedData = ref.watch(expertCheckWishProvider(expertId));
-    final wishData = ref.watch(expertWishProvider);
+    var checkedData;
+    var wishData;
+    try{
+      checkedData = ref.watch(expertCheckWishProvider(expertId));
+      wishData = ref.watch(expertWishProvider);
+    }catch(e){
+      print(e.toString());
+    }
 
     if (checkedData is ServerStatusDataSuccess<ResponseCheckWishModel>) {
       final bool isChecked = checkedData.data.isChecked;
@@ -21,14 +27,11 @@ class ExpertWishHeart extends ConsumerWidget {
 
       return GestureDetector(
         onTap: () {
-          print('isChecked:$isChecked');
           if (isChecked == false) {
-            print('click1');
             ref.read(expertWishProvider.notifier).onCreateWishlist(expertId, context);
           } else {
             print(wishlistId);
             if (wishlistId != 0) {
-              print('click2');
               ref.read(expertWishProvider.notifier).onDeleteWishlist(wishlistId, expertId, context);
             }
           }
