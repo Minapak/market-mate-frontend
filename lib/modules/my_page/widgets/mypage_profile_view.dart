@@ -44,10 +44,13 @@ class ProfileWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    print('user.thumbnail!!!!!!! : ${user.thumbnail}');
     return Container(
+
       child: Column(
         children: [
           MemberImageView(currentImage: user.thumbnail),
+
           SizedBox(
             height: 40,
           ),
@@ -94,6 +97,7 @@ class ProfileWrapper extends StatelessWidget {
       ),
     );
   }
+
 }
 
 

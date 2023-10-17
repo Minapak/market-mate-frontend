@@ -13,14 +13,18 @@ import 'package:sip_app/modules/wishlist/models/wishlist_model.dart';
 
 part 'member_repository.g.dart';
 
+
+
 @RestApi()
 abstract class MemberRepository {
   factory MemberRepository(Dio dio, {String baseUrl}) = _MemberRepository;
+
 
   // 내 정보 디테일 보기
   @GET('/{id}')
   Future<ResponseModel<MemberModel>> getMember({
     @Path() required String id,
+
   });
 
   // 내 리뷰 목록보기

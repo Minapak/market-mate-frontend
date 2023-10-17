@@ -12,7 +12,7 @@ final wholesalerReviewsProvider = StateNotifierProvider.family<
     wholesalerReviewsStateNotifier, PaginationBase, int>((ref, id) {
   final Dio dio = Dio();
   final wholesalerRepository repository = wholesalerRepository(dio,
-      baseUrl: '$SERVER_BASE_URL/users/wholesaler/');
+      baseUrl: '$SERVER_BASE_URL/users/wholesales/');
 
   final notifier = wholesalerReviewsStateNotifier(repository: repository, id: id);
 
@@ -87,7 +87,6 @@ class wholesalerReviewsStateNotifier extends StateNotifier<PaginationBase> {
 
       final res = await repository.reviewPaginate(
           id: id, paginationParams: paginationParams);
-      log('res:$res');
       if (state is PaginationFetchingMore) {
         final pState = state as PaginationFetchingMore;
 

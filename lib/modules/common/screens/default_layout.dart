@@ -30,6 +30,7 @@ class DefaultLayout extends StatelessWidget {
         child: Container(
             color: backgroundColor ?? Colors.white, // 이곳에도 배경색 설정
             child: Scaffold(
+                resizeToAvoidBottomInset : false,
                 backgroundColor: Colors.transparent, // Scaffold의 배경색을 투명으로 설정
                 appBar: appBar ?? null,
                 body: child,

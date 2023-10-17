@@ -5,6 +5,10 @@ import 'package:sip_app/modules/common/models/response_model.dart';
 import 'package:sip_app/modules/expert/models/experts_pagination_params.dart';
 import 'package:sip_app/modules/market/models/market_model.dart';
 
+import '../../common/models/basic_pagination_params_model.dart';
+import '../../expert/models/expert_model.dart';
+import '../../wishlist/models/response_check_wish_model.dart';
+
 part 'market_repository.g.dart';
 
 @RestApi()
@@ -16,6 +20,11 @@ abstract class MarketRepository {
   Future<ResponseModel<Pagination<MarketModel>>> paginate({
     @Queries() ExpertsPaginationParams? paginationParams =
     const ExpertsPaginationParams()
+  });
+
+  @GET('/{id}/experts')
+  Future<ResponseModel<ExpertModel>> getMarketsExpert({
+    @Path() required int id
   });
 
   // 시장 디테일 보기

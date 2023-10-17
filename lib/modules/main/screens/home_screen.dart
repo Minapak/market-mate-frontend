@@ -36,7 +36,7 @@ class HomeScreen extends ConsumerWidget {
     final List<String> _suggestions = ['Afeganistan', 'Albania', 'Algeria', 'Australia', 'Brazil', 'German', 'Madagascar', 'Mozambique', 'Portugal', 'Zambia'];
 
     final isLoggedIn = ref.watch(checkLoggedInProvider);
-       // mainFutureProvider 프로바이더의 값을 감시
+    // mainFutureProvider 프로바이더의 값을 감시
     // 이 프로바이더를 통해 앱의 메인 데이터를 비동기로 가져옴
     final config = ref.watch(mainFutureProvider);
     // mainFutureProvider의 상태에 따라 다른 위젯을 반환
@@ -89,18 +89,18 @@ class HomeScreen extends ConsumerWidget {
               ),
             ),
             appBar: MainAppBar(
-            // appBar: EasySearchBar(
-            //     title: const Text(''),
-            //   onSearch: (value) { // onSearch 콜백 제공
-            //     // 여기에서 검색 결과 또는 다른 작업을 수행할 수 있습니다.
-            //     // 예를 들어, 검색 결과를 상태로 업데이트하려면 다음과 같이 작성할 수 있습니다.
-            //     ref.read(expertListProvider
-            //     as ProviderListenable).state = value; // 검색 결과를 상태로 업데이트
-            //
-            //     // 여기에서 검색 결과 또는 다른 작업을 수행할 수 있습니다.
-            //   },
-            //   suggestions: _suggestions,
-            // ),
+              // appBar: EasySearchBar(
+              //     title: const Text(''),
+              //   onSearch: (value) { // onSearch 콜백 제공
+              //     // 여기에서 검색 결과 또는 다른 작업을 수행할 수 있습니다.
+              //     // 예를 들어, 검색 결과를 상태로 업데이트하려면 다음과 같이 작성할 수 있습니다.
+              //     ref.read(expertListProvider
+              //     as ProviderListenable).state = value; // 검색 결과를 상태로 업데이트
+              //
+              //     // 여기에서 검색 결과 또는 다른 작업을 수행할 수 있습니다.
+              //   },
+              //   suggestions: _suggestions,
+              // ),
             ),
             appbarColor: PRIMARY_BACKGROUND_COLOR,
             backgroundColor: PRIMARY_BACKGROUND_COLOR,

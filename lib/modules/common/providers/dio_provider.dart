@@ -5,6 +5,8 @@ import 'package:sip_app/constants/app_constants.dart';
 import 'package:sip_app/constants/path.dart';
 import 'package:sip_app/modules/auth/providers/auth_provider.dart';
 import 'package:sip_app/modules/common/providers/secure_provider.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 
 final dioProvider = Provider<Dio>((ref) {
   final dio = Dio();
@@ -19,6 +21,12 @@ final dioProvider = Provider<Dio>((ref) {
   );
 
   return dio;
+});
+
+final dateFormatProvider = Provider((_) {
+  initializeDateFormatting();
+
+  return DateFormat('yyyy-MM-dd hh:mm');
 });
 
 class CustomInterceptor extends Interceptor {

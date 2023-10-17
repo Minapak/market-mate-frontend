@@ -84,7 +84,7 @@ class WholesalerCardItemView extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
-          context.push('/Wholesaler/detail');
+          context.push('/Wholesale/detail');
         },
         child: Stack(
           children: [

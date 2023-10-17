@@ -12,6 +12,7 @@ List<RouteModel> routes = [
   //RouteModel(id: 1, name: '내 글 ∙ 댓글 관리', link: PATH_USER_COMMUNITIES),
  // RouteModel(id: 1, name: '알림 설정', link: PATH_USER_NOTIFICATIONS),
   RouteModel(id: 1, name: '고객센터', link: PATH_SERVICES),
+ // RouteModel(id: 1, name: '전문가 등록', link: PATH_USER_EXPERT),
   RouteModel(id: 1, name: '전문가 등록', link: PATH_USER_EXPERT),
 ];
 
