@@ -1,7 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:sip_app/constants/path.dart';
 import 'package:sip_app/modules/auth/screens/forgot_password1_screen.dart';
-import 'package:sip_app/modules/auth/screens/contacts_permission.dart';
 import 'package:sip_app/modules/auth/screens/signin_screen.dart';
 import 'package:sip_app/modules/auth/screens/signup_email_screen.dart';
 import 'package:sip_app/modules/auth/screens/signup_name_screen.dart';
@@ -31,14 +30,15 @@ import 'package:sip_app/modules/expert/screens/mypage_register_expert_screen.dar
 import 'package:sip_app/modules/qna/screens/qna_screen.dart';
 import 'package:sip_app/modules/review/screens/mypage_reviews_screen.dart';
 import 'package:sip_app/modules/service_center/screens/service_center_screen.dart';
+import 'package:sip_app/modules/wholesaler/screens/wholesales_market_screen.dart';
 import 'package:sip_app/modules/wishlist/screens/mypage_wishlist_screen.dart';
 
 import 'package:sip_app/modules/wholesaler/screens/wholesales_screen.dart';
 
-import '../modules/expert/widgets/expert_register_view.dart';
+import '../modules/expert/screens/experts_market_screen.dart';
 import '../modules/expert/widgets/expert_search_page.dart';
 import '../modules/market/widgets/market_search_page.dart';
-import '../modules/member/screens/member_edit_image_screen.dart';
+import '../modules/my_page/screens/mypage_profile_screen.dart';
 import '../modules/wholesaler/screens/wholesales_detail_screen.dart';
 import '../modules/wholesaler/widgets/wholesaler_search_page.dart';
 //Flutter 애플리케이션 내에서 화면 전환 및 라우팅을 관리하기 위한 라우팅 설정
@@ -51,8 +51,8 @@ final GoRouter goRouter = GoRouter(
         pageBuilder: (_, state) => NoTransitionPage(child: SignupNameScreen()),
         routes: [
           GoRoute(
-              path: 'email', //'/signup/email' 경로 설정
-              pageBuilder: (_, state) => NoTransitionPage(child: SignupEmailScreen()),
+            path: 'email', //'/signup/email' 경로 설정
+            pageBuilder: (_, state) => NoTransitionPage(child: SignupEmailScreen()),
           ),
           GoRoute(
             path: 'phone', // '/signup/phone' 경로 설정
@@ -72,19 +72,15 @@ final GoRouter goRouter = GoRouter(
     GoRoute(
         path: PATH_SPLASH,
         pageBuilder: (_, state) => NoTransitionPage(child: SplashScreen())),
-    // GoRoute(
-    //     path: PATH_ONBOARDING,
-    //     pageBuilder: (_, state) => NoTransitionPage(child: OnBoardingScreen())),
-    GoRoute(
-        path: PATH_CONTACT,
-        pageBuilder: (_, state) => NoTransitionPage(child: ContactsPermission())),
+    // PATH_SIGNIN에 대한 경로 설정
+    // PATH_SIGNIN에 대한 경로 설정
     GoRoute(
         path: PATH_SIGNIN,
         pageBuilder: (_, state) => NoTransitionPage(child: SigninScreen())),
     GoRoute(
         path: PATH_FINDIDPW,
         pageBuilder: (_, state) => NoTransitionPage(child: ForgotPassword1Screen())),
-     // PATH_HOME에 대한 경로 설정
+    // PATH_HOME에 대한 경로 설정
     GoRoute(
         path: PATH_MARKETS,
         pageBuilder: (_, state) => NoTransitionPage(child: MarketsScreen())),
@@ -153,6 +149,14 @@ final GoRouter goRouter = GoRouter(
           );
         }),
     GoRoute(
+        path: '/markets/:id/experts',
+        name: 'marketExpert',
+        builder: (context, state) {
+          return ExpertsMarketScreen(
+            marketId: state.pathParameters['id'] ?? '0',
+          );
+        }),
+    GoRoute(
         path: PATH_WHOLESALER,
         pageBuilder: (_, state) => NoTransitionPage(child: wholesalesScreen())),
     GoRoute(
@@ -168,11 +172,11 @@ final GoRouter goRouter = GoRouter(
           );
         }),
     GoRoute(
-        path: '/members/:id/image',
-        name: 'editImage',
+        path: '/markets/:id/wholesale',
+        name: 'marketWholesale',
         builder: (context, state) {
-          return MemberEditImageScreen(
-            currentImage: state.queryParameters['id'] ?? '0',
+          return WholesalesMarketScreen(
+            marketId: state.pathParameters['id'] ?? '0',
           );
         }),
     GoRoute(
@@ -210,7 +214,7 @@ final GoRouter goRouter = GoRouter(
           GoRoute(
               path: 'expert',
               builder: (context, state) {
-                return ExpertRegisterScreen();
+                return MypageRegisterExpertScreen();
               },
               //ExpertCategoriesScreen
               routes: [
@@ -229,26 +233,26 @@ final GoRouter goRouter = GoRouter(
                     ]),
               ]),
           GoRoute(
-            path: 'profile',
-            builder: (context, state) {
-              return MypageProfileScreen();
-            },
-            routes: [
-              GoRoute(
-                  path: 'nickname',
-                  name: 'editNickname',
-                  builder: (context, state) {
-                    return MemberEditNicknameScreen(
-                      currentNickname: state.queryParameters['nickname'] ?? '',
-                    );
-                  }),
-              GoRoute(
-                  path: 'password',
-                  name: 'editPassword',
-                  builder: (context, state) {
-                    return MemberEditPasswordScreen();
-                  }),
-            ]
+              path: 'profile',
+              builder: (context, state) {
+                return MypageProfileScreen();
+              },
+              routes: [
+                GoRoute(
+                    path: 'nickname',
+                    name: 'editNickname',
+                    builder: (context, state) {
+                      return MemberEditNicknameScreen(
+                        currentNickname: state.queryParameters['nickname'] ?? '',
+                      );
+                    }),
+                GoRoute(
+                    path: 'password',
+                    name: 'editPassword',
+                    builder: (context, state) {
+                      return MemberEditPasswordScreen();
+                    }),
+              ]
           ),
           // GoRoute(
           //     path: 'communities',
