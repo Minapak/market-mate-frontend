@@ -29,7 +29,7 @@ final wholesalerListProvider = StateNotifierProvider.family<wholesalerStateNotif
     PaginationBase, CategoryPair>((ref, categoryPair) {
   final Dio dio = Dio();
   final wholesalerRepository repository = wholesalerRepository(dio,
-      baseUrl: '$SERVER_BASE_URL/users/wholesaler');
+      baseUrl: '$SERVER_BASE_URL/users/wholesales');
 
   final notifier =
   wholesalerStateNotifier(repository: repository, categoryPair: categoryPair);

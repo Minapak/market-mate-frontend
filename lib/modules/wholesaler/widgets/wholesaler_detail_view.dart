@@ -108,6 +108,7 @@ class wholesalerBasicInfoView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("middleCategoryLength:"+middleCategories!.length.toString());
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(20),
@@ -141,7 +142,7 @@ class wholesalerBasicInfoView extends StatelessWidget {
                   : SizedBox.shrink(),
               middleCategories != null
                   ? Wrap(
-                  children: mainCategories!
+                  children: middleCategories!
                       .map((sub) => HashtagItemView(name: sub.name))
                       .toList())
                   : SizedBox.shrink(),

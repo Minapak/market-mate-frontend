@@ -30,7 +30,7 @@ final wholesalerCacheProvider =
         (ref, id) {
   final Dio dio = Dio();
   final wholesalerRepository repository = wholesalerRepository(dio,
-      baseUrl: '$SERVER_BASE_URL/users/wholesaler/');
+      baseUrl: '$SERVER_BASE_URL/users/wholesale/');
 
   final notifier = wholesalerStateNotifier(repository: repository, id: id);
 

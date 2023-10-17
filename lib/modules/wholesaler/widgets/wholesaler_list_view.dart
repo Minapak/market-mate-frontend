@@ -193,7 +193,7 @@ class wholesalerItem extends StatelessWidget {
         onTap: () {
           final int id = wholesaler.id;
           final String name = wholesaler.name;
-          context.push('/wholesaler/detail/$id?name=$name');
+          context.push('/wholesale/$id');
         },
         child: Container(
             padding: EdgeInsets.all(16),

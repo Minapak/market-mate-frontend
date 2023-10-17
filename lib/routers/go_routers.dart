@@ -35,8 +35,10 @@ import 'package:sip_app/modules/wishlist/screens/mypage_wishlist_screen.dart';
 
 import 'package:sip_app/modules/wholesaler/screens/wholesales_screen.dart';
 
+import '../modules/expert/widgets/expert_register_view.dart';
 import '../modules/expert/widgets/expert_search_page.dart';
 import '../modules/market/widgets/market_search_page.dart';
+import '../modules/member/screens/member_edit_image_screen.dart';
 import '../modules/wholesaler/screens/wholesales_detail_screen.dart';
 import '../modules/wholesaler/widgets/wholesaler_search_page.dart';
 //Flutter 애플리케이션 내에서 화면 전환 및 라우팅을 관리하기 위한 라우팅 설정
@@ -70,9 +72,9 @@ final GoRouter goRouter = GoRouter(
     GoRoute(
         path: PATH_SPLASH,
         pageBuilder: (_, state) => NoTransitionPage(child: SplashScreen())),
-    GoRoute(
-        path: PATH_ONBOARDING,
-        pageBuilder: (_, state) => NoTransitionPage(child: OnBoardingScreen())),
+    // GoRoute(
+    //     path: PATH_ONBOARDING,
+    //     pageBuilder: (_, state) => NoTransitionPage(child: OnBoardingScreen())),
     GoRoute(
         path: PATH_CONTACT,
         pageBuilder: (_, state) => NoTransitionPage(child: ContactsPermission())),
@@ -157,12 +159,20 @@ final GoRouter goRouter = GoRouter(
         path: PATH_WHOLESALER_SEARCH,
         pageBuilder: (_, state) => NoTransitionPage(child: WholesalerSearchPage())),
     GoRoute(
-        path: '/wholesaler/detail/:id',
+        path: '/wholesale/:id',
         name: 'wholesalesDetail',
         builder: (context, state) {
           return wholesalesDetailScreen(
             wholesalerId: state.pathParameters['id'] ?? '0',
             wholesalerName: state.queryParameters['name'] ?? '',
+          );
+        }),
+    GoRoute(
+        path: '/members/:id/image',
+        name: 'editImage',
+        builder: (context, state) {
+          return MemberEditImageScreen(
+            currentImage: state.queryParameters['id'] ?? '0',
           );
         }),
     GoRoute(
@@ -200,7 +210,7 @@ final GoRouter goRouter = GoRouter(
           GoRoute(
               path: 'expert',
               builder: (context, state) {
-                return MypageRegisterExpertScreen();
+                return ExpertRegisterScreen();
               },
               //ExpertCategoriesScreen
               routes: [

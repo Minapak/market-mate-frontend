@@ -9,8 +9,7 @@ part of 'expert_repository.dart';
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
 class _ExpertRepository implements ExpertRepository {
-  _ExpertRepository(
-    this._dio, {
+  _ExpertRepository(this._dio, {
     this.baseUrl,
   });
 
@@ -29,22 +28,23 @@ class _ExpertRepository implements ExpertRepository {
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<Pagination<ExpertModel>>>(Options(
-      method: 'GET',
-      headers: _headers,
-      extra: _extra,
-    )
+          method: 'GET',
+          headers: _headers,
+          extra: _extra,
+        )
             .compose(
-              _dio.options,
-              '/',
-              queryParameters: queryParameters,
-              data: _data,
-            )
+          _dio.options,
+          '/',
+          queryParameters: queryParameters,
+          data: _data,
+        )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<Pagination<ExpertModel>>.fromJson(
       _result.data!,
-      (json) => Pagination<ExpertModel>.fromJson(
+          (json) =>
+      Pagination<ExpertModel>.fromJson(
         json as Map<String, dynamic>,
-        (json) => ExpertModel.fromJson(json as Map<String, dynamic>),
+            (json) => ExpertModel.fromJson(json as Map<String, dynamic>),
       ),
     );
     return value;
@@ -58,20 +58,20 @@ class _ExpertRepository implements ExpertRepository {
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<ExpertModel>>(Options(
-      method: 'GET',
-      headers: _headers,
-      extra: _extra,
-    )
+          method: 'GET',
+          headers: _headers,
+          extra: _extra,
+        )
             .compose(
-              _dio.options,
-              '/${id}',
-              queryParameters: queryParameters,
-              data: _data,
-            )
+          _dio.options,
+          '/${id}',
+          queryParameters: queryParameters,
+          data: _data,
+        )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<ExpertModel>.fromJson(
       _result.data!,
-      (json) => ExpertModel.fromJson(json as Map<String, dynamic>),
+          (json) => ExpertModel.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }
@@ -89,22 +89,23 @@ class _ExpertRepository implements ExpertRepository {
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<Pagination<ReviewModel>>>(Options(
-      method: 'GET',
-      headers: _headers,
-      extra: _extra,
-    )
+          method: 'GET',
+          headers: _headers,
+          extra: _extra,
+        )
             .compose(
-              _dio.options,
-              '/${id}/reviews',
-              queryParameters: queryParameters,
-              data: _data,
-            )
+          _dio.options,
+          '/${id}/reviews',
+          queryParameters: queryParameters,
+          data: _data,
+        )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<Pagination<ReviewModel>>.fromJson(
       _result.data!,
-      (json) => Pagination<ReviewModel>.fromJson(
+          (json) =>
+      Pagination<ReviewModel>.fromJson(
         json as Map<String, dynamic>,
-        (json) => ReviewModel.fromJson(json as Map<String, dynamic>),
+            (json) => ReviewModel.fromJson(json as Map<String, dynamic>),
       ),
     );
     return value;
@@ -122,20 +123,20 @@ class _ExpertRepository implements ExpertRepository {
     _data.addAll(data.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<WishlistModel>>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
+          method: 'POST',
+          headers: _headers,
+          extra: _extra,
+        )
             .compose(
-              _dio.options,
-              '/experts/${expertId}/wishlists',
-              queryParameters: queryParameters,
-              data: _data,
-            )
+          _dio.options,
+          '/experts/${expertId}/wishlists',
+          queryParameters: queryParameters,
+          data: _data,
+        )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<WishlistModel>.fromJson(
       _result.data!,
-      (json) => WishlistModel.fromJson(json as Map<String, dynamic>),
+          (json) => WishlistModel.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }
@@ -151,20 +152,20 @@ class _ExpertRepository implements ExpertRepository {
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<bool>>(Options(
-      method: 'DELETE',
-      headers: _headers,
-      extra: _extra,
-    )
+          method: 'DELETE',
+          headers: _headers,
+          extra: _extra,
+        )
             .compose(
-              _dio.options,
-              '/${userId}/experts/wishlists/${wishlistId}',
-              queryParameters: queryParameters,
-              data: _data,
-            )
+          _dio.options,
+          '/${userId}/experts/wishlists/${wishlistId}',
+          queryParameters: queryParameters,
+          data: _data,
+        )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<bool>.fromJson(
       _result.data!,
-      (json) => json as bool,
+          (json) => json as bool,
     );
     return value;
   }
@@ -180,20 +181,21 @@ class _ExpertRepository implements ExpertRepository {
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<ResponseCheckWishModel>>(Options(
-      method: 'GET',
-      headers: _headers,
-      extra: _extra,
-    )
+          method: 'GET',
+          headers: _headers,
+          extra: _extra,
+        )
             .compose(
-              _dio.options,
-              '/${userId}/experts/${expertId}/wishlist',
-              queryParameters: queryParameters,
-              data: _data,
-            )
+          _dio.options,
+          '/${userId}/experts/${expertId}/wishlist',
+          queryParameters: queryParameters,
+          data: _data,
+        )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<ResponseCheckWishModel>.fromJson(
       _result.data!,
-      (json) => ResponseCheckWishModel.fromJson(json as Map<String, dynamic>),
+          (json) =>
+          ResponseCheckWishModel.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }
@@ -210,4 +212,5 @@ class _ExpertRepository implements ExpertRepository {
     }
     return requestOptions;
   }
+
 }
