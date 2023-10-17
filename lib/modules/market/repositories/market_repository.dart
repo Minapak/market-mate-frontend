@@ -7,6 +7,7 @@ import 'package:sip_app/modules/market/models/market_model.dart';
 
 import '../../common/models/basic_pagination_params_model.dart';
 import '../../expert/models/expert_model.dart';
+import '../../wholesaler/models/wholesaler_model.dart';
 import '../../wishlist/models/response_check_wish_model.dart';
 
 part 'market_repository.g.dart';
@@ -23,7 +24,16 @@ abstract class MarketRepository {
   });
 
   @GET('/{id}/experts')
-  Future<ResponseModel<ExpertModel>> getMarketsExpert({
+  Future<ResponseModel<Pagination<ExpertModel>>> getMarketsExpertPagenate({
+  @Queries() ExpertsPaginationParams? paginationParams =
+  const ExpertsPaginationParams(),
+    @Path() required int id
+  });
+
+  @GET('/{id}/wholesale')
+  Future<ResponseModel<Pagination<wholesalerModel>>> getMarketsWholesalePagenate({
+    @Queries() ExpertsPaginationParams? paginationParams =
+    const ExpertsPaginationParams(),
     @Path() required int id
   });
 

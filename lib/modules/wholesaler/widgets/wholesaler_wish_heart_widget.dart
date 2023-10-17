@@ -13,8 +13,14 @@ class wholesalerWishHeart extends ConsumerWidget {
   wholesalerWishHeart({required this.wholesalerId});
 
   Widget build(BuildContext context, WidgetRef ref) {
-    final checkedData = ref.watch(wholesalerCheckWishProvider(wholesalerId));
-    final wishData = ref.watch(wholesalerWishProvider);
+    var checkedData;
+    var wishData;
+    try{
+      checkedData = ref.watch(wholesalerCheckWishProvider(wholesalerId));
+      wishData = ref.watch(wholesalerWishProvider);
+    }catch(e){
+      print(e.toString());
+    }
 
     if (checkedData is ServerStatusDataSuccess<ResponseCheckWishModel>) {
       final bool isChecked = checkedData.data.isChecked;
