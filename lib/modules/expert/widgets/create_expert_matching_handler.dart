@@ -13,7 +13,13 @@ class CreateExpertMatchingHandler extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref){
-    final data = ref.watch(createExpertMatchingProvider);
+    var data;
+    try{
+      data = ref.watch(createExpertMatchingProvider);
+    }catch(e){
+      Future.microtask(() =>
+          ErrorDialog.showError(context, title: 'Error', message: data.message ?? '죄송합니다\n잠시후 다시 시도해주세요.'));
+    }
 
     final isLoading = data is ServerStatusLoading;
     final isError = data is ServerStatusError;
