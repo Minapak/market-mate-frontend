@@ -156,22 +156,6 @@ final GoRouter goRouter = GoRouter(
           );
         }),
     GoRoute(
-        path: PATH_EXPERTS_TEST,
-        pageBuilder: (_, state) => NoTransitionPage(child: ExpertsMarketScreen(
-          marketId: state.queryParameters['marketId'] ?? '1',
-        )),
-        routes: [
-
-          // GoRoute(
-          //     path: 'experts/:id/matchings',
-          //     name: 'expertMatchings',
-          //     builder: (context, state) {
-          //       return ExpertDetailScreen(
-          //         id: state.pathParameters['id'] ?? '0',
-          //       );
-          //     }),
-        ]),
-    GoRoute(
         path: PATH_WHOLESALER,
         pageBuilder: (_, state) => NoTransitionPage(child: wholesalesScreen())),
     GoRoute(
