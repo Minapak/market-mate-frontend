@@ -51,7 +51,9 @@ class SigninStateNotifier extends StateNotifier<ServerStatusBase>{
 
       // auth provider에 저장
       ref.read(authProvider.notifier).setAuthModel(accessToken: res.response.accessToken);
-
+      print('storage에 토큰 저장??????????: $storage');
+      print('res.response.accessToken???: $res.response.accessToken');
+      print('response.xerk?????????: $res.response.xerk');
       state = ServerStatusSuccess();
 
       context.go(PATH_HOME);
