@@ -64,8 +64,9 @@ class AuthStateNotifier extends StateNotifier<AuthModel> {
         print('로그인 가능성 잇음');
         // 로그인 가능성 있음
         // 토큰 재발급
-        final res = await repository.refreshToken();
 
+        final res = await repository.refreshToken();
+        print('res????: $res');
         if (res.success && res.response.accessToken != null && res.response.xerk != null) {
           print('토큰 재발급 성공');
           // 토큰 재발급 성공
@@ -93,12 +94,73 @@ class AuthStateNotifier extends StateNotifier<AuthModel> {
       context.go(PATH_HOME);
     } catch(error) {
       print('에러입니다');
-      print(error);
+      print('$error  : 400?');
       ref.read(checkLoggedInProvider.notifier).state = false;
       context.go(PATH_HOME);
     }
   }
+  // 스플레쉬 화면에서 토큰이 있는지 검증
+  // 토큰이 있으면 토큰 재발급 api 호출
+  // 에러나면 로그인 안된유저로 처리
+  // 성공하면 로그인상태 유지
+  Future<void> checkToken(BuildContext context) async {
+    print('checkToken');
+    try {
+      print('accessToken1');
+      final storage = ref.read(secureStorageProvider);
 
+      final String? accessToken = await storage.read(key: ACCESS_TOKEN_KEY) ?? null;
+      final String? xerk = await storage.read(key: XERK_TOKEN_KEY) ?? null;
+
+      print('accessToken????: $accessToken');
+      print('xerk???: $xerk');
+
+
+      if (accessToken == null || xerk == null) {
+        print('로그인 안된 유저');
+        //로그인 안된 유저
+        context.go(PATH_HOME);
+        return;
+      } else {
+        print('로그인 가능성 잇음');
+        // 로그인 가능성 있음
+        // 토큰 재발급
+        await storage.delete(key: ACCESS_TOKEN_KEY);
+        await storage.delete(key: XERK_TOKEN_KEY);
+        final res = await repository.refreshToken();
+        print('res????: $res');
+        if (res.success && res.response.accessToken != null && res.response.xerk != null) {
+          print('토큰 재발급 성공');
+          // 토큰 재발급 성공
+          // 로그인한 유저로 등록
+          setAuthModel(accessToken: res.response.accessToken);
+          // 스토리지 새 토큰으로 저장
+          await storage.write(key: ACCESS_TOKEN_KEY, value: res.response.accessToken);
+          await storage.write(key: XERK_TOKEN_KEY, value: res.response.xerk);
+
+          // accessTokenProvider 및 xerkProvider를 업데이트
+          ref.read(accessTokenProvider).state = res.response.accessToken;
+          ref.read(xerkProvider).state = res.response.xerk;
+
+          ref.read(checkLoggedInProvider.notifier).state = true;
+        } else {
+          print('토큰 재발급 실패');
+          // 토큰 재발급 실패
+          // 만료된 토큰, xerk로 최종 로그인 안되어있음.
+          ref.read(checkLoggedInProvider.notifier).state = false;
+
+          await storage.delete(key: ACCESS_TOKEN_KEY);
+          await storage.delete(key: XERK_TOKEN_KEY);
+        }
+      }
+      context.go(PATH_HOME);
+    } catch(error) {
+      // print('에러입니다');
+      // print('$error  : 400?');
+      // ref.read(checkLoggedInProvider.notifier).state = false;
+      // context.go(PATH_HOME);
+    }
+  }
   // 로그아웃
   Future<void> onLogout() async {
     try {

@@ -46,10 +46,10 @@ class CustomInterceptor extends Interceptor {
   @override
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    print('[REQ] [${options.method}] ${options.uri}  [${options.contentType}]');
+    print('[REQ] [${options.method}] ${options.uri}  [${options.contentType}] [${options.headers['accessToken']}] [${options.headers['xerk']}]');
 
     // content-Type 헤더 추가
-    options.headers['content-Type'] = 'application/json';
+     options.headers['content-Type'] = 'application/json';
 
     if (options.headers['accessToken'] == 'true') {
       // 헤더 삭제
@@ -63,6 +63,26 @@ class CustomInterceptor extends Interceptor {
       });
     }
 
+
+    if (options.headers['accessToken'] == null) {
+      final token = await storage.read(key: ACCESS_TOKEN_KEY);
+      // 실제 토큰으로 대체
+
+      print('[REQ TOKEN accessToken] [${options.headers}]');
+      options.headers.addAll({
+        'authorization': 'Bearer $token',
+      });
+    }
+
+    if (options.headers['xerk'] == null) {
+      print('[REQ TOKEN xerk] [${options.headers}]');
+      final token = await storage.read(key: XERK_TOKEN_KEY);
+
+      // 실제 토큰으로 대체
+      options.headers.addAll({
+        'X-ERK': '$token',
+      });
+    }
     if (options.headers['xerk'] == 'true') {
       // 헤더 삭제
       options.headers.remove('xerk');
@@ -105,11 +125,13 @@ class CustomInterceptor extends Interceptor {
     }
 
     final isStatus401 = err.response?.statusCode == 401;
+    final isStatus400 = err.response?.statusCode == 400;
     final isPathRefresh = err.requestOptions.path == '/auth/token';
 
     if (isStatus401 && !isPathRefresh) {
       final dio = Dio();
-
+      dio.options.contentType = 'application/x-www-form-urlencoded';
+      dio.options.contentType = Headers.formUrlEncodedContentType;
       try {
         final resp = await dio.put(
           '$SERVER_BASE_URL/auth',
@@ -143,7 +165,43 @@ class CustomInterceptor extends Interceptor {
         return handler.reject(e);
       }
     }
+    if (isStatus400 && !isPathRefresh) {
+      final dio = Dio();
+      dio.options.contentType = 'application/x-www-form-urlencoded';
+      dio.options.contentType = Headers.formUrlEncodedContentType;
+      try {
+        final resp = await dio.put(
+          '$SERVER_BASE_URL/auth',
+          options: Options(
+            headers: {
+              'authorization': 'Bearer $refreshToken',
+            },
+          ),
+        );
 
+        final accessToken = resp.data['response']['accessToken'];
+        final xerk = resp.data['response']['xerk'];
+
+        final options = err.requestOptions;
+
+        // 토큰 변경하기
+        options.headers.addAll({
+          'authorization': 'Bearer $accessToken',
+        });
+
+        await storage.write(key: ACCESS_TOKEN_KEY, value: accessToken);
+        await storage.write(key: XERK_TOKEN_KEY, value: xerk);
+
+        // 요청 재전송
+        final response = await dio.fetch(options);
+
+        return handler.resolve(response);
+      } on DioException catch (e) {
+        ref.read(authProvider.notifier).onLogout();
+
+        return handler.reject(e);
+      }
+    }
     return handler.reject(err);
   }
 }
