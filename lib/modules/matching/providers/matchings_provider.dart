@@ -1,16 +1,19 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
 import 'package:sip_app/constants/path.dart';
 import 'package:sip_app/modules/auth/providers/auth_provider.dart';
 import 'package:sip_app/modules/common/models/basic_pagination_params_model.dart';
 import 'package:sip_app/modules/common/models/pagination.dart';
 import 'package:sip_app/modules/matching/models/matching_model.dart';
+import 'package:sip_app/modules/matching/models/create_matching_model.dart';
 import 'package:sip_app/modules/matching/repositories/matching_repository.dart';
 import 'package:collection/collection.dart';
 
 final matchingsGroupProvider =
     Provider<Map<String, List<MatchingModel>>>((ref) {
   final matchings = ref.watch(matchingsProvider) as Pagination<MatchingModel>;
+
   final groupedByDate =
       groupBy(matchings.content, (content) => content.createdDateTime);
 
@@ -20,9 +23,9 @@ final matchingsGroupProvider =
 final matchingsProvider =
     StateNotifierProvider<MatchingsStateNotifier, PaginationBase>((ref) {
   final Dio dio = Dio();
-  dio.options.headers['content-Type'] = 'application/json';
-  dio.options.headers["Authorization"] =
-      "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0MTg1ZUBuYXZlci5jb20iLCJhdXRoIjoiUk9MRV9BRE1JTiIsInVzZXJVVUlEIjoiMmM5ZTgxYTk4ODc5YjNlMTAxODg3OWI1MzI5ZTAwMDAiLCJpZGVudHlLZXkiOiJ0ZXN0MTg1ZUBuYXZlci5jb20iLCJleHAiOjE2OTMxNzk2ODh9.JycZI7F-HwWt6G4fdxCHbv5zJ_P2wdmURNBnXPEonD46z-JetFyYDKMbILHfTPZnS3kMFm-AoioPdRwwDTiZ5w";
+  // dio.options.headers['content-Type'] = 'application/json';
+  // dio.options.headers["Authorization"] =
+  //     "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0MTg1ZUBuYXZlci5jb20iLCJhdXRoIjoiUk9MRV9BRE1JTiIsInVzZXJVVUlEIjoiMmM5ZTgxYTk4ODc5YjNlMTAxODg3OWI1MzI5ZTAwMDAiLCJpZGVudHlLZXkiOiJ0ZXN0MTg1ZUBuYXZlci5jb20iLCJleHAiOjE2OTMxNzk2ODh9.JycZI7F-HwWt6G4fdxCHbv5zJ_P2wdmURNBnXPEonD46z-JetFyYDKMbILHfTPZnS3kMFm-AoioPdRwwDTiZ5w";
   final MatchingRepository repository =
       MatchingRepository(dio, baseUrl: '$SERVER_BASE_URL/users/');
   final authModel = ref.watch(authProvider);

@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:sip_app/constants/path.dart';
+import 'package:sip_app/main.dart';
 import 'package:sip_app/modules/auth/screens/forgot_password1_screen.dart';
 import 'package:sip_app/modules/auth/screens/signin_screen.dart';
 import 'package:sip_app/modules/auth/screens/signup_email_screen.dart';
@@ -44,7 +45,8 @@ import '../modules/wholesaler/widgets/wholesaler_search_page.dart';
 //Flutter 애플리케이션 내에서 화면 전환 및 라우팅을 관리하기 위한 라우팅 설정
 final GoRouter goRouter = GoRouter(
   initialLocation: PATH_SPLASH,// 앱 시작 시 초기 경로
-  // initialLocation: PATH_MYPAGE,
+ //initialLocation: PATH_HOME,
+ //initialLocation: PATH_IMAGE_UPLOAD,
   routes: [
     GoRoute(
         path: '/signup', // '/signup' 경로에 대한 설정
@@ -73,6 +75,9 @@ final GoRouter goRouter = GoRouter(
         path: PATH_SPLASH,
         pageBuilder: (_, state) => NoTransitionPage(child: SplashScreen())),
     // PATH_SIGNIN에 대한 경로 설정
+    GoRoute(
+        path: PATH_IMAGE_UPLOAD,
+        pageBuilder: (_, state) => NoTransitionPage(child: MultipleImageUploader())),
     // PATH_SIGNIN에 대한 경로 설정
     GoRoute(
         path: PATH_SIGNIN,

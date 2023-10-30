@@ -25,9 +25,9 @@ class SplashScreenState extends ConsumerState<SplashScreen> {
   void initState() {
     super.initState();
     // authProvider.notifier.checkTokenSplash(context)가 완료될 때까지 대기
-    Future.delayed(Duration.zero, () async {
-      await ref.read(authProvider.notifier).checkTokenSplash(context);
-    });
+    // Future.delayed(Duration.zero, () async {
+    //   await ref.read(authProvider.notifier).checkTokenSplash(context);
+    // });
   }
 
   @override

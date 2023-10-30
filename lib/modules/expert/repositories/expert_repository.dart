@@ -1,14 +1,19 @@
+import 'dart:html';
+
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:sip_app/modules/common/models/basic_pagination_params_model.dart';
 import 'package:sip_app/modules/common/models/pagination.dart';
 import 'package:sip_app/modules/common/models/response_model.dart';
 import 'package:sip_app/modules/expert/models/expert_model.dart';
+import 'package:sip_app/modules/expert/models/expert_register_model.dart';
 import 'package:sip_app/modules/expert/models/experts_pagination_params.dart';
 import 'package:sip_app/modules/review/models/review_model.dart';
 import 'package:sip_app/modules/wishlist/models/create_wishlist_model.dart';
 import 'package:sip_app/modules/wishlist/models/response_check_wish_model.dart';
 import 'package:sip_app/modules/wishlist/models/wishlist_model.dart';
+
+import '../../common/models/image_response_model.dart';
 
 part 'expert_repository.g.dart';
 
@@ -53,6 +58,15 @@ abstract class ExpertRepository {
   Future<ResponseModel<ResponseCheckWishModel>> checkUserWish({
     @Path('userId') required String userId,
     @Path('expertId') required int expertId,
+  });
+
+  //전문가 등록 시 이미지 업로드
+  @PUT('/users/experts/{expertId}/images')
+  @MultiPart()
+  Future<ResponseModel<ExpertRegisterModel>> ExpertsUploadImage({
+    @Path('userId') required String userId,
+    @Path('expertId') required int expertId,
+    @Part() required File image,
   });
 }
 

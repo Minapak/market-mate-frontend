@@ -15,10 +15,10 @@ import 'package:sip_app/modules/wishlist/models/create_wishlist_model.dart';
 final expertWishProvider = StateNotifierProvider.autoDispose<ExpertWishStateNotifier, ServerStatusBase>((ref) {
   final Dio dio = Dio();
   final currentLocale = Intl.getCurrentLocale();
-  dio.options.headers['Accept-Language'] = currentLocale;
-  dio.options.headers['content-Type'] = 'application/json';
-  dio.options.headers["Authorization"] =
-  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzYW0xMjNAbmF2ZXIuY29tIiwiYXV0aCI6IlJPTEVfTk9STUFMX01FTUJFUiIsInVzZXJVVUlEIjoiMmM5NzgwODM4OWQyOTkzMDAxODlkM2UwMTNjZTAwMDYiLCJpZGVudHlLZXkiOiJzYW0xMjNAbmF2ZXIuY29tIiwiZXhwIjoxNjk0NDg0OTAzfQ.Gx_69JHOYPIKJNvz8geM7xb68CwGddtoLPnddJuGy8GsEOlw9zuEYAJgnn32K5wOmSalS2hbaux11EW3vNJV7w";
+  // dio.options.headers['Accept-Language'] = currentLocale;
+  // dio.options.headers['content-Type'] = 'application/json';
+  // dio.options.headers["Authorization"] =
+  // "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzYW0xMjNAbmF2ZXIuY29tIiwiYXV0aCI6IlJPTEVfTk9STUFMX01FTUJFUiIsInVzZXJVVUlEIjoiMmM5NzgwODM4OWQyOTkzMDAxODlkM2UwMTNjZTAwMDYiLCJpZGVudHlLZXkiOiJzYW0xMjNAbmF2ZXIuY29tIiwiZXhwIjoxNjk0NDg0OTAzfQ.Gx_69JHOYPIKJNvz8geM7xb68CwGddtoLPnddJuGy8GsEOlw9zuEYAJgnn32K5wOmSalS2hbaux11EW3vNJV7w";
 
   final ExpertRepository repository = ExpertRepository(dio, baseUrl: '$SERVER_BASE_URL/users');
   final userUUID = ref.watch(memberUUIDProvider);

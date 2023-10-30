@@ -3,6 +3,15 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <queries>
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.PICK" />
+            <data android:mimeType="image/*" />
+        </intent>
+    </queries>
    <application
         android:label="sip_app"
         android:name="${applicationName}"
@@ -40,15 +49,6 @@
                     android:scheme="c5f620fd6e4288fae50a90fcace53fec" />
             </intent-filter>
         </activity>
-       <queries>
-           <intent>
-               <action android:name="android.media.action.IMAGE_CAPTURE" />
-           </intent>
-           <intent>
-               <action android:name="android.intent.action.PICK" />
-               <data android:mimeType="image/*" />
-           </intent>
-       </queries>
        <activity
            android:name="com.kakao.sdk.flutter.AuthCodeCustomTabsActivity"
            android:exported="true">

@@ -18,7 +18,7 @@ class MemberProfileHandler extends ConsumerWidget {
     if (isSuccess) {
       print('멤버 프로필 보내기 성공.');
     }
-    print('멤버 프로필 보내기 실패.');
+
     return LoadingOverlay(isLoading: isLoading, child: SizedBox.shrink());
   }
 }
