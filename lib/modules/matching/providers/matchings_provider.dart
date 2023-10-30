@@ -1,16 +1,19 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
 import 'package:sip_app/constants/path.dart';
 import 'package:sip_app/modules/auth/providers/auth_provider.dart';
 import 'package:sip_app/modules/common/models/basic_pagination_params_model.dart';
 import 'package:sip_app/modules/common/models/pagination.dart';
 import 'package:sip_app/modules/matching/models/matching_model.dart';
+import 'package:sip_app/modules/matching/models/create_matching_model.dart';
 import 'package:sip_app/modules/matching/repositories/matching_repository.dart';
 import 'package:collection/collection.dart';
 
 final matchingsGroupProvider =
     Provider<Map<String, List<MatchingModel>>>((ref) {
   final matchings = ref.watch(matchingsProvider) as Pagination<MatchingModel>;
+
   final groupedByDate =
       groupBy(matchings.content, (content) => content.createdDateTime);
 
@@ -20,9 +23,9 @@ final matchingsGroupProvider =
 final matchingsProvider =
     StateNotifierProvider<MatchingsStateNotifier, PaginationBase>((ref) {
   final Dio dio = Dio();
-  dio.options.headers['content-Type'] = 'application/json';
-  dio.options.headers["Authorization"] =
-      "Bearer YOUR_ACCESS_TOKEN";
+  // dio.options.headers['content-Type'] = 'application/json';
+  // dio.options.headers["Authorization"] =
+  //     "Bearer YOUR_ACCESS_TOKEN";
   final MatchingRepository repository =
       MatchingRepository(dio, baseUrl: '$SERVER_BASE_URL/users/');
   final authModel = ref.watch(authProvider);

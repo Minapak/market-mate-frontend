@@ -136,7 +136,13 @@ class SigninForm extends ConsumerWidget {
             height: 48,
             child: ElevatedButton(
               onPressed: () {
-                ref.read(signinProvider.notifier).onSignin(context);
+                Future.delayed(Duration.zero, () async {
+                  await ref.read(authProvider.notifier).checkTokenSplash(context);
+                });
+                Future.delayed(Duration.zero, () async {
+                  await ref.read(signinProvider.notifier).onSignin(context);
+       
+                });
               },
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(

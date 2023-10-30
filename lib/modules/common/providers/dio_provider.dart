@@ -83,17 +83,7 @@ class CustomInterceptor extends Interceptor {
         'X-ERK': '$token',
       });
     }
-    if (options.headers['xerk'] == 'true') {
-      // 헤더 삭제
-      options.headers.remove('xerk');
 
-      final token = await storage.read(key: XERK_TOKEN_KEY);
-
-      // 실제 토큰으로 대체
-      options.headers.addAll({
-        'X-ERK': '$token',
-      });
-    }
 
     return super.onRequest(options, handler);
   }

@@ -19,20 +19,36 @@ class ExpertRegisterModel {
   final String? thumbnail;
   final String? introduceExpert;
   final String? introduceContent;
-  // final List<ImageModel>? images;
-  // final List<MainCategoryModel>? mainCategories;
-  // final List<MiddleCategoryModel>? middleCategories;
+  final List<ImageModel>? images;
+  final List<MainCategoryModel>? mainCategories;
+  final List<MiddleCategoryModel>? middleCategories;
 
   ExpertRegisterModel({
     required this.id,
     required this.thumbnail,
     required this.introduceExpert,
     required this.introduceContent,
-    // this.images,
-    // this.mainCategories,
-    // this.middleCategories,
+    this.images,
+    this.mainCategories,
+    this.middleCategories,
   });
-
+  ExpertRegisterModel copyWith({
+    int? id,
+    String? introduceExpert,
+    String? introduceContent,
+    String? thumbnail,
+    List<ImageModel>? images,
+  }) {
+    return ExpertRegisterModel(
+        id: id ?? this.id,
+        thumbnail: thumbnail ?? this.thumbnail,
+        introduceExpert: introduceExpert ??  this.introduceExpert,
+        introduceContent: introduceContent ?? this.introduceContent,
+        images: images ?? this.images,
+        mainCategories: this.mainCategories,
+        middleCategories: this.middleCategories
+    );
+  }
   factory ExpertRegisterModel.fromJson(Map<String, dynamic> json) =>
       _$ExpertRegisterModelFromJson(json);
 

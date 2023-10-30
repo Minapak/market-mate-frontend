@@ -50,6 +50,7 @@ class _ExpertRepository implements ExpertRepository {
     return value;
   }
 
+
   @override
   Future<ResponseModel<ExpertModel>> getDetail({required id}) async {
     const _extra = <String, dynamic>{};
@@ -211,6 +212,33 @@ class _ExpertRepository implements ExpertRepository {
       }
     }
     return requestOptions;
+  }
+
+  @override
+  Future<ResponseModel<ExpertRegisterModel>> ExpertsUploadImage({required String userId, required int expertId, required File image}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ResponseModel<ExpertRegisterModel>>(Options(
+          method: 'PUT',
+          headers: _headers,
+          extra: _extra,
+        )
+            .compose(
+          _dio.options,
+          '/users/${userId}/expert',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ResponseModel<ExpertRegisterModel>.fromJson(
+      _result.data!,
+          (json) => ExpertRegisterModel.fromJson(json as Map<String, dynamic>),
+    );
+    return value;
+    throw UnimplementedError();
   }
 
 }

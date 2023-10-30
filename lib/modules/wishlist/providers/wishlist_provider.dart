@@ -11,6 +11,7 @@ import 'package:sip_app/modules/wishlist/models/wishlist_model.dart';
 final wishlistsGroupProvider =
     Provider<Map<String, List<WishlistModel>>>((ref) {
   final wishlists = ref.watch(wishlistsProvider) as Pagination<WishlistModel>;
+
   final groupedByDate =
       groupBy(wishlists.content, (content) => content.createdDateTime!);
 

@@ -15,10 +15,10 @@ import 'package:sip_app/modules/wishlist/models/create_wishlist_model.dart';
 final expertWishProvider = StateNotifierProvider.autoDispose<ExpertWishStateNotifier, ServerStatusBase>((ref) {
   final Dio dio = Dio();
   final currentLocale = Intl.getCurrentLocale();
-  dio.options.headers['Accept-Language'] = currentLocale;
-  dio.options.headers['content-Type'] = 'application/json';
-  dio.options.headers["Authorization"] =
-  "Bearer YOUR_ACCESS_TOKEN";
+  // dio.options.headers['Accept-Language'] = currentLocale;
+  // dio.options.headers['content-Type'] = 'application/json';
+  // dio.options.headers["Authorization"] =
+  // "Bearer YOUR_ACCESS_TOKEN";
 
   final ExpertRepository repository = ExpertRepository(dio, baseUrl: '$SERVER_BASE_URL/users');
   final userUUID = ref.watch(memberUUIDProvider);

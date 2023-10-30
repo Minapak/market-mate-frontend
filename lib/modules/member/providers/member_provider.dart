@@ -15,7 +15,7 @@ final memberUUIDProvider = Provider<String>((ref) {
   return asyncMemberState.maybeWhen(
       data: (member) {
         if (member.uuid == null) {
-          throw Exception('User is not authenticated.');
+          throw Exception('User is not authenticated.member.uuid == null');
         }
         return member.uuid!;
       },

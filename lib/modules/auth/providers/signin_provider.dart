@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sip_app/constants/app_constants.dart';
 import 'package:sip_app/constants/path.dart';
@@ -24,7 +25,6 @@ final signinProvider = StateNotifierProvider.autoDispose<SigninStateNotifier, Se
 class SigninStateNotifier extends StateNotifier<ServerStatusBase>{
   final ref;
   final AuthRepository repository;
-
   SigninStateNotifier({required this.ref, required this.repository})
       : super(ServerStatusInitial());
 
@@ -38,23 +38,34 @@ class SigninStateNotifier extends StateNotifier<ServerStatusBase>{
       );
 
       final res = await repository.signin(data: data);
+      print(res);
+
+      if (res.success){
+        // 토큰 저장
+        final storage = ref.read(secureStorageProvider);
+
+        await storage.write(key: ACCESS_TOKEN_KEY, value: res.response.accessToken);
+        await storage.write(key: XERK_TOKEN_KEY, value: res.response.xerk);
+
+        // auth provider에 저장
+        ref.read(authProvider.notifier).setAuthModel(accessToken: res.response.accessToken);
+        print('로그인 성공 success');
+        state = ServerStatusSuccess();
+      } else {
+        print('dpfj');
+        state = ServerStatusError(message: '에러');
+      }
 
       if (res.success == false) {
         state = ServerStatusError(message: '에러');
         return;
       }
-      // 토큰 저장
-      final storage = ref.read(secureStorageProvider);
 
-      await storage.write(key: ACCESS_TOKEN_KEY, value: res.response.accessToken);
-      await storage.write(key: XERK_TOKEN_KEY, value: res.response.xerk);
 
-      // auth provider에 저장
-      ref.read(authProvider.notifier).setAuthModel(accessToken: res.response.accessToken);
-      print('storage에 토큰 저장??????????: $storage');
-      print('res.response.accessToken???: $res.response.accessToken');
-      print('response.xerk?????????: $res.response.xerk');
-      state = ServerStatusSuccess();
+      // print('res.response.accessToken???: $res.response.accessToken');
+      // print('response.xerk?????????: $res.response.xerk');
+
+
 
       context.go(PATH_HOME);
     } on DioException catch(error) {
