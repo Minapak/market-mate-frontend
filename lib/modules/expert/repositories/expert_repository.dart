@@ -1,5 +1,5 @@
-import 'dart:html';
 
+import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:sip_app/modules/common/models/basic_pagination_params_model.dart';
@@ -13,6 +13,7 @@ import 'package:sip_app/modules/wishlist/models/create_wishlist_model.dart';
 import 'package:sip_app/modules/wishlist/models/response_check_wish_model.dart';
 import 'package:sip_app/modules/wishlist/models/wishlist_model.dart';
 
+import '../../common/models/image_model.dart';
 import '../../common/models/image_response_model.dart';
 
 part 'expert_repository.g.dart';
@@ -53,20 +54,54 @@ abstract class ExpertRepository {
     @Path('userId') required String userId,
     @Path('wishlistId') required int wishlistId,
   });
-
+  //전문가 찜하기 가져오기
   @GET('/{userId}/experts/{expertId}/wishlist')
   Future<ResponseModel<ResponseCheckWishModel>> checkUserWish({
     @Path('userId') required String userId,
     @Path('expertId') required int expertId,
   });
+  /*
+  // 전문가 등록 시 thumbnail
+  // 추가할것
+  */
+  // 멤버 썸네일 수정
+  @PUT('/users/experts/{expertId}/thumbnail')
+  @MultiPart()
+  Future<ResponseModel<ImageResponseModel>> updateImage({
+    @Path() required String id,
+    @Part() required File image,
+  });
 
-  //전문가 등록 시 이미지 업로드
+  @PUT('/users/experts/{expertId}/thumbnail')
+  @MultiPart()
+  Future<ResponseModel<ExpertRegisterModel>> ExpertsUploadthumbnail({
+    @Path('expertId') required int id,
+    @Part() required File image,
+  });
+  // 전문가 등록 시 이미지 업로드
   @PUT('/users/experts/{expertId}/images')
   @MultiPart()
   Future<ResponseModel<ExpertRegisterModel>> ExpertsUploadImage({
-    @Path('userId') required String userId,
-    @Path('expertId') required int expertId,
+    @Path('expertId') required int id,
     @Part() required File image,
+  });
+  /*
+  // 전문가 등록 시 디테일 (id, thumnail, introduceExpert, introduceContent)
+  // 추가할것
+   */
+  @PUT('/users/experts/{expertId}/images')
+  @MultiPart()
+  Future<ResponseModel<ExpertRegisterModel>> ExpertsUploadDetail({
+    @Path('expertId') required int id,
+    @Body() required List<ImageModel> images,
+  });
+
+  // 전문가 전체 등록
+  @PUT('/users/{userId}/expert')
+  @MultiPart()
+  Future<ResponseModel<ExpertRegisterModel>> ExpertsRegister({
+    @Path() required int id,
+    @Body() required ExpertRegisterModel data,
   });
 }
 

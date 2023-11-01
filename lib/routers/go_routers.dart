@@ -44,8 +44,8 @@ import '../modules/wholesaler/screens/wholesales_detail_screen.dart';
 import '../modules/wholesaler/widgets/wholesaler_search_page.dart';
 //Flutter 애플리케이션 내에서 화면 전환 및 라우팅을 관리하기 위한 라우팅 설정
 final GoRouter goRouter = GoRouter(
-  initialLocation: PATH_SPLASH,// 앱 시작 시 초기 경로
- //initialLocation: PATH_HOME,
+  //initialLocation: PATH_SPLASH,// 앱 시작 시 초기 경로
+ initialLocation: PATH_HOME,
  //initialLocation: PATH_IMAGE_UPLOAD,
   routes: [
     GoRoute(

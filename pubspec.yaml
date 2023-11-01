@@ -82,7 +82,7 @@ dependencies:
   share_plus: ^4.5.2
   scrollable_positioned_list:
   flutter_image_compress: ^2.0.4
-
+  multi_image_picker: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

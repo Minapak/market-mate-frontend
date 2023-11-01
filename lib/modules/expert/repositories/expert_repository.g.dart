@@ -215,30 +215,67 @@ class _ExpertRepository implements ExpertRepository {
   }
 
   @override
-  Future<ResponseModel<ExpertRegisterModel>> ExpertsUploadImage({required String userId, required int expertId, required File image}) async {
+  Future<ResponseModel<ImageResponseModel>> updateImage({
+    required id,
+    required image,
+  }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    final _data = FormData();
+    _data.files.add(MapEntry(
+      'image',
+      MultipartFile.fromFileSync(
+        image.path,
+        filename: image.path.split(Platform.pathSeparator).last,
+      ),
+    ));
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ResponseModel<ExpertRegisterModel>>(Options(
+        _setStreamType<ResponseModel<ImageResponseModel>>(Options(
           method: 'PUT',
           headers: _headers,
           extra: _extra,
+          contentType: 'multipart/form-data',
         )
             .compose(
           _dio.options,
-          '/users/${userId}/expert',
+          '/${id}/image',
           queryParameters: queryParameters,
           data: _data,
         )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = ResponseModel<ExpertRegisterModel>.fromJson(
+    final value = ResponseModel<ImageResponseModel>.fromJson(
       _result.data!,
-          (json) => ExpertRegisterModel.fromJson(json as Map<String, dynamic>),
+          (json) => ImageResponseModel.fromJson(json as Map<String, dynamic>),
     );
     return value;
+  }
+
+
+  @override
+  Future<ResponseModel<ExpertRegisterModel>> ExpertsRegister({required int id,  required ExpertRegisterModel data}) {
+    // TODO: implement ExpertsRegiser
     throw UnimplementedError();
   }
+
+  @override
+  Future<ResponseModel<ExpertRegisterModel>> ExpertsUploadDetail({required int id, required List<ImageModel> images}) {
+    // TODO: implement ExpertsUploadDetail
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<ResponseModel<ExpertRegisterModel>> ExpertsUploadImage({required int id, required File image}) {
+    // TODO: implement ExpertsUploadImage
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<ResponseModel<ExpertRegisterModel>> ExpertsUploadthumbnail({required int id, required File image}) {
+    // TODO: implement ExpertsUploadthumbnail
+    throw UnimplementedError();
+  }
+
+
 
 }

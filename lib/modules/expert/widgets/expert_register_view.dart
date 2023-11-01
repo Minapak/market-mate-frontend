@@ -1,564 +1,777 @@
+import 'dart:convert';
+import 'dart:ui';
+import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:sip_app/modules/expert/models/expert_register_model.dart';
-import 'package:sip_app/modules/expert/screens/expert_register_done_screen.dart';
-import 'package:sip_app/utils/assete_icon_paths.dart';
-import 'package:sip_app/config/colors.dart';
-import 'package:sip_app/utils/common_appbar.dart';
-import 'package:sip_app/utils/common_button.dart';
-import 'package:sip_app/config/font_family.dart';
-import 'package:sip_app/config/size_config.dart';
-import 'package:sip_app/config/string_config.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
 
-class ExpertRegisterScreen extends StatefulWidget {
-  ExpertRegisterScreen({Key? key, this.isAppbarName = false}) : super(key: key);
-  bool isAppbarName;
+// 사용자 정의 색상과 경로를 가져오는 데 필요한 import문
+import 'package:sip_app/constants/colors.dart';
+import 'package:sip_app/constants/path.dart';
+import 'dart:io';
+import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sip_app/constants/app_constants.dart';
+import 'package:sip_app/constants/path.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:image_picker/image_picker.dart';
+import 'package:sip_app/constants/colors.dart';
+import 'package:sip_app/modules/member/providers/member_edit_image_provider.dart';
+import 'package:sip_app/modules/member/providers/member_provider.dart';
+import 'package:sip_app/modules/member/repositories/member_repository.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
+
+import '../../category/models/main_category_model.dart';
+
+
+// 마이페이지에서 전문가 등록을 위한 화면 위젯입니다.
+class MypageRegisterExpertView extends StatelessWidget {
+  int selectedCategoryIndex = 0;
+  String selectedCategory = '';
+  late final File file;
+  late final String? currentImage;
+  final List<String> CategoryList = [
+    '돼지',
+    '닭',
+    '소',
+    '해산물',
+    '야채',
+    '과일',
+    '분식',
+    '반찬',
+    '옷',
+    '액세서리',
+    '한약재',
+    '기타',
+  ];
 
   @override
-  State<ExpertRegisterScreen> createState() => _ExpertRegisterScreenState();
-}
-
-class _ExpertRegisterScreenState extends State<ExpertRegisterScreen> {
-  int selectedTimeIndex = 0;
-  int selectedPackageIndex = 0;
-  String selectedTime = '30 minutes';
-
-  void changeTime(String language) {
-    selectedTime = language;
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Container(
+        padding: EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            RegisterItem(
+              label: '전문가 이름',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  RegisterNameInput(),
+                ],
+              ),
+            ),
+            RegisterItem(
+              label: '전문가 소개',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  RegisterInput(),
+                ],
+              ),
+            ),
+            RegisterItem(
+              label: '카테고리',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  RegisterCategory(),
+                ],
+              ),
+            ),
+            RegisterItem(
+              label: '이미지 업로드',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ImageUploadView(file: file, currentImage: currentImage),
+                ],
+              ),
+            ),
+            // RegisterItem(
+            //   label: '이미지',
+            //   child: Column(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: [
+            //       ExpertImageUploadView(),
+            //     ],
+            //   ),
+            // ),
+            RegisterItem(child: RegisterCheckTextarea(), label: '경력'),
+            // RegisterItem(child: RegisterTextarea(), label: '소개글'),
+          ],
+        ),
+      ),
+    );
   }
 
-  final List<String> timeList = [
-    '10 minutes',
-    '25 minutes',
-    '20 minutes',
-    '25 minutes',
-    '30 minutes',
-    '60 minutes',
-  ];
+}
 
-  List<ExpertRegisterModel> selectedPackageList = [
-    ExpertRegisterModel(
-      id: 0,
-      thumbnail: AssetIconPaths.messagingDarkIcon,
-      introduceExpert: StringConfig.messagingPackage,
-      introduceContent: StringConfig.chatMessagesWithDoctor,
-    ),
-    ExpertRegisterModel(
-      id: 1,
-      thumbnail: AssetIconPaths.messagingDarkIcon,
-      introduceExpert: StringConfig.messagingPackage,
-      introduceContent: StringConfig.chatMessagesWithDoctor,
-    ),
-    ExpertRegisterModel(
-      id: 2,
-      thumbnail: AssetIconPaths.messagingDarkIcon,
-      introduceExpert: StringConfig.messagingPackage,
-      introduceContent: StringConfig.chatMessagesWithDoctor,
-    ),
-  ];
-  DateTime selectedDate = DateTime.now();
-  DateTime currentDate = DateTime.now();
+// 전문가 이미지 업로드 위젯
+class ExpertImageUploadView extends StatefulWidget {
+  @override
+  ExpertImageUploadViewState createState() => ExpertImageUploadViewState();
+}
 
-  String formatNumber(int num) {
-    if (num >= 1 && num <= 9) {
-      return "0${num.toString()}";
-    } else {
-      return '$num';
-    }
+class ExpertImageUploadViewState extends State<ExpertImageUploadView> {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+
+      },
+      child: Container(
+        width: 100,
+        height: 100,
+        decoration: BoxDecoration(
+          color: BUTTON_GRAY_BORDER_COLOR,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 28,
+                height: 28,
+                child: SvgPicture.asset('assets/icons/icon_image_plus.svg'),
+              ),
+              SizedBox(height: 10),
+              Text(
+                '이미지 추가',
+                style: TextStyle(
+                  color: COMMUNITY_CATEGORY_COLOR,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// 등록 항목을 래핑하는 컨테이너 위젯
+class RegisterItem extends StatelessWidget {
+  final Widget child;
+  final String label;
+
+  const RegisterItem({required this.child, required this.label, Key? key})
+      : super();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              color: BLACK_COLOR_FONT,
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          SizedBox(height: 10),
+          child,
+          SizedBox(height: 28),
+        ],
+      ),
+    );
+  }
+}
+
+// 텍스트 입력 멀티라인 위젯
+class RegisterNameInput extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 50,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: INPUT_BORDER_GRAY_COLOR),
+      ),
+      child: TextField(
+        maxLines: 1,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          hintText: '전문가님의 별명 혹은 이름을 적어주세요.',
+          contentPadding: EdgeInsets.all(10),
+          hintStyle: TextStyle(
+            color: Colors.grey, // 원하는 색상으로 변경
+          ),
+        ),
+      ),
+    );
+  }
+}
+// 텍스트 입력 멀티라인 위젯
+class RegisterInput extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 117,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: INPUT_BORDER_GRAY_COLOR),
+      ),
+      child: TextField(
+        maxLines: 10,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          hintText: '전문가님을 설명할 수 있는 간단한 문구를 적어주세요.',
+          contentPadding: EdgeInsets.all(10),
+          hintStyle: TextStyle(
+            color: Colors.grey, // 원하는 색상으로 변경
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// 텍스트 입력 멀티라인 위젯
+class RegisterTextarea extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 117,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: INPUT_BORDER_GRAY_COLOR),
+      ),
+      child: TextField(
+        maxLines: 10,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          hintText: '내용을 입력해주세요.',
+          contentPadding: EdgeInsets.all(10),
+        ),
+      ),
+    );
+  }
+}
+
+class RegisterCheckTextarea extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 117,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: INPUT_BORDER_GRAY_COLOR),
+      ),
+      child: TextField(
+        maxLines: 10,
+        enabled: false, // 입력 비활성화
+        decoration: InputDecoration(
+          hintText: '경력은 사업자 인증 후 등록이 가능합니다. (경력 인증은 010-8306-4017로 연락주시면 됩니다.)',
+          contentPadding: EdgeInsets.all(10),
+        ),
+      ),
+    );
+  }
+}
+
+class RegisterDropdown extends StatefulWidget {
+  @override
+  RegisterDropdownState createState() => RegisterDropdownState();
+}
+
+class RegisterDropdownState extends State<RegisterDropdown> {
+  // 현재 선택한 값
+  String? dropdownValue = 'Option 1';
+
+  // 가능한 선택 옵션
+  final List<String> options = ['Option 1', 'Option 2', 'Option 3'];
+
+  // 메서드를 통해 알림 팝업을 열기
+  void _showOptionsDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('옵션 선택'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: options.map((String option) {
+              return ListTile(
+                title: Text(option),
+                onTap: () {
+                  setState(() {
+                    dropdownValue = option;
+                  });
+                  Navigator.of(context).pop(); // 팝업 닫기
+                },
+              );
+            }).toList(),
+          ),
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final daysInMonth =
-        DateTime(currentDate.year, currentDate.month + 1, 0).day;
-    final dayLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-    final today = DateTime.now().toLocal();
-    final currentMonth = DateTime(currentDate.year, currentDate.month);
-    return Scaffold(
-      backgroundColor: ColorFile.whiteColor,
-      appBar: commonAppBar(context,
-          title: widget.isAppbarName
-              ? StringConfig.bookAppointment
-              : StringConfig.rescheduleAppointment),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: SizeFile.height10),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: SizeFile.height20),
-              child: Text(StringConfig.selectDate,
-                  style: TextStyle(
-                      color: ColorFile.appbarTitleColor,
-                      fontFamily: lexendMedium,
-                      fontWeight: FontWeight.w500,
-                      fontSize: SizeFile.height16)),
-            ),
-            SizedBox(height: SizeFile.height16),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: SizeFile.height20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "${_getMonthName(currentDate.month)} ${currentDate.year}",
-                    style: TextStyle(
-                      fontFamily: lexendRegular,
-                      fontWeight: FontWeight.w400,
-                      fontSize: SizeFile.height18,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            currentDate = DateTime(
-                                currentDate.year, currentDate.month - 1);
-                          });
-                        },
-                        child: Icon(
-                          Icons.arrow_left,
-                          size: 30,
-                          color: Colors.white,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            currentDate = DateTime(
-                                currentDate.year, currentDate.month + 1);
-                          });
-                        },
-                        child: const Icon(
-                          Icons.arrow_right,
-                          size: 30,
-                          color: ColorFile.appColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              height: 85.0,
-              padding: const EdgeInsets.only(left: 20),
-              child: ListView.builder(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: daysInMonth,
-                itemBuilder: (context, index) {
-                  final date =
-                  DateTime(currentDate.year, currentDate.month, index + 1);
-                  String dayLabel = dayLabels[date.weekday - 1];
-                  String formattedDate = date.day.toString().padLeft(2, '0');
-                  bool isToday = date.day == today.day &&
-                      currentMonth.month == today.month &&
-                      date.year == today.year;
-                  bool isSelected = date.day == selectedDate.day &&
-                      currentMonth.month == selectedDate.month &&
-                      date.year == selectedDate.year;
-                  Color textColor = isSelected
-                      ? Colors.white
-                      : isToday
-                      ? Colors.black
-                      : Colors.white;
-                  return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedDate = date;
-                      });
-                    },
-                    child: Container(
-                      width: 60.0,
-                      margin: const EdgeInsets.only(right: 20),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.rectangle,
-                        borderRadius: BorderRadius.circular(35),
-                        color: isSelected
-                            ? ColorFile.appColor
-                            : ColorFile.dateUnSelectColor,
-                      ),
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              formattedDate,
-                              style: TextStyle(
-                                fontFamily: lexendRegular,
-                                fontWeight: FontWeight.w400,
-                                fontSize: SizeFile.height17,
-                                color: textColor,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              dayLabel,
-                              style: TextStyle(
-                                fontFamily: lexendRegular,
-                                fontWeight: FontWeight.w400,
-                                fontSize: SizeFile.height16,
-                                color: textColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-            SizedBox(height: SizeFile.height32),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: SizeFile.height20),
-              child: Text(StringConfig.selectTime,
-                  style: TextStyle(
-                      color: ColorFile.whiteColor,
-                      fontFamily: lexendMedium,
-                      fontWeight: FontWeight.w500,
-                      fontSize: SizeFile.height16)),
-            ),
-            SizedBox(height: SizeFile.height16),
-            _buildSelectedTimeList(),
-            SizedBox(height: SizeFile.height32),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: SizeFile.height20),
-              child: Text(StringConfig.selectDuration,
-                  style: TextStyle(
-                      color: ColorFile.whiteColor,
-                      fontFamily: lexendMedium,
-                      fontWeight: FontWeight.w500,
-                      fontSize: SizeFile.height16)),
-            ),
-            SizedBox(height: SizeFile.height16),
-            buildSelectedDurationList(),
-            SizedBox(height: SizeFile.height32),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: SizeFile.height20),
-              child: Text(StringConfig.selectPackage,
-                  style: TextStyle(
-                      color: ColorFile.whiteColor,
-                      fontFamily: lexendMedium,
-                      fontWeight: FontWeight.w500,
-                      fontSize: SizeFile.height16)),
-            ),
-            SizedBox(height: SizeFile.height16),
-            buildSelectPackageList(),
-            SizedBox(height: SizeFile.height8),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: SizeFile.height20),
-              child: GestureDetector(
-                onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) {
-                  //       return ExpertRegisterDoneScreen(
-                  //         expertId: $expertName,
-                  //         expertName: expertName,
-                  //       );
-                  //     },
-                  //   ),
-                  // );
-                },
-                child: ButtonCommon(
-                  text: widget.isAppbarName
-                      ? StringConfig.continues
-                      : StringConfig.reschedule,
-                ),
-              ),
-            ),
-            SizedBox(height: SizeFile.height10),
-          ],
-        ),
-      ),
-    );
-  }
-
-  String _getMonthName(int month) {
-    switch (month) {
-      case 1:
-        return "January";
-      case 2:
-        return "February";
-      case 3:
-        return "March";
-      case 4:
-        return "April";
-      case 5:
-        return "May";
-      case 6:
-        return "June";
-      case 7:
-        return "July";
-      case 8:
-        return "August";
-      case 9:
-        return "September";
-      case 10:
-        return "October";
-      case 11:
-        return "November";
-      case 12:
-        return "December";
-      default:
-        return "";
-    }
-  }
-
-  _buildSelectedTimeList() {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: SizeFile.height20),
-      child: GridView.builder(
-        itemCount: timeList.length,
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          mainAxisSpacing: SizeFile.height12,
-          mainAxisExtent: SizeFile.height31,
-          crossAxisSpacing: SizeFile.height12,
-        ),
-        itemBuilder: (BuildContext context, int index) {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  selectedTimeIndex = index;
-                },
-                child: Container(
-                  width: SizeFile.height92,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: selectedTimeIndex == index
-                        ? ColorFile.appColor
-                        : ColorFile.darkModeColor,
-                    borderRadius: BorderRadius.circular(SizeFile.height28),
-                    border: Border.all(
-                      color: ColorFile.dividerDarkModeColor.withOpacity(0.5),
-                    ),
-                  ),
-                  child: Text(
-                    timeList[index].toString(),
-                    style: TextStyle(
-                      color: selectedTimeIndex == index
-                          ? ColorFile.whiteColor
-                          : ColorFile.whiteColor,
-                      fontFamily: lexendRegular,
-                      fontWeight: FontWeight.w400,
-                      fontSize: SizeFile.height12,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          );
-        },
-      ),
-    );
-  }
-
-  buildSelectedDurationList() {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: SizeFile.height20),
+    return GestureDetector(
+      onTap: _showOptionsDialog, // 클릭 시 알림 팝업 열기
       child: Container(
-        width: SizeFile.width,
-        height: SizeFile.height50,
+        padding: EdgeInsets.symmetric(horizontal: 10.0),
+        height: 48.0,
         decoration: BoxDecoration(
-          color: ColorFile.rectangleColor,
-          borderRadius: BorderRadius.circular(SizeFile.height10),
-          boxShadow: [
-            BoxShadow(
-              color: ColorFile.darkModeColor,
-              spreadRadius: 3,
-              blurRadius: 3,
-              offset: const Offset(0, 0),
-            ),
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: INPUT_BORDER_GRAY_COLOR),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(dropdownValue ?? 'Option 1'),
+            Icon(Icons.arrow_drop_down),
           ],
         ),
-        child: DropdownButton(
-          onChanged: (String? language) => changeTime(language!),
-          elevation: 1,
-          dropdownColor: ColorFile.rectangleColor,
-          hint: Padding(
-            padding: EdgeInsets.only(left: SizeFile.height16),
-            child: Row(
-              children: [
-                Image.asset(
-                  AssetIconPaths.clockCircleIcon,
-                  height: SizeFile.height18,
-                  width: SizeFile.height18,
-                ),
-                SizedBox(width: SizeFile.height10),
-                Text(
-                  selectedTime,
-                  style: TextStyle(
-                    fontFamily: lexendMedium,
-                    color: ColorFile.whiteColor,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          icon: Padding(
-            padding: EdgeInsets.only(right: SizeFile.height8),
-            child: Icon(
-              Icons.arrow_drop_down,
-              color: ColorFile.appColor,
-              size: SizeFile.height30,
-            ),
-          ),
-          underline: Container(height: 0),
-          isExpanded: true,
-          items: timeList
-              .map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(
-                value,
-                style: TextStyle(
-                  fontFamily: lexendRegular,
-                  color: ColorFile.whiteColor,
-                  fontWeight: FontWeight.w400,
-                  fontSize: SizeFile.height14,
-                ),
-              ),
-            );
-          }).toList(),
-        ),
-      ),
-    );
-  }
-
-  buildSelectPackageList() {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: SizeFile.height20),
-      child: ListView.builder(
-        itemCount: selectedPackageList.length,
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (BuildContext context, int index) {
-          return Container(
-            width: SizeFile.width,
-            padding: EdgeInsets.symmetric(
-              vertical: SizeFile.height10,
-              horizontal: SizeFile.height12,
-            ),
-            margin: EdgeInsets.only(bottom: SizeFile.height24),
-            decoration: BoxDecoration(
-              color: ColorFile.packageColor,
-              borderRadius: BorderRadius.circular(SizeFile.height20),
-              boxShadow: [
-                BoxShadow(
-                  color: ColorFile.packageColor,
-                  spreadRadius: 3,
-                  blurRadius: 3,
-                  offset: const Offset(0, 0),
-                ),
-              ],
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Image.asset(
-                  selectedPackageList[index].thumbnail ?? "",
-                  height: SizeFile.height44,
-                  width: SizeFile.height44,
-                ),
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                          left: SizeFile.height8,
-                          right: SizeFile.height31,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              selectedPackageList[index].introduceExpert ?? "",
-                              style: TextStyle(
-                                color: ColorFile.whiteColor,
-                                fontFamily: lexendMedium,
-                                fontWeight: FontWeight.w500,
-                                fontSize: SizeFile.height14,
-                              ),
-                            ),
-                            Text(
-                              selectedPackageList[index].introduceContent ?? "",
-                              style: TextStyle(
-                                color: ColorFile.appColor,
-                                fontFamily: lexendSemiBold,
-                                fontWeight: FontWeight.w600,
-                                fontSize: SizeFile.height16,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: SizeFile.height10),
-                      Padding(
-                        padding: EdgeInsets.only(
-                          left: SizeFile.height8,
-                          right: SizeFile.height24,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              selectedPackageList[index].introduceExpert ?? "",
-                              style: TextStyle(
-                                color: ColorFile.dividerDarkModeColor,
-                                fontFamily: lexendLight,
-                                fontWeight: FontWeight.w300,
-                                fontSize: SizeFile.height12,
-                              ),
-                            ),
-                            Text(
-                              selectedPackageList[index].introduceContent ?? "",
-                              style: TextStyle(
-                                color: ColorFile.dividerDarkModeColor,
-                                fontFamily: lexendLight,
-                                fontWeight: FontWeight.w300,
-                                fontSize: SizeFile.height12,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    selectedPackageIndex = index;
-                  },
-                  child: Image.asset(
-                    selectedPackageIndex == index
-                        ? AssetIconPaths.selsectCircleIcon
-                        : AssetIconPaths.circleIcon,
-                    height: SizeFile.height16,
-                    width: SizeFile.height16,
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
       ),
     );
   }
 }
+
+// 카테고리 등록 위젯
+class RegisterCategory extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GestureDetector(
+          onTap: () {
+            context.push(PATH_USER_EXPERT_MAIN_CATEGORIES);
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              color: INPUT_BACKGROUND_GRAY_COLOR,
+              borderRadius: BorderRadius.circular(100),
+            ),
+          ),
+        ),
+        CategoriesWrapper(),
+      ],
+    );
+  }
+}
+
+
+class ImageUploadView extends ConsumerWidget {
+  var file;
+  var currentImage;
+  ImageUploadView({required this.file,required this.currentImage});
+
+  exec() async {
+    return await _getFileImage(this.file);
+  }
+  String _timestamp() => DateTime.now().millisecondsSinceEpoch.toString();
+
+  Future<XFile?> _getFileImage(File file) async {
+    // directory
+    final dir = await path_provider.getTemporaryDirectory();
+    // image path
+
+    final targetPath = dir.absolute.path + "/" + _timestamp() + ".jpg";
+    final imgFile = await _compressAndGetFile(file, targetPath);
+
+    return imgFile;
+  }
+
+  Future<XFile?> _compressAndGetFile(File file, String targetPath) async {
+    final result = await FlutterImageCompress.compressAndGetFile(
+      file.absolute.path,
+      targetPath,
+      minWidth: 600,
+      minHeight: 600,
+      quality: 50,
+    );
+    return result;
+  }
+
+
+
+  // 데이터 불러오기
+  Future<void> _loadData() async {
+    final SharedPreferences UserUUID = await SharedPreferences.getInstance();
+    List<Asset> resultList = <Asset>[];
+
+    Future<void> saveResultListToSharedPreferences(List<Asset> resultList) async {
+      final prefs = await SharedPreferences.getInstance();
+      final resultListData = resultList.map((asset) {
+        return {
+          'identifier': asset.identifier,
+          'name': asset.name,
+          'originalWidth': asset.originalWidth,
+          'originalHeight': asset.originalHeight,
+         // 'type': asset.type.index, // Convert AssetType enum to int
+        };
+      }).toList();
+      prefs.setString('resultList', json.encode(resultListData));
+    }
+
+    try {
+      resultList = await MultiImagePicker.pickImages(
+        maxImages: 300,
+        enableCamera: true,
+      );
+      String? UserID = UserUUID.getString('userUUID');
+      print('유저아이디 스트링 화 : $UserID');
+      List<XFile> xFileList = await convertAssetsToXFiles(resultList);
+      saveResultListToSharedPreferences(xFileList.cast<Asset>());
+
+
+
+    } on Exception catch (e) {
+      print('Error: $e');
+    }
+
+  }
+  //Xfile로 변환
+  Future<List<XFile>> convertAssetsToXFiles(List<Asset> assets) async {
+    List<XFile> xFiles = <XFile>[];
+
+    for (var asset in assets) {
+      ByteData byteData = await asset.getByteData();
+      Uint8List uint8List = byteData.buffer.asUint8List();
+      // 파일 이름 설정 (임의 또는 고유한 이름)
+      String fileName = 'image_${DateTime.now().millisecondsSinceEpoch}.jpg';
+      // XFile로 변환
+      XFile xFile = XFile.fromData(uint8List, name: fileName);
+      xFiles.add(xFile);
+    }
+
+    return xFiles;
+  }
+  Future<void> _uploadExpertImage(List<XFile> images) async {
+
+    print('loadData : $_loadData()');
+
+    Dio dio = Dio();
+    try {
+      FormData formData = FormData.fromMap({
+        "package_photo": images.map((image) async {
+          final file = File(image.path);
+          final compressedFile = await FlutterImageCompress.compressAndGetFile(
+            file.path,
+            file.path,
+            quality: 10, // 이미지 품질을 조절하세요.
+            );
+          return MultipartFile.fromFile(
+            compressedFile as String,
+            filename: file.uri.toString(),
+            //   contentType: MediaType("image", "jpg"),
+          );
+        }).toList(),
+      });
+
+
+
+      final resp = await dio.put('$SERVER_BASE_URL/admin/users/$memberUUIDProvider/expert', data: formData);
+      //final compressedFilePath = compressedFile?.path;
+
+      if (resp.statusCode == 200) {
+        var targetName = DateTime.now().millisecondsSinceEpoch;
+        final formData = FormData.fromMap({
+          'file': await MultipartFile.fromFile(
+            _compressAndGetFile as String,
+            filename: "$targetName.jpg",
+          ),
+        });
+
+        final response = await dio.post(resp.data as String, data: formData);
+
+        if (response.statusCode == 200) {
+          print('이미지 업로드 성공');
+          print(response.data);
+        } else {
+          print('이미지 업로드 실패: ${response.statusCode}');
+        }
+      } else {
+        print('이미지 업로드 실패: ${resp.statusCode}');
+      }
+    } catch (e) {
+      print('오류 발생: $e');
+    }
+  }
+  // Widget buildGridView() {
+  //   return GridView.count(
+  //     crossAxisCount: 3,
+  //     children: List.generate(images.length, (index) {
+  //       XFile image = images[index];
+  //       return Image.file(File(image.path));
+  //     }),
+  //   );
+  // }
+  Widget build(BuildContext context, WidgetRef ref) {
+    return GestureDetector(
+      onTap: () {
+        _getFileImage(file);
+      },
+      child: Stack(
+        children: [
+          GestureDetector(
+            onTap: () {
+              _getFileImage(file);
+              _uploadExpertImage;
+              print('업로드 전문가 이미지 : $_uploadExpertImage;');
+            },
+            child: Container(
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: IMAGE_UPLOAD_BUTTON_COLOR,
+                image: currentImage != null ? DecorationImage(
+                  image: NetworkImage(currentImage!),
+                  fit: BoxFit.cover,
+                ) : null,
+              ),
+              padding: EdgeInsets.all(28),
+              child:
+              currentImage == null ? Center(
+                child: SizedBox(
+                    height: 44,
+                    width: 44,
+                    child: SvgPicture.asset(
+                        'assets/icons/icon_plus_white.svg',
+                        fit: BoxFit.cover)
+                ),
+              ) : SizedBox.shrink(),
+            ),
+          ),
+          Positioned(
+              bottom: 0,
+              right: 0,
+              child: Container(
+                width: 32,
+                height: 32,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                  color: Colors.white,
+                ),
+                padding: EdgeInsets.all(2),
+                child: Container(
+                    padding: EdgeInsets.all(6),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      color: NAVIGATION_TEXT_COLOR,
+                    ),
+                    child: Center(
+                      child: SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: SvgPicture.asset(
+                              'assets/icons/icon_image_upload.svg')),
+                    )),
+              ))
+        ],
+      ),
+    );
+  }
+}
+
+
+
+// 이미지 아이템 위젯
+class ImageItem extends StatefulWidget {
+  @override
+  ImageItemState createState() => ImageItemState();
+}
+
+class ImageItemState extends State<ImageItem> {
+  bool isSelected = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          isSelected = !isSelected;
+        });
+      },
+      child: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: NetworkImage('https://via.placeholder.com/150'),
+              ),
+            ),
+          ),
+          Positioned(
+            top: 6,
+            right: 6,
+            child: Container(
+              width: 16,
+              height: 16,
+              decoration: BoxDecoration(
+                color: isSelected ? BUTTON_PRIMARY_COLOR : Colors.transparent,
+                border: Border.all(
+                  color: isSelected ? BUTTON_PRIMARY_COLOR : Colors.white,
+                  width: 1,
+                ),
+                borderRadius: BorderRadius.all(Radius.circular(50)),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+// 카테고리 래핑 위젯
+class CategoriesWrapper extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      direction: Axis.horizontal,
+      runSpacing: 6,
+      spacing: 6,
+      children: [
+        AddCategoryItem(text: '돼지'),
+        AddCategoryItem(text: '닭'),
+        AddCategoryItem(text: '소'),
+        AddCategoryItem(text: '해산물'),
+        AddCategoryItem(text: '야채'),
+        AddCategoryItem(text: '과일'),
+        AddCategoryItem(text: '분식'),
+        AddCategoryItem(text: '반찬'),
+        AddCategoryItem(text: '옷'),
+        AddCategoryItem(text: '액세서리'),
+        AddCategoryItem(text: '한약재'),
+        AddCategoryItem(text: '기타'),
+      ],
+    );
+  }
+}
+
+
+class CategoriesList extends StatefulWidget {
+  @override
+  _CategoriesListState createState() => _CategoriesListState();
+}
+
+class _CategoriesListState extends State<CategoriesList> {
+  final List<String> widgetList = [
+    '돼지', '닭', '소', '해산물', '야채', '과일', '분식', '반찬', '옷', '액세서리', '한약재', '기타',
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: widgetList.length,
+      itemBuilder: (context, index) {
+        final text = widgetList[index];
+        return AddCategoryItem(text: text);
+      },
+    );
+  }
+}
+
+class AddCategoryItem extends StatefulWidget {
+  final String text;
+
+  AddCategoryItem({required this.text});
+
+  @override
+  _AddCategoryItemState createState() => _AddCategoryItemState();
+}
+
+class _AddCategoryItemState extends State<AddCategoryItem> {
+  bool isSelected = false;
+  late final MainCategoryModel _mainCategoryModel;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        if (isSelected) {
+          // 이미 선택된 경우 선택 해제
+          setState(() {
+            isSelected = false;
+          });
+        } else {
+          // 선택되지 않은 경우
+          int selectedItemCount = 0;
+
+          // 최대 선택 가능한 아이템 수 (예: 2개)
+          int maxSelectionCount = 2;
+
+          if (selectedItemCount < maxSelectionCount) {
+            // 선택 가능한 경우 선택
+            setState(() {
+              isSelected = true;
+            });
+          } else {
+            // 선택 수 초과 시 알림 표시
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('알림'),
+                  content: Text('최대 ${maxSelectionCount}개까지 선택할 수 있습니다.'),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('확인'),
+                    ),
+                  ],
+                );
+              },
+            );
+          }
+        }
+      },
+      child: Container(
+        width: 105,
+        height: 40,
+        decoration: BoxDecoration(
+          color: isSelected ? BUTTON_PRIMARY_COLOR : Colors.grey.withOpacity(0.5),
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+        ),
+        padding: EdgeInsets.all(10),
+        child: Row(
+          children: [
+            Text(
+              widget.text,
+              style: TextStyle(
+                color: isSelected ? Colors.white : Colors.black.withOpacity(0.5),
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(width: 15),
+            SizedBox(
+              width: 14,
+              height: 14,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+
+
+
+

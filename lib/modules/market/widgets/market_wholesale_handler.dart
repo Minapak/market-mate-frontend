@@ -8,7 +8,7 @@ import 'package:sip_app/constants/path.dart';
 import '../../common/models/server_status_model.dart';
 import '../../common/widgets/error_dialog_widget.dart';
 import '../../common/widgets/loading_overlay.dart';
-import '../providers/market_expert_handler.dart';
+import '../providers/market_expert_provider.dart';
 
 class MarketWholesaleHandler extends ConsumerWidget {
   MarketWholesaleHandler();

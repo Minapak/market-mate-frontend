@@ -9,8 +9,6 @@ import 'package:sip_app/modules/wishlist/models/response_check_wish_model.dart';
 final expertCheckWishProvider = StateNotifierProvider.family
 <ExpertCheckWishStateNotifier, ServerStatusBase, int>((ref, expertId) {
   final Dio dio = Dio();
-  // dio.options.headers['content-Type'] = 'application/json';
-  // dio.options.headers["Authorization"] = "Bearer YOUR_ACCESS_TOKEN";
 
   final repository = ExpertRepository(dio, baseUrl: '$SERVER_BASE_URL/users');
   final userUUID = ref.watch(memberUUIDProvider);

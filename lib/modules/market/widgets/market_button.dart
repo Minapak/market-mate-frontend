@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sip_app/constants/colors.dart';
 
-import '../providers/market_expert_handler.dart';
+import '../providers/market_expert_provider.dart';
 
 class MarketButton extends ConsumerWidget {
   final int marketId;
