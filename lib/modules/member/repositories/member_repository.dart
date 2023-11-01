@@ -59,7 +59,7 @@ abstract class MemberRepository {
     @Path() required String id,
   });
 
-  // 맴버 썸네일 수정
+  // 멤버 썸네일 수정
   @PUT('/{id}/image')
   @MultiPart()
   Future<ResponseModel<ImageResponseModel>> updateImage({

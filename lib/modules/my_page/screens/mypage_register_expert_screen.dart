@@ -11,7 +11,7 @@ class MypageRegisterExpertScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultLayout(
       appBar: BackAppBar(title: '전문가 등록'),
-      child: ExpertRegisterScreen(),
+      child: MypageRegisterExpertView(),
       backgroundColor: Colors.white,
       bottomNavigationBar: FixedBottomButton(label: '등록완료'),
     );
