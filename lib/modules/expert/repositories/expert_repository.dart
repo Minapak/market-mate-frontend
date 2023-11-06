@@ -1,6 +1,7 @@
 
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:sip_app/modules/common/models/basic_pagination_params_model.dart';
 import 'package:sip_app/modules/common/models/pagination.dart';
@@ -83,17 +84,17 @@ abstract class ExpertRepository {
   @MultiPart()
   Future<ResponseModel<ExpertRegisterModel>> ExpertsUploadImage({
     @Path('expertId') required int id,
-    @Part() required File image,
+    @Body() required List<XFile> images,
   });
-  /*
+
   // 전문가 등록 시 디테일 (id, thumnail, introduceExpert, introduceContent)
-  // 추가할것
-   */
   @PUT('/users/experts/{expertId}/images')
   @MultiPart()
   Future<ResponseModel<ExpertRegisterModel>> ExpertsUploadDetail({
     @Path('expertId') required int id,
-    @Body() required List<ImageModel> images,
+    @Part() required File thumnail,
+    @Path() required String introduceExpert,
+    @Path() required String introduceContent,
   });
 
   // 전문가 전체 등록
