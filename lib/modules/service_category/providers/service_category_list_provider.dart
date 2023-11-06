@@ -9,9 +9,7 @@ import 'package:sip_app/modules/service_category/repositories/service_category_r
 final ServiceCategoryListNotifierProvider = StateNotifierProvider.family
   <ServiceCategoryListNotifier, PaginationBase, String>((ref, serviceType) {
     final Dio dio = Dio();
-    dio.options.headers['content-Type'] = 'application/json';
-    dio.options.headers["Authorization"] =
-    "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0MTg1ZUBuYXZlci5jb20iLCJhdXRoIjoiUk9MRV9BRE1JTiIsInVzZXJVVUlEIjoiMmM5ZTgxYTk4ODc5YjNlMTAxODg3OWI1MzI5ZTAwMDAiLCJpZGVudHlLZXkiOiJ0ZXN0MTg1ZUBuYXZlci5jb20iLCJleHAiOjE2OTM1MjA2ODN9.M_vLns1fietL0m9VhhEuvQr7_9asmZioK7L3uRVNQSAik1vPrrjf3VBOChMo9iTUfyjT7nsu0fs-8HJY4-9KbA";
+   
     final ServiceCategoryRepository repository = ServiceCategoryRepository(
         dio, baseUrl: "$SERVER_BASE_URL/users/"
     );

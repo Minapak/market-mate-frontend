@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sip_app/constants/colors.dart';
 import 'package:sip_app/modules/expert/models/expert_model.dart';
 import 'package:sip_app/modules/category/models/main_category_model.dart';
@@ -104,6 +105,10 @@ class ExpertBasicInfoView extends StatelessWidget {
       this.mainCategories,
       this.middleCategories});
 
+  Future<void> saveExpertIdToSharedPreferences(int expertId) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setInt('expertId', expertId);
+  }
   @override
   Widget build(BuildContext context) {
     return Container(

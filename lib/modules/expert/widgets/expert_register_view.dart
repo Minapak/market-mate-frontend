@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
 // 사용자 정의 색상과 경로를 가져오는 데 필요한 import문
@@ -21,6 +22,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:image_picker/image_picker.dart';
 import 'package:sip_app/constants/colors.dart';
+import 'package:sip_app/modules/expert/providers/experts_provider.dart';
 import 'package:sip_app/modules/member/providers/member_edit_image_provider.dart';
 import 'package:sip_app/modules/member/providers/member_provider.dart';
 import 'package:sip_app/modules/member/repositories/member_repository.dart';
@@ -91,7 +93,7 @@ class MypageRegisterExpertView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ImageUploadView(file: file, currentImage: currentImage),
+                  ExpertImageUploadView(),
                 ],
               ),
             ),
@@ -121,11 +123,62 @@ class ExpertImageUploadView extends StatefulWidget {
 }
 
 class ExpertImageUploadViewState extends State<ExpertImageUploadView> {
+  final String? currentImage;
+
+  ExpertImageUploadViewState({this.currentImage});
+
+  Future<void> _pickImage(WidgetRef ref) async {
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedFile == null) {
+      return;
+    }
+
+    final croppedFile = await ImageCropper().cropImage(
+      sourcePath: pickedFile!.path,
+      aspectRatioPresets:
+      [
+        CropAspectRatioPreset.square,
+        CropAspectRatioPreset.ratio3x2,
+        CropAspectRatioPreset.original,
+        CropAspectRatioPreset.ratio4x3,
+        CropAspectRatioPreset.ratio16x9
+      ],
+      uiSettings: [
+        AndroidUiSettings(
+            toolbarTitle: 'Crop',
+            cropGridColor: Colors.black,
+            initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: false),
+        IOSUiSettings(title: 'Crop')
+      ],
+    );
+
+    if (croppedFile != null) {
+      // ref.read(memberEditImageViewProvider.notifier).state = croppedFile;
+      // ref.read(expertListProvider.notifier).onSubmit();
+    } else {
+      print('Image cropping failed.');
+    }
+  }
+  Future<void> _uploadProfileImage() async {
+    final imagePicker = ImagePicker();
+
+    // 갤러리에서 이미지를 선택합니다.
+    final pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      // 이미지가 선택되었을 경우, 해당 이미지를 서버로 업로드하거나
+      // 필요한 처리를 수행하세요.
+      final imageFile = File(pickedFile.path);
+
+      // 여기에서 이미지를 업로드하거나 다른 작업을 수행할 수 있습니다.
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-
+        _uploadProfileImage();
       },
       child: Container(
         width: 100,
@@ -416,7 +469,7 @@ class ImageUploadView extends ConsumerWidget {
           'name': asset.name,
           'originalWidth': asset.originalWidth,
           'originalHeight': asset.originalHeight,
-         // 'type': asset.type.index, // Convert AssetType enum to int
+          // 'type': asset.type.index, // Convert AssetType enum to int
         };
       }).toList();
       prefs.setString('resultList', json.encode(resultListData));
@@ -468,7 +521,7 @@ class ImageUploadView extends ConsumerWidget {
             file.path,
             file.path,
             quality: 10, // 이미지 품질을 조절하세요.
-            );
+          );
           return MultipartFile.fromFile(
             compressedFile as String,
             filename: file.uri.toString(),
@@ -769,7 +822,6 @@ class _AddCategoryItemState extends State<AddCategoryItem> {
     );
   }
 }
-
 
 
 

@@ -258,21 +258,22 @@ class _ExpertRepository implements ExpertRepository {
     throw UnimplementedError();
   }
 
+
   @override
-  Future<ResponseModel<ExpertRegisterModel>> ExpertsUploadDetail({required int id, required List<ImageModel> images}) {
+  Future<ResponseModel<ExpertRegisterModel>> ExpertsUploadthumbnail({required int id, required File image}) {
+    // TODO: implement ExpertsUploadthumbnail
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<ResponseModel<ExpertRegisterModel>> ExpertsUploadDetail({required int id, required File thumnail, required String introduceExpert, required String introduceContent}) {
     // TODO: implement ExpertsUploadDetail
     throw UnimplementedError();
   }
 
   @override
-  Future<ResponseModel<ExpertRegisterModel>> ExpertsUploadImage({required int id, required File image}) {
+  Future<ResponseModel<ExpertRegisterModel>> ExpertsUploadImage({required int id, required List<XFile> images}) {
     // TODO: implement ExpertsUploadImage
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<ResponseModel<ExpertRegisterModel>> ExpertsUploadthumbnail({required int id, required File image}) {
-    // TODO: implement ExpertsUploadthumbnail
     throw UnimplementedError();
   }
 
