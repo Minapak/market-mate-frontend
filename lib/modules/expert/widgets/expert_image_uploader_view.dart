@@ -1,11 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:image_picker/image_picker.dart';
+//import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
 import 'dart:async';
 import 'dart:io';
 
@@ -16,18 +17,22 @@ class ImageUploader {
   static List<XFile> images = [];
 
   static Future<String> uploadImage({required Map<String, String> data}) async {
-    late Future<String> serverResponse;
+   late Future<String> serverResponse;
     int? statusCode;
 
     final dio = Dio();  // Dio 클라이언트 생성
-
+   String _timestamp() => DateTime.now().millisecondsSinceEpoch.toString();
+    // directory
+   final dir = await path_provider.getTemporaryDirectory();
+   // image path
+   final targetPath = dir.absolute.path + "/" + _timestamp() + ".jpg";
     if (images.isNotEmpty) {
 
 
       for (final img in images) {
-        final imageName = img.path.split("/").last;
-        final stream = File(img.path).readAsBytes().asStream();
-        final length = File(img.path).lengthSync();
+        // final imageName = img.path.split("/").last;
+        // final stream = File(img.path).readAsBytes().asStream();
+        // final length = File(img.path).lengthSync();
 
         final formData = FormData.fromMap({
           "sellerId": data["sellerId"]!,
@@ -49,7 +54,7 @@ class ImageUploader {
           yield compressedBytes;
         }
 
-        final imageFile = File(img.path);
+        final imageFile = File(targetPath);
         final compressedImageStream = compressImageAsStream(imageFile);
 
         Future<void> uploadCompressedImage(List<int> compressedBytes) async {

@@ -30,6 +30,7 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
 import '../../category/models/main_category_model.dart';
+import 'expert_image_uploader_view.dart';
 
 
 // 마이페이지에서 전문가 등록을 위한 화면 위젯입니다.
@@ -88,15 +89,15 @@ class MypageRegisterExpertView extends StatelessWidget {
                 ],
               ),
             ),
-            RegisterItem(
-              label: '이미지 업로드',
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ExpertImageUploadView(),
-                ],
-              ),
-            ),
+            // RegisterItem(
+            //   label: '이미지 업로드',
+            //   child: Column(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: [
+            //   ImageUploader(),
+            //     ]
+            //   ),
+            // ),
             // RegisterItem(
             //   label: '이미지',
             //   child: Column(
