@@ -12,6 +12,7 @@ import 'package:sip_app/modules/auth/screens/splash_screen.dart';
 import 'package:sip_app/modules/community/screens/communities_screen.dart';
 import 'package:sip_app/modules/expert/screens/expert_detail_screen.dart';
 import 'package:sip_app/modules/expert/screens/experts_screen.dart';
+import 'package:sip_app/modules/expert/screens/experts_upload_image_screen.dart';
 import 'package:sip_app/modules/faq/screens/faq_screen.dart';
 import 'package:sip_app/modules/main/screens/home_screen.dart';
 import 'package:sip_app/modules/market/screens/market_detail_screen.dart';
@@ -45,8 +46,8 @@ import '../modules/wholesaler/widgets/wholesaler_search_page.dart';
 //Flutter 애플리케이션 내에서 화면 전환 및 라우팅을 관리하기 위한 라우팅 설정
 final GoRouter goRouter = GoRouter(
   //initialLocation: PATH_SPLASH,// 앱 시작 시 초기 경로
- initialLocation: PATH_HOME,
- //initialLocation: PATH_IMAGE_UPLOAD,
+ //initialLocation: PATH_HOME,
+ initialLocation: PATH_IMAGE_UPLOAD,
   routes: [
     GoRoute(
         path: '/signup', // '/signup' 경로에 대한 설정
@@ -77,7 +78,7 @@ final GoRouter goRouter = GoRouter(
     // PATH_SIGNIN에 대한 경로 설정
     GoRoute(
         path: PATH_IMAGE_UPLOAD,
-        pageBuilder: (_, state) => NoTransitionPage(child: MultipleImageUploader())),
+        pageBuilder: (_, state) => NoTransitionPage(child: ExpertsUploadImageScreen())),
     // PATH_SIGNIN에 대한 경로 설정
     GoRoute(
         path: PATH_SIGNIN,
