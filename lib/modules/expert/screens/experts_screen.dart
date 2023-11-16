@@ -13,6 +13,8 @@ import 'package:sip_app/modules/expert/providers/experts_provider.dart';
 import 'package:sip_app/modules/expert/widgets/expert_list_view.dart';
 import 'package:sip_app/modules/category/widgets/sub_categories_view.dart';
 
+import '../../common/widgets/back_expert_appbar.dart';
+
 class ExpertsScreen extends ConsumerStatefulWidget {
   final ExpertsPaginationParams param = ExpertsPaginationParams();
   final String mainCategoryId;
@@ -81,7 +83,7 @@ class ExpertsScreenState extends ConsumerState<ExpertsScreen> {
     final data = ref.watch(expertListProvider(categoryPair));
 
     return DefaultLayout(
-      appBar: ExpertsAppBar(),
+      appBar: BackExpertAppBar(title: '창업 전문가'),
       child: CustomScrollView(
         slivers: <Widget>[
           SliverToBoxAdapter(

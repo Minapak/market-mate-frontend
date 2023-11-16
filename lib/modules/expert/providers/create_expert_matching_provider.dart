@@ -12,10 +12,6 @@ import 'package:sip_app/modules/member/providers/member_provider.dart';
 final createExpertMatchingProvider = StateNotifierProvider.autoDispose<CreateExpertMatchingStateNotifier, ServerStatusBase>((ref) {
   final currentLocale = Intl.getCurrentLocale();
   final Dio dio = Dio();
-  // dio.options.headers['Accept-Language'] = currentLocale;
-  // dio.options.headers['content-Type'] = 'application/json';
-  // dio.options.headers["Authorization"] =
-  // "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzYW0xMjNAbmF2ZXIuY29tIiwiYXV0aCI6IlJPTEVfTk9STUFMX01FTUJFUiIsInVzZXJVVUlEIjoiMmM5NzgwODM4OWQyOTkzMDAxODlkM2UwMTNjZTAwMDYiLCJpZGVudHlLZXkiOiJzYW0xMjNAbmF2ZXIuY29tIiwiZXhwIjoxNjk0NDg0OTAzfQ.Gx_69JHOYPIKJNvz8geM7xb68CwGddtoLPnddJuGy8GsEOlw9zuEYAJgnn32K5wOmSalS2hbaux11EW3vNJV7w";
 
   final userUUID = ref.watch(memberUUIDProvider);
   final MatchingRepository repository = MatchingRepository(dio, baseUrl: SERVER_BASE_URL);

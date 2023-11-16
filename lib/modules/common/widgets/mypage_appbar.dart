@@ -10,7 +10,7 @@ import '../../../constants/path.dart';
 import '../../../utils/assete_icon_paths.dart';
 
 
-class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
+class MyPageAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => Size.fromHeight(54.0);
 
@@ -39,15 +39,15 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                     margin: EdgeInsets.only(left: 20),
                     width: 40,
                     height: 40,
-                    child: SvgPicture.asset(
-                      'assets/logos/logo_small.svg',
-                      fit: BoxFit.cover,
-                    ),
+                    // child: SvgPicture.asset(
+                    //   'assets/logos/logo_small.svg',
+                    //   fit: BoxFit.cover,
+                    // ),
                   ),
                 ),
                 GestureDetector(
                   onTap: () {
-                // 가운데 공백란
+                    // 가운데 공백란
                   },
                   child: Container(
                     width: MediaQuery
@@ -86,11 +86,11 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                     margin: EdgeInsets.only(right: 20),
                     width: 20,
                     height: 20,
-                    child: SvgPicture.asset(
-                      'assets/icons/icon_user.svg',
-                      fit: BoxFit.cover,
-                      color: ColorFile.greyColor,
-                    ),
+                    // child: SvgPicture.asset(
+                    //   'assets/icons/icon_user.svg',
+                    //   fit: BoxFit.cover,
+                    //   color: ColorFile.greyColor,
+                    // ),
                   ),
                 ),
               ],

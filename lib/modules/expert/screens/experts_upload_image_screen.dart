@@ -7,6 +7,8 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:path_provider/path_provider.dart';
 
+import '../../common/widgets/back_appbar.dart';
+
 
 class ExpertsUploadImageScreen extends StatefulWidget {
   @override
@@ -20,8 +22,8 @@ class _ExpertsUploadImageScreenState extends State<ExpertsUploadImageScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: Text('Image Upload Example'),
+        appBar: BackAppBar(
+          title: 'Image Upload Example',
         ),
         body: Column(
           children: <Widget>[
@@ -56,22 +58,14 @@ class _ExpertsUploadImageScreenState extends State<ExpertsUploadImageScreen> {
   }
 
   Future<void> loadAssets() async {
-
     List<Asset> resultList = <Asset>[];
-
-
     try {
-
-
       resultList = await MultiImagePicker.pickImages(
         maxImages: 300,
         enableCamera: true,
       );
-
       List<XFile> xFileList = await convertAssetsToXFiles(resultList);
-
       if (!mounted) return;
-
       setState(() {
         images = xFileList;
         images[0].path; // 첫 번째 이미지의 경로
@@ -87,24 +81,18 @@ class _ExpertsUploadImageScreenState extends State<ExpertsUploadImageScreen> {
 
   Future<List<XFile>> convertAssetsToXFiles(List<Asset> assets) async {
     List<XFile> xFiles = <XFile>[];
-
     for (var asset in assets) {
       ByteData byteData = await asset.getByteData();
       Uint8List uint8List = byteData.buffer.asUint8List();
-
       // 파일 이름 (필요하면 고유한 이름을 생성할 수 있습니다)
       String fileName = 'image_${DateTime.now().millisecondsSinceEpoch}.jpg';
-
       // 바이트를 임시 파일에 저장
       File tempFile = File('${(await getTemporaryDirectory()).path}/$fileName');
       await tempFile.writeAsBytes(uint8List);
-
       // 파일을 XFile로 변환
       XFile xFile = XFile(tempFile.path);
-
       xFiles.add(xFile);
     }
-
     return xFiles;
   }
   final List<XFile> assets = <XFile>[];

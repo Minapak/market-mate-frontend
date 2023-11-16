@@ -17,8 +17,9 @@ final ExpertRegisterSubmitProvider = StateNotifierProvider.family
 <ExpertRegisterSubmitStateNotifier, ServerStatusBase, int>((ref, expertId) {
   final Dio dio = Dio();
 
-  final repository = ExpertRepository(dio, baseUrl: '$SERVER_BASE_URL/users');
+
   final userUUID = ref.watch(memberUUIDProvider);
+  final repository = ExpertRepository(dio, baseUrl: '$SERVER_BASE_URL/users/$userUUID/expert');
   final notifier = ExpertRegisterSubmitStateNotifier(ref: ref,repository: repository, userUUID: userUUID, expertId: expertId);
 
   return notifier;

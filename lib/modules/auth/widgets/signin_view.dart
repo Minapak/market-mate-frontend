@@ -352,26 +352,31 @@ class SigninForm extends ConsumerWidget {
                   if (_formKey.currentState != null) {
                     // TODO: 애플 로그인 버튼 클릭 시 동작 구현
 
+
+
                     // 클릭 시 애플 로그인 프로바이더의 상태 업데이트
                     final result =
                     await SignInWithApple.getAppleIDCredential(
                       scopes: [
                         AppleIDAuthorizationScopes.email,
                         AppleIDAuthorizationScopes.fullName,
+
                       ],
                       webAuthenticationOptions: WebAuthenticationOptions(
                         clientId: 'ioss.test.fluttersimple',
                         redirectUri: Uri.parse(
-                            'https://wealthy-sedate-furniture.glitch.me/callbacks/sign_in_with_apple'),
+                            'http://ship-dev.ap-northeast-2.elasticbeanstalk.com/api/v1/oauth/apple'),
                       ),
                     );
 
                     print(result);
 
                     final signInWithAppleEndpoint = Uri(
-                      scheme: 'https',
-                      host: 'wealthy-sedate-furniture.glitch.me',
-                      path: '/callbacks/sign_in_with_apple',
+                      scheme: 'http',
+                      // host: 'wealthy-sedate-furniture.glitch.me',
+                      // path: '/callbacks/sign_in_with_apple',
+                      host: 'ship-dev.ap-northeast-2.elasticbeanstalk.com',
+                      path: '/api/v1/oauth/apple',
                       queryParameters: <String, String>{
                         'code': result.authorizationCode,
                         if (result.givenName != null)
@@ -382,12 +387,23 @@ class SigninForm extends ConsumerWidget {
                           'state': result.state!,
                       },
                     );
+
+                    //int value = int.parse(signInWithAppleEndpoint as String, radix: 16);
                     final session = await http.Client().post(
                       signInWithAppleEndpoint,
                     );
-
+                    // // 예시로 서버로 데이터를 POST하는 방법입니다.
+                    // final response = await http.post(
+                    //   Uri.parse('http://ship-dev.ap-northeast-2.elasticbeanstalk.com/api/v1/oauth/apple'),
+                    //   body: {
+                    //     'userIdentifier': AppleIDAuthorizationScopes.email,
+                    //     'email':  AppleIDAuthorizationScopes.fullName,
+                    //     // 필요한 다른 사용자 정보를 여기에 추가할 수 있습니다.
+                    //   },
+                    // );
                     context.go(PATH_HOME);
                     print(session);
+
                   }
                 },
                 style: ElevatedButton.styleFrom(
