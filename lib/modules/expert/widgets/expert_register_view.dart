@@ -8,6 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 
 // 사용자 정의 색상과 경로를 가져오는 데 필요한 import문
 import 'package:sip_app/constants/colors.dart';
@@ -30,6 +31,7 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
 import '../../category/models/main_category_model.dart';
+import '../../common/widgets/back_appbar.dart';
 import 'expert_image_uploader_view.dart';
 
 
@@ -37,8 +39,7 @@ import 'expert_image_uploader_view.dart';
 class MypageRegisterExpertView extends StatelessWidget {
   int selectedCategoryIndex = 0;
   String selectedCategory = '';
-  late final File file;
-  late final String? currentImage;
+  List<XFile> images = <XFile>[];
   final List<String> CategoryList = [
     '돼지',
     '닭',
@@ -57,62 +58,54 @@ class MypageRegisterExpertView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Container(
-        padding: EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            RegisterItem(
-              label: '전문가 이름',
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  RegisterNameInput(),
-                ],
+    child: Container(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              RegisterItem(
+                label: '전문가 이름',
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    RegisterNameInput(),
+                  ],
+                ),
               ),
-            ),
-            RegisterItem(
-              label: '전문가 소개',
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  RegisterInput(),
-                ],
+              RegisterItem(
+                label: '전문가 소개',
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    RegisterInput(),
+                  ],
+                ),
               ),
-            ),
-            RegisterItem(
-              label: '카테고리',
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  RegisterCategory(),
-                ],
+              RegisterItem(
+                label: '카테고리',
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    RegisterCategory(),
+                  ],
+                ),
               ),
-            ),
-            // RegisterItem(
-            //   label: '이미지 업로드',
-            //   child: Column(
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     children: [
-            //   ImageUploader(),
-            //     ]
-            //   ),
-            // ),
-            // RegisterItem(
-            //   label: '이미지',
-            //   child: Column(
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     children: [
-            //       ExpertImageUploadView(),
-            //     ],
-            //   ),
-            // ),
-            RegisterItem(child: RegisterCheckTextarea(), label: '경력'),
-            // RegisterItem(child: RegisterTextarea(), label: '소개글'),
-          ],
-        ),
-      ),
+              RegisterItem(
+                label: '이미지',
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ExpertImageUploadView(),
+                  ],
+                ),
+              ),
+              RegisterItem(child: RegisterCheckTextarea(), label: '경력'),
+              // RegisterItem(child: RegisterTextarea(), label: '소개글'),
+            ],
+          ),
+    ),
     );
+
   }
 
 }
@@ -125,61 +118,93 @@ class ExpertImageUploadView extends StatefulWidget {
 
 class ExpertImageUploadViewState extends State<ExpertImageUploadView> {
   final String? currentImage;
-
+  List<XFile> images = <XFile>[];
   ExpertImageUploadViewState({this.currentImage});
 
-  Future<void> _pickImage(WidgetRef ref) async {
-    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (pickedFile == null) {
+  Widget buildGridView() {
+    return GridView.count(
+      crossAxisCount: 3,
+      children: List.generate(images.length, (index) {
+        XFile image = images[index];
+        return Image.file(File(image.path));
+      }),
+    );
+  }
+
+  Future<void> loadAssets() async {
+    List<Asset> resultList = <Asset>[];
+    try {
+      resultList = await MultiImagePicker.pickImages(
+        maxImages: 300,
+        enableCamera: true,
+      );
+      List<XFile> xFileList = await convertAssetsToXFiles(resultList);
+
+      images = xFileList;
+      images[0].path; // 첫 번째 이미지의 경로
+      for (int i = 0; i < images.length; i++) {
+        String imagePath = images[i].path;
+        print('Image $i path: $imagePath');
+      }
+
+    } on Exception catch (e) {
+      print('Error: $e');
+    }
+  }
+
+  Future<List<XFile>> convertAssetsToXFiles(List<Asset> assets) async {
+    List<XFile> xFiles = <XFile>[];
+    for (var asset in assets) {
+      ByteData byteData = await asset.getByteData();
+      Uint8List uint8List = byteData.buffer.asUint8List();
+      // 파일 이름 (필요하면 고유한 이름을 생성할 수 있습니다)
+      String fileName = 'image_${DateTime.now().millisecondsSinceEpoch}.jpg';
+      // 바이트를 임시 파일에 저장
+      File tempFile = File('${(await getTemporaryDirectory()).path}/$fileName');
+      await tempFile.writeAsBytes(uint8List);
+      // 파일을 XFile로 변환
+      XFile xFile = XFile(tempFile.path);
+      xFiles.add(xFile);
+    }
+    return xFiles;
+  }
+  final List<XFile> assets = <XFile>[];
+
+  Future<void> uploadImages(List<XFile> images) async {
+    if (images.isEmpty) {
+      print("No images selected");
       return;
     }
 
-    final croppedFile = await ImageCropper().cropImage(
-      sourcePath: pickedFile!.path,
-      aspectRatioPresets:
-      [
-        CropAspectRatioPreset.square,
-        CropAspectRatioPreset.ratio3x2,
-        CropAspectRatioPreset.original,
-        CropAspectRatioPreset.ratio4x3,
-        CropAspectRatioPreset.ratio16x9
-      ],
-      uiSettings: [
-        AndroidUiSettings(
-            toolbarTitle: 'Crop',
-            cropGridColor: Colors.black,
-            initAspectRatio: CropAspectRatioPreset.original,
-            lockAspectRatio: false),
-        IOSUiSettings(title: 'Crop')
-      ],
-    );
+    Dio dio = Dio();
 
-    if (croppedFile != null) {
-      // ref.read(memberEditImageViewProvider.notifier).state = croppedFile;
-      // ref.read(expertListProvider.notifier).onSubmit();
-    } else {
-      print('Image cropping failed.');
-    }
-  }
-  Future<void> _uploadProfileImage() async {
-    final imagePicker = ImagePicker();
+    try {
+      FormData formData = FormData.fromMap({
+        "package_photo": images.map((image) {
+          final file = File(image.path);
+          return MultipartFile.fromFile(
+            file.path,
+            filename: file.uri.toString(),
+            //   contentType: MediaType("image", "jpg"),
+          );
+        }).toList(),
+      });
 
-    // 갤러리에서 이미지를 선택합니다.
-    final pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
+      var response = await dio.put(
+        'http://ship-dev.ap-northeast-2.elasticbeanstalk.com/api/v1/users/experts/6/images',
+        data: formData,
+      );
 
-    if (pickedFile != null) {
-      // 이미지가 선택되었을 경우, 해당 이미지를 서버로 업로드하거나
-      // 필요한 처리를 수행하세요.
-      final imageFile = File(pickedFile.path);
-
-      // 여기에서 이미지를 업로드하거나 다른 작업을 수행할 수 있습니다.
+      print('Response: $response');
+    } catch (e) {
+      print('Error: $e');
     }
   }
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        _uploadProfileImage();
+        uploadImages(images);
       },
       child: Container(
         width: 100,
@@ -455,8 +480,6 @@ class ImageUploadView extends ConsumerWidget {
     return result;
   }
 
-
-
   // 데이터 불러오기
   Future<void> _loadData() async {
     final SharedPreferences UserUUID = await SharedPreferences.getInstance();
@@ -683,6 +706,7 @@ class ImageItemState extends State<ImageItem> {
             ),
           ),
         ],
+
       ),
     );
   }
@@ -714,6 +738,7 @@ class CategoriesWrapper extends StatelessWidget {
     );
   }
 }
+
 
 
 class CategoriesList extends StatefulWidget {

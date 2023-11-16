@@ -21,9 +21,7 @@ final wishlistsGroupProvider =
 final wishlistsProvider =
     StateNotifierProvider<WishlistStateNotifier, PaginationBase>((ref) {
   final Dio dio = Dio();
-  dio.options.headers['content-Type'] = 'application/json';
-  dio.options.headers["Authorization"] =
-      "Bearer YOUR_ACCESS_TOKEN";
+
   final MemberRepository repository =
       MemberRepository(dio, baseUrl: '$SERVER_BASE_URL/users');
 

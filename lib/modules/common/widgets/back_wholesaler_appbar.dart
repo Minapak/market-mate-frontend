@@ -5,18 +5,20 @@ import 'package:sip_app/constants/colors.dart';
 import 'package:sip_app/main.dart';
 import 'package:sip_app/modules/main/screens/home_screen.dart';
 
+import '../../../constants/app_constants.dart';
 import '../../../constants/path.dart';
 import '../../auth/widgets/signin_view.dart';
+import '../../category/widgets/horizontal_category_list.dart';
 
-class BackHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
+class BackWholesalerAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final Widget? actionWidget;
 
-  const BackHomeAppBar({required this.title, this.actionWidget, Key? key})
+  const BackWholesalerAppBar({required this.title, this.actionWidget, Key? key})
       : super(key: key);
 
   @override
-  Size get preferredSize => Size.fromHeight(54.0);
+  Size get preferredSize => Size.fromHeight(100.0);
 
   Widget build(BuildContext context) {
     return AppBar(
@@ -29,16 +31,24 @@ class BackHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
             fontWeight: FontWeight.w500,
           )),
       elevation: 0,
-      leading: IconButton(
-        icon: SvgPicture.asset('assets/icons/icon_back.svg'),
-        onPressed: () {
+        flexibleSpace: Column(
+          children: [
+            Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                    height: 54,
+                    padding: const EdgeInsets.fromLTRB(20, 6, 20, 6),
+                    child:  IconButton(
+                        icon: SvgPicture.asset('assets/icons/icon_back.svg'),
+                        onPressed: () {
+                         // Navigator.pop(context); // 현재 화면 닫기
+                          context.go(PATH_HOME);
+                        },
+                       ))),
+            HorizontalCategoryList(type :CATEGORY_PAIR_EXPERT_TYPE),
+          ],
+        )
 
-          //_showDialog(context);
-        },
-      ),
-      actions: [
-        actionWidget ?? SizedBox.shrink(),
-      ],
     );
   }
 }

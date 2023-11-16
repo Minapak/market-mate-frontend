@@ -18,6 +18,9 @@ class ExpertsMarketScreen extends ConsumerStatefulWidget {
   final ExpertsPaginationParams param = ExpertsPaginationParams();
   final String marketId;
 
+
+ // const BackAppBar({required this.title, this.actionWidget, Key? key})
+    //  : super(key: key);
   ExpertsMarketScreen({required this.marketId, super.key});
 
 
@@ -75,7 +78,32 @@ class ExpertsMarketScreenState extends ConsumerState<ExpertsMarketScreen> {
     final data = ref.watch(expertMarketListProvider(categoryPair));
 
     return DefaultLayout(
-      child: CustomScrollView(
+        child: NestedScrollView(
+        controller: _scrollController,
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+      return [
+        SliverAppBar(
+          primary: true,
+          backgroundColor: Colors.white,
+          title: Text('$marketId번째 시장 창업 전문가 보기',
+              style: TextStyle(
+                color: SECTION_FONT_COLOR,
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              )),
+          elevation: 0,
+          leading: IconButton(
+            icon: SvgPicture.asset('assets/icons/icon_back.svg'),
+            onPressed: () {
+              Navigator.of(context).pop();
+              // _showDialog(context);
+            },
+          ),
+        ),
+        // 추가적인 슬리버를 필요에 따라 여기에 추가할 수 있습니다.
+      ];
+    },
+      body: CustomScrollView(
         slivers: <Widget>[
           if (data is PaginationLoading)
             SliverFillRemaining(
@@ -126,9 +154,7 @@ class ExpertsMarketScreenState extends ConsumerState<ExpertsMarketScreen> {
           ),
         ],
       ),
-      appbarColor: Colors.white,
-      backgroundColor: PRIMARY_BACKGROUND_COLOR,
-      isNeedAppbar: true,
+          ),
     );
   }
 }

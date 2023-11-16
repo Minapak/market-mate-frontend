@@ -12,10 +12,6 @@ import 'package:sip_app/modules/member/providers/member_provider.dart';
 final createExpertMatchingProvider = StateNotifierProvider.autoDispose<CreateExpertMatchingStateNotifier, ServerStatusBase>((ref) {
   final currentLocale = Intl.getCurrentLocale();
   final Dio dio = Dio();
-  // dio.options.headers['Accept-Language'] = currentLocale;
-  // dio.options.headers['content-Type'] = 'application/json';
-  // dio.options.headers["Authorization"] =
-  // "Bearer YOUR_ACCESS_TOKEN";
 
   final userUUID = ref.watch(memberUUIDProvider);
   final MatchingRepository repository = MatchingRepository(dio, baseUrl: SERVER_BASE_URL);

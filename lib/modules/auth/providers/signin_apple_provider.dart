@@ -82,6 +82,7 @@ class SigninStateNotifier extends StateNotifier<ServerStatusBase>{
           scopes: [
             AppleIDAuthorizationScopes.email,
             AppleIDAuthorizationScopes.fullName,
+
           ],
           webAuthenticationOptions: WebAuthenticationOptions(
             clientId: 'ioss.test.fluttersimple',

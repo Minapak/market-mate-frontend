@@ -13,6 +13,8 @@ import 'package:sip_app/modules/wholesaler/widgets/wholesaler_list_view.dart';
 import 'package:sip_app/modules/category/widgets/sub_categories_view.dart';
 import 'package:sip_app/modules/wholesaler/models/wholesaler_pagination_params.dart';
 
+import '../../common/widgets/back_wholesaler_appbar.dart';
+
 class wholesalesScreen extends ConsumerStatefulWidget {
   final wholesalerPaginationParams param = wholesalerPaginationParams();
 
@@ -68,7 +70,7 @@ class wholesalesScreenState extends ConsumerState<wholesalesScreen> {
     final data = ref.watch(wholesalerListProvider(categoryPair));
 
     return DefaultLayout(
-      appBar: wholesalerAppBar(),
+      appBar: BackWholesalerAppBar(title: '도/소매 보기',),
       child: CustomScrollView(
         slivers: <Widget>[
           SliverToBoxAdapter(

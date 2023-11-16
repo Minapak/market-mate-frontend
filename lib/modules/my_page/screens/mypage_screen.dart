@@ -10,6 +10,7 @@ import 'package:sip_app/modules/my_page/widgets/mypage_view.dart';
 
 import '../../../constants/colors.dart';
 import '../../common/widgets/main_appbar.dart';
+import '../../common/widgets/mypage_appbar.dart';
 
 class MypageScreen extends ConsumerWidget {
   const MypageScreen({super.key});
@@ -20,7 +21,7 @@ class MypageScreen extends ConsumerWidget {
 
     return DefaultLayout(
 
-      appBar: MainAppBar(), // MainAppBar 추가
+      appBar: MyPageAppBar(), // MainAppBar 추가
       child: isLoggedIn ? MyPageView() : Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
