@@ -14,7 +14,7 @@ import 'package:sip_app/modules/auth/providers/signin_email_provider.dart';
 import 'package:sip_app/modules/auth/providers/signin_provider.dart';
 import 'package:sip_app/modules/auth/widgets/signin_email_input_widget.dart';
 import 'package:sip_app/modules/auth/widgets/signin_password_input_widget.dart';
-import 'package:sip_app/modules/auth/models/login_platform.dart';
+
 import 'package:sip_app/utils/jwt.dart';
 import 'package:http/http.dart' as http;
 //소셜 로그인
@@ -23,6 +23,8 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
 class SigninView extends StatelessWidget {
   const SigninView({Key? key}) : super(key: key);
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +78,8 @@ class SigninLogo extends StatelessWidget {
   }
 }
 
+
+
 class SigninForm extends ConsumerWidget {
   final _formKey = GlobalKey<FormState>();
 
@@ -96,8 +100,37 @@ class SigninForm extends ConsumerWidget {
 
     }
   } //async 끝
+
+  void naverLogin(BuildContext context, WidgetRef ref) async {
+    try {
+
+      await ref.read(authProvider.notifier);
+      final NaverLoginResult user = await FlutterNaverLogin.logIn();
+      NaverAccessToken res = await FlutterNaverLogin.currentAccessToken;
+
+
+
+      String id = user.account.email;
+      String name = user.account.name;
+      String tel = user.account.mobile
+          .replaceAll('+82', '0')
+          .replaceAll('-', '')
+          .replaceAll(' ', '')
+          .replaceAll('+', '');
+      String sex = user.account.gender;
+      String socialNo = '${user.account.birthyear}${user.account.birthday}'.replaceAll('-', '');
+      String idx = user.account.id.toString();
+
+      print('$id,$name,$tel,$sex,$socialNo, $idx');
+    } catch (error) {
+      print('naver login error $error');
+    }
+  }
+
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
     return Form(
       key: _formKey,
       child: Column(
@@ -282,24 +315,39 @@ class SigninForm extends ConsumerWidget {
             child: ElevatedButton(
               onPressed: () async {
                 try {
+
+
                   bool isInstalled = await isKakaoTalkInstalled();
 
                   OAuthToken token = isInstalled
                       ? await UserApi.instance.loginWithKakaoTalk()
                       : await UserApi.instance.loginWithKakaoAccount();
 
-                  final url = Uri.https('kapi.kakao.com', '/v2/user/me');
+                  final url = Uri.http('ship-dev.ap-northeast-2.elasticbeanstalk.com', '/api/v1/member/signup');
 
-                  final response = await http.get(
-                    url,
-                    headers: {
-                      HttpHeaders.authorizationHeader: 'Bearer ${token.accessToken}'
-                    },
-                  );
-
-                  final profileInfo = json.decode(response.body);
-                  print(profileInfo.toString());
-
+                  // final response = await http.post(
+                  //   url,
+                  //   headers: {
+                  //     HttpHeaders.authorizationHeader: 'Bearer ${token.accessToken}'
+                  //   },
+                  // );
+                  //
+                  // final profileInfo = json.decode(response.body);
+                  // print(profileInfo.toString());
+                  try {
+                    OAuthToken token =
+                    await UserApi.instance.loginWithKakaoAccount();
+                    print('카카오계정으로 로그인 성공 ${token.accessToken}');
+                    final response = await http.post(
+                      url,
+                      headers: {
+                        HttpHeaders.authorizationHeader: 'Bearer ${token.accessToken}'
+                      },
+                    );
+                    print('카카오계정으로 로그인 성공1 ${response}');
+                  } catch (error) {
+                    print('카카오계정으로 로그인 실패 $error');
+                  }
                   // 카카오 로그인 성공 후 추가 작업을 수행하십시오.
                   context.go(PATH_HOME);
                 } catch (error) {

@@ -43,6 +43,9 @@ class AuthStateNotifier extends StateNotifier<AuthModel> {
   // 토큰이 있으면 토큰 재발급 api 호출
   // 에러나면 로그인 안된유저로 처리
   // 성공하면 로그인상태 유지
+  void setAccessToken(String token) {
+    state = state.copyWith(accessToken: token);
+  }
   Future<void> checkTokenSplash(BuildContext context) async {
     print('checkTokenSplash');
     try {

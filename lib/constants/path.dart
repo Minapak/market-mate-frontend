@@ -2,7 +2,7 @@
 
 ///각각의 상수는 해당 경로의 식별자
 ///라우팅 또는 네트워크 요청 등에 사용
-final String SERVER_BASE_URL = 'http://ship-dev.ap-northeast-2.elasticbeanstalk.com/api/v1';
+final String SERVER_BASE_URL = 'http://ship-dev2.ap-northeast-2.elasticbeanstalk.com/api/v1';
 final String PATH_IMAGE_UPLOAD = '/users/experts/6/images';
 final String PATH_SPLASH = '/a';
 final String PATH_HOME = '/main';
