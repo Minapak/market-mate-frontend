@@ -51,7 +51,7 @@ class SignupEmailStateNotifier extends StateNotifier<SignupEmailModel> {
 
   bool isValid() {
     final bool emailValid =
-      RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+    RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
         .hasMatch(state.email);
 
     return emailValid;
@@ -65,7 +65,7 @@ class SignupEmailStateNotifier extends StateNotifier<SignupEmailModel> {
     }
   }
 
-   Future<void> checkEmail(BuildContext context) async {
+  Future<void> checkEmail(BuildContext context) async {
     try {
       if (state.isValidSuccess == false || state.isValidSuccess == null) {
         return;

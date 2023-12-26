@@ -13,7 +13,7 @@ import 'package:sip_app/modules/common/models/server_status_model.dart';
 
 final signupSubmitProvider = StateNotifierProvider<SignupSubmitStateNotifier,ServerStatusBase>((ref) {
   final Dio dio = Dio();
-  final SignupRepository repository = SignupRepository(dio, baseUrl: '$SERVER_BASE_URL/member');
+  final SignupRepository repository = SignupRepository(dio, baseUrl: '$SERVER_BASE_URL/members');
   final notifier = SignupSubmitStateNotifier(repository: repository, ref: ref);
 
   return notifier;

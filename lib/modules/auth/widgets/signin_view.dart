@@ -52,7 +52,7 @@ class SigninLogo extends StatelessWidget {
         Container(
           margin: const EdgeInsets.only(bottom: 16),
           child: SvgPicture.asset(
-            'assets/logos/logo_sip.svg',
+            'assets/logos/logo_small.svg',
             width: 80,
             height: 80,
           ),
