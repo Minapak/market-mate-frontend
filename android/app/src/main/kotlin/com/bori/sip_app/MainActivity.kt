@@ -1,4 +1,4 @@
-package com.example.sip_app
+package com.bori.sip_app
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -6,6 +6,8 @@ import 'package:sip_app/modules/auth/providers/signup_email_provider.dart';
 import 'package:sip_app/modules/common/widgets/error_dialog_widget.dart';
 import 'package:sip_app/modules/common/widgets/loading_overlay.dart';
 
+import '../../../constants/path.dart';
+
 class SignupEmailHandler extends ConsumerWidget {
   SignupEmailHandler();
 
@@ -15,6 +17,11 @@ class SignupEmailHandler extends ConsumerWidget {
     final isLoading = ref.watch(signupEmailProvider).isLoading ?? false;
     final isError = ref.watch(signupEmailProvider).isError ?? false;
     final String errorMessage = '이미 가입한 이메일입니다.';
+
+    if (isSuccess) {
+      Future.microtask(() => context.push('/signup/phone'));
+    }
+
 
     if (isError) {
       Future.microtask(() =>

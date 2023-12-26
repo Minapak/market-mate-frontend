@@ -43,7 +43,7 @@ class MypageScreen extends ConsumerWidget {
                 ],
               ),
               child: SvgPicture.asset(
-                'assets/logos/logo_sip.svg', // 로고 이미지 파일 경로
+                'assets/logos/logo_small.svg', // 로고 이미지 파일 경로
                 fit: BoxFit.contain, // 이미지 크기 조절 옵션 (필요에 따라 설정)
               ),
             ),
