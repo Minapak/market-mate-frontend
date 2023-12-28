@@ -11,6 +11,7 @@ class SignupInput extends StatefulWidget {
   final String? hintText;
   final TextEditingController? controller;
 
+
   SignupInput({
     required this.isObscure,
     required this.onChangeValue,
@@ -18,6 +19,7 @@ class SignupInput extends StatefulWidget {
     this.initialValue,
     this.readOnly = false,
     this.hintText = '텍스트를 입력해주세요.',
+
   });
 
   SignupInputState createState() => SignupInputState();
@@ -25,11 +27,12 @@ class SignupInput extends StatefulWidget {
 
 class SignupInputState extends State<SignupInput> {
   SignupInputState();
-
+  final _formkey = GlobalKey<FormState>();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
   }
 
   @override
@@ -41,6 +44,7 @@ class SignupInputState extends State<SignupInput> {
         borderRadius: BorderRadius.circular(100),
       ),
       child: TextField(
+        autofocus: true,
         controller: widget.controller,
         obscureText: widget.isObscure,
         readOnly: widget.readOnly ?? false,
@@ -52,6 +56,7 @@ class SignupInputState extends State<SignupInput> {
           contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
           border: InputBorder.none,
           enabledBorder: InputBorder.none,
+
         ),
         style: TextStyle(
           color: widget.readOnly == true ? GRAY_COLOR_FONT : BLACK_COLOR_FONT,  // Add this line

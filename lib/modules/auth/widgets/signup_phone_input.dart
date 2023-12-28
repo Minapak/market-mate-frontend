@@ -10,15 +10,18 @@ class SignupPhoneInput extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.watch(signupPhoneProvider.notifier).controller;
     final bool isSuccess = ref.watch(signupPhoneProvider).isSuccess ?? false;
+    final focusNode = FocusNode();
     void onChangeValue(String value) {
       ref.read(signupPhoneProvider.notifier).onChangePhone(value);
     }
 
 
     return SignupInput(
+
         isObscure: false,
         onChangeValue: onChangeValue,
         controller: controller,
+
     );
   }
 }
