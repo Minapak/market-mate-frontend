@@ -22,7 +22,7 @@ class ExpertMatchingButton extends ConsumerWidget {
         elevation: 0,
         child: GestureDetector(
           onTap: () {
-            print('매칭하기 버튼');
+            print('연락하기 버튼');
             onTapMatching();
           },
           child: Container(
@@ -34,7 +34,7 @@ class ExpertMatchingButton extends ConsumerWidget {
                 decoration: BoxDecoration(
                     color: NAVIGATION_TEXT_COLOR,
                     borderRadius: BorderRadius.all(Radius.circular(10))),
-                child: Text('매칭하기',
+                child: Text('연락하기',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Colors.white,

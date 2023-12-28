@@ -26,6 +26,7 @@ class BackLoginAppBar extends StatelessWidget implements PreferredSizeWidget {
             fontSize: 16,
             fontWeight: FontWeight.w500,
           )),
+      centerTitle: true,
       elevation: 0,
       leading: IconButton(
         icon: SvgPicture.asset('assets/icons/icon_back.svg'),

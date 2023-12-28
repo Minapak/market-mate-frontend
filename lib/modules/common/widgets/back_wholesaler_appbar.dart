@@ -31,6 +31,7 @@ class BackWholesalerAppBar extends StatelessWidget implements PreferredSizeWidge
             fontWeight: FontWeight.w500,
           )),
       elevation: 0,
+        centerTitle: true,
         flexibleSpace: Column(
           children: [
             Align(

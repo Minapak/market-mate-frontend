@@ -27,6 +27,7 @@ class BackAppBar extends StatelessWidget implements PreferredSizeWidget {
             fontWeight: FontWeight.w500,
           )),
       elevation: 0,
+      centerTitle: true,
       leading: IconButton(
         icon: SvgPicture.asset('assets/icons/icon_back.svg'),
         onPressed: () {

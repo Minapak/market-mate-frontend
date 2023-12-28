@@ -30,6 +30,7 @@ class BackExpertAppBar extends StatelessWidget implements PreferredSizeWidget {
               fontSize: 16,
               fontWeight: FontWeight.w500,
             )),
+        centerTitle: true,
         elevation: 0,
         flexibleSpace: Column(
           children: [

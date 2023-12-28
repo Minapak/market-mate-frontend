@@ -4,7 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sip_app/constants/app_constants.dart';
 import 'package:sip_app/modules/auth/models/signup_phone_model.dart';
-
+import 'package:go_router/go_router.dart';
+import 'package:sip_app/constants/app_constants.dart';
+import 'package:sip_app/constants/path.dart';
 import '../../../constants/path.dart';
 import '../repositories/signup_repository.dart';
 
@@ -57,6 +59,26 @@ class SignupPhoneStateNotifier extends StateNotifier<SignupPhoneModel> {
       state = state.copyWith(isValidError: true, isValidSuccess: false);
     } else {;
     state = state.copyWith(isValidError: false, isValidSuccess: true);
+    }
+  }
+  Future<void> checkPhone(BuildContext context) async {
+    try {
+      if (state.isValidSuccess == false || state.isValidSuccess == null) {
+        return;
+      }
+      state = state.copyWith(isLoading: true, isError: false, isSuccess: false);
+      final res = await repository.checkIdentyKey(identyKey: state.phone);
+
+      if (res.response.success) {
+        state = state.copyWith(isLoading: false, isError: false, isSuccess: true);
+        context.push('/signup/phone');
+      } else {
+        state = state.copyWith(isLoading: false, isError: true, isSuccess: false);
+      }
+
+    } catch(error) {
+      print(error);
+      state = state.copyWith(isLoading: false, isError: true, isSuccess: false);
     }
   }
 }

@@ -9,7 +9,7 @@ class SignupPhoneInput extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.watch(signupPhoneProvider.notifier).controller;
-    //final bool isSuccess = ref.watch(signupPhoneProvider).isSuccess ?? false;
+    final bool isSuccess = ref.watch(signupPhoneProvider).isSuccess ?? false;
     void onChangeValue(String value) {
       ref.read(signupPhoneProvider.notifier).onChangePhone(value);
     }
