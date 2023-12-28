@@ -40,7 +40,7 @@ class SignupPhoneStateNotifier extends StateNotifier<SignupPhoneModel> {
   }
 
   void onChangePhone(String value) {
-    state = state.copyWith(phone: value);
+    state = state.copyWith(phone: value, isError: false);
     updatePhoneDebounce.setValue(value);
   }
 
@@ -71,7 +71,7 @@ class SignupPhoneStateNotifier extends StateNotifier<SignupPhoneModel> {
 
       if (res.response.success) {
         state = state.copyWith(isLoading: false, isError: false, isSuccess: true);
-        context.push('/signup/phone');
+        context.push('/signup/password');
       } else {
         state = state.copyWith(isLoading: false, isError: true, isSuccess: false);
       }
