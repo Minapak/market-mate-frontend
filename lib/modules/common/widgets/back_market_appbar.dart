@@ -31,6 +31,7 @@ class BackMarketAppBar extends StatelessWidget implements PreferredSizeWidget {
               fontWeight: FontWeight.w500,
             )),
         elevation: 0,
+        centerTitle: true,
         flexibleSpace: Column(
           children: [
             Align(
