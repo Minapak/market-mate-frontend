@@ -1,21 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sip_app/constants/colors.dart';
 import 'package:sip_app/modules/expert/providers/create_expert_matching_provider.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import '../providers/expert_detail_provider.dart';
 
 class ExpertMatchingButton extends ConsumerWidget {
   final int expertId;
+
 
   ExpertMatchingButton({required this.expertId, Key? key}) : super();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    void onTapMatching() {
+    void onTapMatching() async {
       if (expertId == null) {
         return;
       }
+      // SharedPreferences에서 값 가져오기
+      final prefs = await SharedPreferences.getInstance();
+      final storedName = prefs.getString('name') ?? ''; // 디폴트 값 설정 가능
+      final storedPhone = prefs.getString('phone') ?? ''; // 디폴트 값 설정 가능
+      final phoneNumber = storedPhone;
+      // 가져온 값 로그로 출력
+      print('Stored Name: $storedName');
+      print('Stored Phone: $storedPhone');
+      if (phoneNumber.isEmpty) {
+        return;
+      }
 
-      ref.read(createExpertMatchingProvider.notifier).onMatch(expertId:expertId);
+      final url = 'tel:$phoneNumber';
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        throw 'Could not launch $url';
+      }
+  //  ref.read(expertCacheProvider as ProviderListenable).onMatch(expertId:expertId);
     }
 
     return BottomAppBar(
