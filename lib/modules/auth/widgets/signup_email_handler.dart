@@ -19,7 +19,7 @@ class SignupEmailHandler extends ConsumerWidget {
     final String errorMessage = '이미 가입한 이메일입니다.';
 
     if (isSuccess) {
-      Future.microtask(() => context.push('/signup/phone'));
+      // Future.microtask(() => context.push('/signup/phone'));
     }
 
 

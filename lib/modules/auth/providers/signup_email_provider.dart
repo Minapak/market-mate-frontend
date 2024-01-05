@@ -75,7 +75,6 @@ class SignupEmailStateNotifier extends StateNotifier<SignupEmailModel> {
 
       if (res.response.success) {
         state = state.copyWith(isLoading: false, isError: false, isSuccess: true);
-        context.push('/signup/phone');
       } else {
         state = state.copyWith(isLoading: false, isError: true, isSuccess: false);
       }
