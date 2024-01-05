@@ -8,8 +8,8 @@ import 'package:sip_app/modules/expert/widgets/expert_matching_button.dart';
 class ExpertRegisterDoneScreen extends StatelessWidget {
   final String expertId;
   final String expertName;
-
-  ExpertRegisterDoneScreen({required this.expertId, required this.expertName});
+  final String expertPhone;
+  ExpertRegisterDoneScreen({required this.expertId, required this.expertName,required this.expertPhone});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class ExpertRegisterDoneScreen extends StatelessWidget {
       children: [
         DefaultLayout(
           appBar: BackAppBar(title: '$expertName 전문가'),
-          child: ExpertDetailView(expertId: expertId),
+          child: ExpertDetailView(expertId: expertId, expertPhone: expertPhone),
           bottomNavigationBar: ExpertMatchingButton(expertId: int.parse(expertId)),
         ),
         CreateExpertMatchingHandler(),

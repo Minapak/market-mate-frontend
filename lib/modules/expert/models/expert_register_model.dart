@@ -17,6 +17,7 @@ enum ExpertCareer {
 class ExpertRegisterModel {
   final int id;
   final String? thumbnail;
+  final String? phoneNumber;
   final String? introduceExpert;
   final String? introduceContent;
   final List<ImageModel>? images;
@@ -29,6 +30,7 @@ class ExpertRegisterModel {
     required this.introduceExpert,
     required this.introduceContent,
     this.images,
+    this.phoneNumber,
     this.mainCategories,
     this.middleCategories,
   });
@@ -37,6 +39,7 @@ class ExpertRegisterModel {
     String? introduceExpert,
     String? introduceContent,
     String? thumbnail,
+    String? phoneNumber,
     List<ImageModel>? images,
   }) {
     return ExpertRegisterModel(
@@ -44,6 +47,7 @@ class ExpertRegisterModel {
         thumbnail: thumbnail ?? this.thumbnail,
         introduceExpert: introduceExpert ??  this.introduceExpert,
         introduceContent: introduceContent ?? this.introduceContent,
+        phoneNumber: phoneNumber ?? this.phoneNumber,
         images: images ?? this.images,
         mainCategories: this.mainCategories,
         middleCategories: this.middleCategories

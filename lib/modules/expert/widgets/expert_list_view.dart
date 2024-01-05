@@ -4,6 +4,8 @@ import 'package:sip_app/constants/colors.dart';
 import 'package:sip_app/modules/expert/models/expert_model.dart';
 import 'package:sip_app/modules/category/widgets/middle_category_hashtag_view.dart';
 
+import '../../../constants/path.dart';
+
 
 class ExpertItem extends StatelessWidget {
   final ExpertModel expert;
@@ -16,7 +18,9 @@ class ExpertItem extends StatelessWidget {
         onTap: () {
           final int id = expert.id;
           final String name = expert.name;
-          context.push('/experts/detail/$id?name=$name');
+          ///여길 고치세요
+          //context.push(SERVER_BASE_URL+'/users/experts/$id');
+          context.push('/users/experts/$id');
         },
         child: Container(
             padding: EdgeInsets.all(16),

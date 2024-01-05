@@ -17,7 +17,7 @@ class SignupPhoneInput extends ConsumerWidget {
 
 
     return SignupInput(
-
+        hintText: '예시)010-1234-5678',
         isObscure: false,
         onChangeValue: onChangeValue,
         controller: controller,

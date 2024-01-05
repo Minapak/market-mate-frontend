@@ -12,6 +12,7 @@ ExpertModel _$ExpertModelFromJson(Map<String, dynamic> json) => ExpertModel(
       content: json['content'] as String?,
       thumbnail: json['thumbnail'] as String?,
       marketName: json['marketName'] as String?,
+      phone: json['phone'] as String?,
       career: $enumDecodeNullable(_$ExpertCareerEnumMap, json['career']),
       images: (json['images'] as List<dynamic>?)
           ?.map((e) => ImageModel.fromJson(e as Map<String, dynamic>))
@@ -29,6 +30,7 @@ Map<String, dynamic> _$ExpertModelToJson(ExpertModel instance) =>
       'id': instance.id,
       'name': instance.name,
       'marketName': instance.marketName,
+      'phone': instance.phone,
       'content': instance.content,
       'thumbnail': instance.thumbnail,
       'career': _$ExpertCareerEnumMap[instance.career],

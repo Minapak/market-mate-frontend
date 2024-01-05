@@ -18,8 +18,9 @@ final String reviewType = 'review';
 
 class ExpertDetailView extends ConsumerWidget {
   final String expertId;
+  final String expertPhone;
 
-  ExpertDetailView({required this.expertId});
+  ExpertDetailView({required this.expertId, required this.expertPhone});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -28,6 +29,12 @@ class ExpertDetailView extends ConsumerWidget {
     final bool isError = config.isError;
     final ExpertModel? state = config.expert;
     final ScrollController scrollController = ScrollController();
+
+    FlutterError.onError = (FlutterErrorDetails details) {
+      print('Flutter Error: ${details.exception}');
+      print(details.stack);
+    };
+
 
     if (isLoading) {
       return Center(
@@ -38,7 +45,9 @@ class ExpertDetailView extends ConsumerWidget {
     if (isError || state == null) {
       return Center(
         child: Text('에러입니다.'),
+        //child: ErrorWidget(FlutterError.onError as Object),
       );
+
     }
 
     String displayCareer(ExpertCareer? career) {
@@ -61,7 +70,7 @@ class ExpertDetailView extends ConsumerWidget {
           mainCategories: state.mainCategories,
           middleCategories: state.middleCategories,
         ),
-        // ExpertIntroView(content: state.content),
+      //  ExpertIntroView(content: state.content),
         ExpertTabView(
           expertId: state.id,
           scrollController: scrollController,
