@@ -52,7 +52,7 @@ class _ExpertRepository implements ExpertRepository {
 
 
   @override
-  Future<ResponseModel<ExpertModel>> getDetail({required id}) async {
+  Future<ResponseModel<ExpertModel>> getDetail({required id, required phone}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -65,17 +65,40 @@ class _ExpertRepository implements ExpertRepository {
         )
             .compose(
           _dio.options,
-          '/${id}',
+          '${id}',
           queryParameters: queryParameters,
           data: _data,
         )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    print('Base URL: ${baseUrl ?? _dio.options.baseUrl}');
+    final completeUrl = '${baseUrl ?? _dio.options.baseUrl}${id}';
+    print('Complete URL: $completeUrl');
+    // 응답 값 로그
+    print('Response: $_result');
+    final responseData = _result.data as Map<String, dynamic>;
+    final resData = responseData['response'] as Map<String, dynamic>;
+    final idd = responseData['id'];
+    final nameValue = resData['name'];
+    print('Name: $nameValue');
+    final phoneValue = resData['phone'];
+    print('Phone: $phoneValue');
+    // final phone = responseData['phone'];
+    print('Response Data: ${_result.data}');
+    print('ID: $idd');
+    print('id???????: $id');
+    print('Res Data: $resData');
+// SharedPreferences에 저장
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('name', nameValue);
+    await prefs.setString('phone', phoneValue);
     final value = ResponseModel<ExpertModel>.fromJson(
       _result.data!,
+
           (json) => ExpertModel.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }
+
 
   @override
   Future<ResponseModel<Pagination<ReviewModel>>> reviewPaginate({
@@ -227,7 +250,9 @@ class _ExpertRepository implements ExpertRepository {
       'image',
       MultipartFile.fromFileSync(
         image.path,
-        filename: image.path.split(Platform.pathSeparator).last,
+        filename: image.path
+            .split(Platform.pathSeparator)
+            .last,
       ),
     ));
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -253,30 +278,83 @@ class _ExpertRepository implements ExpertRepository {
 
 
   @override
-  Future<ResponseModel<ExpertRegisterModel>> ExpertsRegister({required int id,  required ExpertRegisterModel data}) {
+  Future<ResponseModel<ExpertRegisterModel>> ExpertsRegister(
+      {required int id, required ExpertRegisterModel data}) {
     // TODO: implement ExpertsRegiser
     throw UnimplementedError();
   }
 
 
   @override
-  Future<ResponseModel<ExpertRegisterModel>> ExpertsUploadthumbnail({required int id, required File image}) {
+  Future<ResponseModel<ExpertRegisterModel>> ExpertsUploadthumbnail(
+      {required int id, required File image}) {
     // TODO: implement ExpertsUploadthumbnail
     throw UnimplementedError();
   }
 
   @override
-  Future<ResponseModel<ExpertRegisterModel>> ExpertsUploadDetail({required int id, required File thumnail, required String introduceExpert, required String introduceContent}) {
+  Future<ResponseModel<ExpertRegisterModel>> ExpertsUploadDetail(
+      {required int id, required File thumnail, required String introduceExpert, required String introduceContent}) {
     // TODO: implement ExpertsUploadDetail
     throw UnimplementedError();
   }
 
   @override
-  Future<ResponseModel<ExpertRegisterModel>> ExpertsUploadImage({required int id, required List<XFile> images}) {
+  Future<ResponseModel<ExpertRegisterModel>> ExpertsUploadImage(
+      {required int id, required List<XFile> images}) {
     // TODO: implement ExpertsUploadImage
     throw UnimplementedError();
   }
 
+  @override
+  Future<ResponseModel<ExpertModel>> getDetailPhone(
+      {required int id, required String phoneNumber}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ResponseModel<ExpertModel>>(Options(
+          method: 'GET',
+          headers: _headers,
+          extra: _extra,
+        )
+            .compose(
+          _dio.options,
+          '/${phoneNumber}/',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ResponseModel<ExpertModel>.fromJson(
+      _result.data!,
 
+          (json) => ExpertModel.fromJson(json as Map<String, dynamic>),
+    );
 
+    return value;
+  }
+
+// // 맴버 정보 받아옴
+//   final memberFutureProvider = FutureProvider<MemberModel>((ref) async {
+//     try {
+//       final Dio dio = Dio();
+//
+//       final MemberRepository repository =
+//       MemberRepository(dio, baseUrl: '$SERVER_BASE_URL/members');
+//       final authModel = ref.watch(authProvider);
+//       print(authModel.userUUID);
+//       final ExpertModel = ref.watch(SelectExpertDetail);
+//       print(ExpertModel.phone);
+//
+//       final res = await repository.getMember(id: authModel.userUUID ?? '');
+//       final res1 = await repository.getDetailphone(id: authModel.userUUID ?? '');
+//       return res.response;
+//     } catch (error) {
+//       print(error);
+//       throw Exception("Failed to fetch User");
+//     }
+//   });
+//
+// }
 }

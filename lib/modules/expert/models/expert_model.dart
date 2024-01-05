@@ -20,6 +20,7 @@ class ExpertModel {
   final String? marketName;
   final String? content;
   final String? thumbnail;
+  final String? phone;
   final ExpertCareer? career;
   final List<ImageModel>? images;
   final List<MainCategoryModel>? mainCategories;
@@ -30,6 +31,7 @@ class ExpertModel {
     required this.name,
     required this.content,
     this.thumbnail,
+    required this.phone,
     this.marketName,
     this.career,
     this.images,

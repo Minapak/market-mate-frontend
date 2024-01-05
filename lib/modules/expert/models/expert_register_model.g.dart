@@ -11,6 +11,7 @@ ExpertRegisterModel _$ExpertRegisterModelFromJson(Map<String, dynamic> json) => 
   thumbnail: json['thumbnail'] as String?,
   introduceExpert: json['introduceExpert'] as String?,
   introduceContent: json['introduceContent'] as String?,
+  phoneNumber: json['phoneNumber'] as String?,
   images: (json['images'] as List<dynamic>?)
        ?.map((e) => ImageModel.fromJson(e as Map<String, dynamic>))
        .toList(),
@@ -28,6 +29,7 @@ Map<String, dynamic> _$ExpertRegisterModelToJson(ExpertRegisterModel instance) =
       'thumbnail': instance.thumbnail,
       'introduceExpert': instance.introduceExpert,
       'introduceContent': instance.introduceContent,
+      'phoneNumber': instance.phoneNumber,
       'images': instance.images,
       'mainCategories': instance.mainCategories,
       'middleCategories': instance.middleCategories,

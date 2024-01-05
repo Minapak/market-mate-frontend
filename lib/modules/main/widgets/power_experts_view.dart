@@ -35,7 +35,7 @@ class PowerExpertsItem extends StatelessWidget {
         final int id = expert.id;
         final String name = expert.name;
 
-        context.push('/experts/detail/$id?name=$name');
+        context.push('/users/experts/$id');
       },
       child: Container(
           width: 116,

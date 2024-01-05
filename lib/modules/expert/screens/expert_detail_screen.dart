@@ -8,20 +8,23 @@ import 'package:sip_app/modules/expert/widgets/expert_matching_button.dart';
 class ExpertDetailScreen extends StatelessWidget {
   final String expertId;
   final String expertName;
-
-  ExpertDetailScreen({required this.expertId, required this.expertName});
+  final String expertPhone;
+  ExpertDetailScreen({required this.expertId, required this.expertName,required this.expertPhone});
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         DefaultLayout(
-          appBar: BackAppBar(title: '$expertName 전문가'),
-          child: ExpertDetailView(expertId: expertId),
-          bottomNavigationBar: ExpertMatchingButton(expertId: int.parse(expertId)),
+          appBar: BackAppBar(title: '전문가 상세보기'),
+         child: ExpertDetailView(expertId: '$expertId', expertPhone: expertPhone),
+
+
+    bottomNavigationBar: ExpertMatchingButton(expertId: int.parse(expertId)),
         ),
-        CreateExpertMatchingHandler(),
+     //   CreateExpertMatchingHandler(),
       ],
     );
+
   }
 }

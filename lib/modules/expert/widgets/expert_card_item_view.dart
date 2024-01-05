@@ -84,7 +84,7 @@ class ExpertCardItemView extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
-          context.push('/experts/detail');
+          context.push('/users/experts');
         },
         child: Stack(
           children: [
