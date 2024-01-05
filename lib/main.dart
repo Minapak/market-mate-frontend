@@ -29,7 +29,10 @@ void main() async {
   //runApp이 최초로 불러온 위젯
   //MyApp은 위젯 트리에서 최상단에 위치하는 위젯이며 스크린 레이아웃을 최초로 빌드하는 역할
 
-
+  FlutterError.onError = (FlutterErrorDetails details) {
+    print('Flutter Error: ${details.exception}');
+    print(details.stack);
+  };
 }
 
 class MyApp extends StatelessWidget {

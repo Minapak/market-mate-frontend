@@ -23,6 +23,7 @@ const _$ExpertRegisterTypeEnumMap = {
   ExpertRegisterType.THUMBNAIL: 'THUMBNAIL',
   ExpertRegisterType.INTRODUCE_EXPERT: 'INTRODUCE_EXPERT',
   ExpertRegisterType.INTRODUCE_CONTENT: 'INTRODUCE_CONTENT',
+  ExpertRegisterType.PHONENUMBER: 'PHONENUMBER',
   ExpertRegisterType.MAIN_CATEGORIES: 'MAIN_CATEGORIES',
   ExpertRegisterType.MIDDLE_CATEGORIES: 'MIDDLE_CATEGORIES',
 };

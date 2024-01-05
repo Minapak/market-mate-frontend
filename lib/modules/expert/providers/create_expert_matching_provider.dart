@@ -9,6 +9,7 @@ import 'package:sip_app/modules/matching/models/matching_model.dart';
 import 'package:sip_app/modules/matching/repositories/matching_repository.dart';
 import 'package:sip_app/modules/member/providers/member_provider.dart';
 
+//매칭하기 대신 연락하기로 변경
 final createExpertMatchingProvider = StateNotifierProvider.autoDispose<CreateExpertMatchingStateNotifier, ServerStatusBase>((ref) {
   final currentLocale = Intl.getCurrentLocale();
   final Dio dio = Dio();

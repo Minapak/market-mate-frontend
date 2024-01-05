@@ -147,12 +147,13 @@ final GoRouter goRouter = GoRouter(
           //     }),
         ]),
     GoRoute(
-        path: '/experts/detail/:id',
+        path: '/users/experts/:id',
         name: 'expertDetail',
         builder: (context, state) {
           return ExpertDetailScreen(
             expertId: state.pathParameters['id'] ?? '0',
             expertName: state.queryParameters['name'] ?? '',
+            expertPhone: state.queryParameters['phone'] ?? '',
           );
         }),
     GoRoute(

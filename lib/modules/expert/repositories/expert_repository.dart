@@ -1,8 +1,12 @@
 
+import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sip_app/modules/common/models/basic_pagination_params_model.dart';
 import 'package:sip_app/modules/common/models/pagination.dart';
 import 'package:sip_app/modules/common/models/response_model.dart';
@@ -14,8 +18,13 @@ import 'package:sip_app/modules/wishlist/models/create_wishlist_model.dart';
 import 'package:sip_app/modules/wishlist/models/response_check_wish_model.dart';
 import 'package:sip_app/modules/wishlist/models/wishlist_model.dart';
 
+import '../../../constants/path.dart';
+import '../../auth/providers/auth_provider.dart';
 import '../../common/models/image_model.dart';
 import '../../common/models/image_response_model.dart';
+import '../../member/models/member_model.dart';
+import '../../member/repositories/member_repository.dart';
+import '../providers/expert_detail_provider.dart';
 
 part 'expert_repository.g.dart';
 
@@ -30,10 +39,18 @@ abstract class ExpertRepository {
         const ExpertsPaginationParams()
       });
 
-  @GET('/{id}')
+  @GET('{id}')
   Future<ResponseModel<ExpertModel>> getDetail({
     @Path() required int id,
+    @Path() required String phone,
   });
+
+  @GET('{id}/phone')
+  Future<ResponseModel<ExpertModel>> getDetailPhone({
+    @Path() required int id,
+    @Path() required String phoneNumber,
+  });
+
 
   @GET('/{id}/reviews')
   Future<ResponseModel<Pagination<ReviewModel>>> reviewPaginate({
