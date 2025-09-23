@@ -35,11 +35,11 @@ Market-Mate provides a comprehensive ecosystem that:
 ### Core Features Showcase
 
 <div align="center">
-  <img src="screenshots/home_search.png" width="200" alt="Home & Search" />
-  <img src="screenshots/home_categories.png" width="200" alt="Business Categories" />
-  <img src="screenshots/expert_list.png" width="200" alt="Expert Listings" />
-  <img src="screenshots/expert_registration.png" width="200" alt="Expert Registration" />
-  <img src="screenshots/expert_profile.png" width="200" alt="Expert Profile" />
+  <img src="screenshots/home_search.jpg" width="200" alt="Home & Search" />
+  <img src="screenshots/home_categories.jpg" width="200" alt="Business Categories" />
+  <img src="screenshots/expert_list.jpg" width="200" alt="Expert Listings" />
+  <img src="screenshots/expert_registration.jpg" width="200" alt="Expert Registration" />
+  <img src="screenshots/expert_profile.jpg" width="200" alt="Expert Profile" />
 </div>
 
 ### Key UI Features Demonstrated
