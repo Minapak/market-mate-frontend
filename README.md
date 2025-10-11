@@ -1,11 +1,8 @@
-완벽하게 수정했습니다! 전체 README 여기 있습니다:
-
----
-
-```markdown
 # Market-Mate: AI-Powered Traditional Market Business Platform
 
 > Bridging traditional Korean market expertise with modern entrepreneurship through intelligent matchmaking
+
+<div align="center">
 
 [![Flutter](https://img.shields.io/badge/Flutter-3.0+-02569B?style=flat-square&logo=flutter)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/Dart-3.0+-0175C2?style=flat-square&logo=dart)](https://dart.dev)
@@ -17,24 +14,52 @@
 **Government Funding**: Secured 70M KRW from Korean startup support program  
 **Development Period**: May 2023 - January 2024 | **Team**: 2 developers (Frontend Lead)
 
+[Key Features](#-key-features) • [Architecture](#-technical-architecture) • [Getting Started](#-getting-started) • [Contact](#-author--contact)
+
+</div>
+
 ---
 
-## Project Overview
+## 📑 Table of Contents
+
+- [Project Overview](#-project-overview)
+- [App Screenshots](#-app-screenshots)
+- [Key Features](#-key-features)
+- [Technical Architecture](#-technical-architecture)
+- [Performance Metrics](#-performance--quality-metrics)
+- [Deployment Status](#-deployment-status)
+- [Business Impact](#-business-impact--results)
+- [Getting Started](#-getting-started)
+- [Testing](#-testing-strategy)
+- [Technical Challenges](#-technical-challenges--solutions)
+- [Roadmap](#-future-development-roadmap)
+- [Contributing](#-contributing-guidelines)
+- [Author & Contact](#-author--contact)
+- [License](#-license)
+
+---
+
+## 🎯 Project Overview
 
 Market-Mate revolutionizes traditional Korean marketplace knowledge transfer by connecting experienced vendors with aspiring entrepreneurs through AI-powered matching. The platform addresses the critical knowledge gap between generations while modernizing traditional business practices.
 
 ### The Problem
+
 - **Knowledge Isolation**: Decades of business expertise trapped in traditional markets
 - **Digital Divide**: Elderly vendors lack digital literacy for knowledge sharing
 - **Market Access Barriers**: New entrepreneurs struggle to access wholesale networks
 - **Generational Gap**: Limited structured mentorship opportunities
 
 ### Our Solution
+
 Market-Mate provides a comprehensive ecosystem that:
+
 - Simplifies vendor onboarding through AI-assisted registration
 - Intelligently matches mentors with entrepreneurs based on compatibility
 - Facilitates knowledge transfer through integrated communication tools
 - Connects users to traditional market supply chains
+
+---
 
 ## 📸 App Screenshots
 
@@ -49,29 +74,33 @@ Market-Mate provides a comprehensive ecosystem that:
 </div>
 
 ### Key UI Features Demonstrated
+
 - **Intuitive Search Interface**: Easy product and service discovery with category filters
-- **Expert Discovery**: Visual expert profiles with specialization tags and ratings  
+- **Expert Discovery**: Visual expert profiles with specialization tags and ratings
 - **Smart Registration**: Simplified onboarding flow with category selection
 - **Professional Profiles**: Comprehensive expert information with experience levels
 - **Traditional Market Integration**: Real market listings (Namdaemun Market integration)
 
 ---
 
-## Key Features
+## ✨ Key Features
 
 ### 🤖 AI-Powered Smart Registration
+
 - **Voice-to-Text Onboarding**: Reduces digital barriers for elderly vendors
 - **Automated Expertise Categorization**: ML-driven skill assessment
 - **Visual Confirmation Workflows**: Minimal text input required
 - **Progressive Disclosure**: Step-by-step guided setup
 
 ### 👥 Intelligent Matching System
+
 - **Vector-Based Similarity**: Advanced ML algorithms for mentor-mentee pairing
 - **Multi-Factor Analysis**: Location, experience, goals, and personality matching
 - **Real-Time Availability**: Dynamic scheduling and preference integration
 - **Success Rate Prediction**: Historical data analysis for optimal matches
 
 ### 📱 Comprehensive Mobile Experience
+
 - **Expert Consultation Booking**: Seamless appointment scheduling
 - **Integrated Messaging**: Real-time chat with translation support
 - **Business Guidance Tools**: AI-generated recommendations and insights
@@ -79,14 +108,18 @@ Market-Mate provides a comprehensive ecosystem that:
 - **Community Features**: Knowledge sharing and peer support
 
 ### 📊 Business Intelligence Dashboard
+
 - **Market Trend Analysis**: Data-driven insights for decision making
 - **Performance Metrics**: Track mentorship success rates
 - **ROI Calculations**: Business impact measurement tools
 - **Predictive Analytics**: Success forecasting by category and location
 
-## Technical Architecture
+---
+
+## 🏗 Technical Architecture
 
 ### Frontend Stack (Flutter)
+
 ```yaml
 dependencies:
   flutter: ">=3.0.0"
@@ -101,6 +134,7 @@ dependencies:
 ```
 
 ### Backend Infrastructure
+
 - **Spring Boot**: RESTful API microservices
 - **MariaDB**: Primary relational database
 - **AWS EC2**: Scalable cloud compute
@@ -109,6 +143,7 @@ dependencies:
 - **Nginx**: Reverse proxy and static file serving
 
 ### Clean Architecture Implementation
+
 ```
 lib/
 ├── modules/
@@ -133,6 +168,7 @@ lib/
 ### Key Technical Implementations
 
 #### AI Matching Service
+
 ```dart
 class AIMatchingProvider extends StateNotifier<MatchingState> {
   Future<List<ExpertModel>> getRecommendations({
@@ -171,6 +207,7 @@ class AIMatchingProvider extends StateNotifier<MatchingState> {
 ```
 
 #### Repository Pattern with Error Handling
+
 ```dart
 @RestApi()
 abstract class MatchingRepository {
@@ -207,9 +244,12 @@ class MatchingRepositoryImpl extends MatchingRepository {
 }
 ```
 
-## Performance & Quality Metrics
+---
+
+## 📊 Performance & Quality Metrics
 
 ### Development Standards
+
 - **Test Coverage**: 85%+ (unit, widget, integration tests)
 - **Code Quality**: Dart analyzer score 100/100
 - **Performance**: 60 FPS on mid-range devices (Android API 21+)
@@ -218,23 +258,28 @@ class MatchingRepositoryImpl extends MatchingRepository {
 - **Cold Start**: <2 seconds on average devices
 
 ### Scalability Features
+
 - **Lazy Loading**: Efficient pagination for large datasets
 - **Image Optimization**: WebP format with multi-level caching
 - **Offline-First**: Local SQLite with sync conflict resolution
 - **Background Processing**: Queue-based data synchronization
 - **Resource Management**: Automatic memory cleanup and optimization
 
+---
+
 ## 🚀 Deployment Status
 
 **Current Phase**: Private Beta & Compliance Review
 
 This application is in advanced development with:
+
 - Active beta testing with 200+ vendors and 500+ entrepreneurs
 - Feature validation and user experience optimization
 - Regulatory compliance review for marketplace platforms
 - Enterprise deployment via internal distribution
 
 **Distribution Channels**:
+
 - Enterprise internal distribution
 - Beta testing via Firebase App Distribution
 - Direct installation for pilot users
@@ -242,9 +287,12 @@ This application is in advanced development with:
 
 The platform is fully functional and serving real users in a controlled testing environment while preparing for broader public release.
 
+---
+
 ## 📈 Business Impact & Results
 
 ### Quantitative Achievements
+
 - **Government Funding**: Secured 70M KRW from Korean government startup support program
 - **Patent Application**: AI-based storytelling methodology under review (Application No: 10-2023-0022550)
 - **Platform Scale**: Connected 200+ experienced vendors with 500+ aspiring entrepreneurs
@@ -253,21 +301,26 @@ The platform is fully functional and serving real users in a controlled testing 
 - **Technical Performance**: Sub-200ms API response times at scale
 
 ### Qualitative Impact
+
 - Enhanced digital literacy among traditional market vendors
 - Preserved and digitized decades of business knowledge
 - Reduced barriers to entrepreneurship in traditional sectors
 - Created new revenue streams for experienced vendors
 - Strengthened traditional market ecosystems
 
-## Getting Started
+---
+
+## 🚀 Getting Started
 
 ### Prerequisites
+
 - Flutter SDK 3.0+
 - Dart SDK 3.0+
 - Android Studio / VS Code
 - Git
 
 ### Development Setup
+
 ```bash
 # Clone repository
 git clone https://github.com/Minapak/market-mate-frontend.git
@@ -288,6 +341,7 @@ flutter run --flavor dev
 ```
 
 ### Environment Configuration
+
 ```dart
 // constants/path.dart
 const String SERVER_BASE_URL = String.fromEnvironment(
@@ -300,6 +354,7 @@ flutter run --dart-define=API_BASE_URL=https://dev-api.market-mate.co.kr
 ```
 
 ### Development Build
+
 ```bash
 # Debug build for testing
 flutter run --flavor dev
@@ -311,11 +366,14 @@ flutter build apk --debug
 flutter build ios --simulator
 ```
 
-**Note**: Production App Store deployment is under review due to regulatory compliance requirements for marketplace platforms in South Korea.
+> **Note**: Production App Store deployment is under review due to regulatory compliance requirements for marketplace platforms in South Korea.
+
+---
 
 ## 🧪 Testing Strategy
 
 ### Comprehensive Testing Framework
+
 ```bash
 # Unit tests
 flutter test test/unit/ --coverage
@@ -335,53 +393,68 @@ open coverage/html/index.html
 ```
 
 ### Quality Assurance Process
+
 - **Automated Testing**: GitHub Actions CI/CD with 85%+ coverage requirement
 - **Code Review**: Mandatory peer review with 2+ approvals
 - **Performance Monitoring**: Firebase Performance and Crashlytics integration
 - **Security Scanning**: Regular dependency vulnerability checks
 - **User Testing**: Beta testing with 200+ traditional market vendors and 500+ entrepreneurs
 
+---
+
 ## 💡 Technical Challenges & Solutions
 
 ### Challenge 1: Digital Literacy Gap
+
 **Problem**: Elderly vendors struggled with traditional app interfaces  
 **Solution**: Implemented voice-first onboarding with visual confirmation steps, reducing text input by 70% and increasing completion rates by 300%
 
 ### Challenge 2: Real-Time Matching at Scale
+
 **Problem**: Complex matching algorithms caused performance bottlenecks  
 **Solution**: Implemented vector-based similarity search with Redis caching and background processing, achieving <200ms response times for 10,000+ user queries
 
 ### Challenge 3: Cross-Generational Communication
+
 **Problem**: Language and cultural barriers between mentors and mentees  
 **Solution**: Built integrated translation service with context-aware suggestions and cultural communication guides
 
 ### Challenge 4: Offline Functionality
+
 **Problem**: Unreliable internet in traditional market areas  
 **Solution**: Designed offline-first architecture with intelligent sync, enabling 90% of core features without internet connectivity
+
+---
 
 ## 🔮 Future Development Roadmap
 
 ### Phase 2: Advanced Intelligence (Q2 2025)
+
 - [ ] AR-based market navigation and product identification
 - [ ] Advanced sentiment analysis for mentor-mentee compatibility
 - [ ] Blockchain-based transaction verification and reputation system
 - [ ] Predictive analytics for market trend forecasting
 
 ### Phase 3: Global Expansion (Q3-Q4 2025)
+
 - [ ] Multi-language support (English, Chinese, Vietnamese)
 - [ ] Adaptation for international traditional markets
 - [ ] Cross-border business facilitation features
 - [ ] Integration with global e-commerce platforms
 
 ### Phase 4: Ecosystem Integration (2026)
+
 - [ ] IoT integration for smart market sensors
 - [ ] Financial services integration (loans, insurance)
 - [ ] Supply chain optimization tools
 - [ ] Advanced business intelligence dashboard
 
+---
+
 ## 🤝 Contributing Guidelines
 
 ### Development Workflow
+
 1. **Feature Branches**: Create feature branches from `develop`
 2. **Code Standards**: Follow [Effective Dart](https://dart.dev/guides/language/effective-dart) guidelines
 3. **Testing**: Maintain 80%+ test coverage for new features
@@ -389,37 +462,47 @@ open coverage/html/index.html
 5. **Review Process**: Submit PR with detailed description and test results
 
 ### Code Quality Standards
+
 - Use `flutter analyze` for static analysis
 - Follow conventional commit messages
 - Implement proper error handling and logging
 - Write comprehensive unit and widget tests
 - Document complex business logic
 
+---
+
 ## 📜 Intellectual Property
 
 ### Patent Details
+
 - **Application Title**: Method for Providing AI-based Startup Storytelling Service
 - **Application Number**: 10-2023-0022550
 - **Filing Date**: February 2023
 - **Status**: Under examination
 - **Innovation**: Novel approach to automated business narrative generation using machine learning
 
+---
+
 ## 💼 Looking for a Mobile Developer?
 
 This project showcases:
-✅ Cross-platform mobile development (Flutter)
-✅ AI/ML integration (vector-based matching)
-✅ Clean Architecture & scalable code
-✅ Government-funded innovation (70M KRW)
-✅ Patent-pending technology
+
+✅ Cross-platform mobile development (Flutter)  
+✅ AI/ML integration (vector-based matching)  
+✅ Clean Architecture & scalable code  
+✅ Government-funded innovation (70M KRW)  
+✅ Patent-pending technology  
 ✅ Real user validation (200+ vendors, 500+ entrepreneurs)
 
 **Need someone who can build production-quality apps with AI features?**
-📧 Email: dmsals2008@gmail.com
-💼 LinkedIn: [linkedin.com/in/eunminpark-ios](https://linkedin.com/in/eunminpark-ios)
+
+📧 Email: dmsals2008@gmail.com  
+💼 LinkedIn: [linkedin.com/in/eunminpark-ios](https://linkedin.com/in/eunminpark-ios)  
 🚀 Available for remote contracts
 
 Let's build something innovative together!
+
+---
 
 ## 👨‍💻 Author & Contact
 
@@ -435,19 +518,25 @@ Senior Mobile Developer & Technical Lead
 - **Tech Blog**: [eunminpark.hashnode.dev](https://eunminpark.hashnode.dev)
 
 ### Professional Background
+
 - **2024.08 - Present**: CTO & iOS Developer at Zypher
 - **2021.10 - 2024.03**: CEO & Full-Stack Developer at High Software
 - **2021.04 - 2021.10**: iOS Developer at Digital Zone Co.
 - **2019.02 - 2020.07**: Technical Instructor & Developer at Team Nova
 
 ### Other Projects
+
 - **SwiftQuantum**: World's first Swift quantum computing framework (IEEE featured)
 - **Woorinara**: Excellence Award winner (2024 Open Data Forum), 10K+ MAU
 - **Zypher**: AI-powered marketing platform (1st place National Startup Competition)
 
+---
+
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
 
 ## 🙏 Acknowledgments
 
@@ -460,10 +549,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 <div align="center">
 
-**Transforming Traditional Business Through Technology**
+### **Transforming Traditional Business Through Technology**
 
 *This project demonstrates expertise in cross-platform mobile development, AI integration, clean architecture, and building scalable solutions for complex real-world problems.*
 
-Built with Flutter 💙 | Serving 700+ Real Users
+**Built with Flutter 💙 | Serving 700+ Real Users**
+
+⭐ **Star this repo if you find it useful!** ⭐
 
 </div>
