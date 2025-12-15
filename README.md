@@ -1,8 +1,8 @@
 # 🏪 Market-Mate
 
-<p align="center">
+<!-- <p align="center">
   <img src="screenshots/logo.png" alt="Market Mate Logo" width="200"/>
-</p>
+</p> -->
 
 <p align="center">
   <b>AI-Powered Platform Connecting Traditional Market Vendors with Aspiring Entrepreneurs</b>
