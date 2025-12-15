@@ -19,7 +19,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/🏆_Gov_Funded-$50K+-gold?style=for-the-badge" alt="Funding">
   <img src="https://img.shields.io/badge/📋_Patent_Pending-10--2023--0022550-blue?style=for-the-badge" alt="Patent">
-  <img src="https://img.shields.io/badge/👥_Users-700+-green?style=for-the-badge" alt="Users">
+  <img src="https://img.shields.io/badge/👥_Beta_Users-700+-green?style=for-the-badge" alt="Users">"Users">
 </p>
 
 ---
@@ -34,7 +34,8 @@
 |--------|--------|
 | **Government Funding** | $50,000+ (70M KRW) secured |
 | **Patent Status** | Filed (#10-2023-0022550) |
-| **Active Users** | 700+ (200 vendors, 500 entrepreneurs) |
+| **Beta Users (Peak)** | 700+ (200 vendors, 500 entrepreneurs) |
+| **Status** | Pilot program completed |
 | **Retention Rate** | 85% month-over-month |
 | **Successful Matches** | 200+ mentor-mentee connections |
 
@@ -174,6 +175,16 @@ Market-Mate provides a comprehensive ecosystem that:
 - Conflict resolution for concurrent updates
 
 ---
+
+## 📊 Project Status
+
+**Phase**: Pilot program completed (2023-2024)  
+**Peak Metrics**: 700+ users, 85% retention during beta  
+**Current**: Service sunset after government funding period  
+**Codebase**: Maintained for portfolio demonstration  
+
+> This was a government-funded pilot project. The metrics shown represent 
+> validated results during the active beta period.
 
 ## 🏗 Technical Architecture
 
@@ -469,7 +480,7 @@ This project demonstrates:
 |-------|----------|
 | **Government Validation** | $50K+ funding secured through competitive startup program |
 | **Patent Innovation** | AI methodology recognized as novel invention |
-| **Real User Traction** | 700+ active users, 85% retention proves product-market fit |
+| **Validated Metrics** | 700+ beta users, 85% retention during pilot program |
 | **Full-Stack Capability** | Flutter + Spring Boot + AWS + AI/ML integration |
 | **Business Acumen** | Identified real market problem and built scalable solution |
 | **Technical Leadership** | Led 3-person development team as Frontend Lead |
