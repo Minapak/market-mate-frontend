@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# gitleaks 사전 검사. 우회가 필요하면: git commit --no-verify
+set -euo pipefail
+
+if ! command -v gitleaks >/dev/null 2>&1; then
+  echo "gitleaks 미설치 - 검사를 건너뜁니다. 설치: brew install gitleaks" >&2
+  exit 0
+fi
+
+echo "gitleaks: 스테이징된 변경 검사 중..."
+if ! gitleaks protect --staged --redact --verbose; then
+  cat >&2 <<'MSG'
+
+커밋이 차단되었습니다: 스테이징된 변경에서 시크릿으로 보이는 값이 발견되었습니다.
+
+  1. 해당 값을 코드에서 제거하고 환경변수 또는 시크릿 매니저로 옮기세요.
+  2. 그 값이 실제 크리덴셜이었다면, 커밋하지 않았더라도 폐기/재발급하세요.
+  3. 오탐이라면 .gitleaksignore 에 지문(fingerprint)을 추가하세요.
+
+부득이 우회하려면: git commit --no-verify
+MSG
+  exit 1
+fi
