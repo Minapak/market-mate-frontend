@@ -79,3 +79,8 @@ kubeconfig
 .git.bfg-report/
 .git-rewrite/
 filter-repo/
+
+# 로컬 환경설정 (실제 값 포함 - 커밋 금지)
+env.json
+env.*.json
+!env.example.json

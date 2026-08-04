@@ -20,7 +20,22 @@ class AppConfig {
   static bool get isTesting => const bool.fromEnvironment('TESTING');
   
   /// API Configuration
+  ///
+  /// Every endpoint is resolved from environment values supplied at build time.
+  /// No host names are committed to this repository.
+  ///
+  ///     flutter run --dart-define-from-file=env.json
+  ///     flutter build apk --dart-define-from-file=env.json
+  ///
+  /// Copy `env.example.json` to `env.json` and fill in the real values.
+  /// `env.json` is gitignored.
+  ///
+  /// `API_BASE_URL` overrides both environments when set; otherwise the
+  /// per-environment values are used.
   static String get apiBaseUrl {
+    const override = String.fromEnvironment('API_BASE_URL');
+    if (override.isNotEmpty) return override;
+
     if (isDevelopment) {
       return const String.fromEnvironment(
         'DEV_API_URL',
@@ -28,9 +43,22 @@ class AppConfig {
       );
     }
     return const String.fromEnvironment(
-      'PROD_API_URL', 
+      'PROD_API_URL',
       defaultValue: 'https://api.market-mate.co.kr/v1',
     );
+  }
+
+  /// Sign in with Apple — Services ID registered in the Apple Developer portal.
+  static String get appleServiceId => const String.fromEnvironment(
+        'APPLE_SERVICE_ID',
+        defaultValue: 'com.example.app',
+      );
+
+  /// Sign in with Apple — server endpoint Apple redirects to after auth.
+  /// Defaults to the OAuth path on [apiBaseUrl] when not set explicitly.
+  static String get appleOAuthRedirectUrl {
+    const override = String.fromEnvironment('APPLE_OAUTH_REDIRECT_URL');
+    return override.isNotEmpty ? override : '$apiBaseUrl/oauth/apple';
   }
   
   /// Network timeouts (in milliseconds)

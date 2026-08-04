@@ -326,25 +326,47 @@ flutter pub get
 dart run build_runner build --delete-conflicting-outputs
 
 # Configure environment
-cp .env.example .env
-# Update API endpoints and configuration
+cp env.example.json env.json
+# Fill in API endpoints and keys in env.json (gitignored)
 
 # Run application
-flutter run --flavor dev
+flutter run --dart-define-from-file=env.json
 ```
 
 ### Environment Configuration
 
-```dart
-// constants/path.dart
-const String SERVER_BASE_URL = String.fromEnvironment(
-  'API_BASE_URL',
-  defaultValue: 'https://api.market-mate.co.kr',
-);
+No host names, endpoints, or keys are committed to this repository. Every
+environment-specific value is injected at build time from `env.json`, which is
+gitignored. `env.example.json` documents the expected keys.
 
-// Build configurations
-flutter run --dart-define=API_BASE_URL=https://dev-api.market-mate.co.kr
+```bash
+cp env.example.json env.json
 ```
+
+| Key | Purpose |
+|---|---|
+| `API_BASE_URL` | Overrides both environments when set |
+| `DEV_API_URL` | API base URL used in debug builds |
+| `PROD_API_URL` | API base URL used in release builds |
+| `APPLE_SERVICE_ID` | Sign in with Apple — Services ID |
+| `APPLE_OAUTH_REDIRECT_URL` | Apple redirect endpoint (defaults to `$API_BASE_URL/oauth/apple`) |
+| `KAKAO_NATIVE_APP_KEY` | Kakao SDK native app key |
+| `KAKAO_JS_APP_KEY` | Kakao SDK JavaScript app key |
+
+All values resolve through `AppConfig` (`lib/core/config/app_config.dart`);
+`SERVER_BASE_URL` in `lib/constants/path.dart` delegates to it.
+
+```bash
+# Run with the local config file
+flutter run   --dart-define-from-file=env.json
+flutter build apk --dart-define-from-file=env.json
+
+# Or override a single value inline
+flutter run --dart-define=API_BASE_URL=https://staging-api.example.com/v1
+```
+
+In CI, provide the same keys as `--dart-define` arguments from your secret
+store rather than committing `env.json`.
 
 ### Development Build
 

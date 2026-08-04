@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:sip_app/constants/path.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
@@ -118,7 +119,7 @@ class _ExpertsUploadImageScreenState extends State<ExpertsUploadImageScreen> {
       });
 
       var response = await dio.put(
-        'http://ship-dev.ap-northeast-2.elasticbeanstalk.com/api/v1/users/experts/6/images',
+        '$SERVER_BASE_URL$PATH_IMAGE_UPLOAD',
         data: formData,
       );
 

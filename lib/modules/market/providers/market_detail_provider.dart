@@ -50,7 +50,7 @@ class MarketDetailStateNotifier extends StateNotifier<ServerStatusBase> {
 // final marketFutureProvider = FutureProvider<MarketModel>((ref) async {
 //   try {
 //     final Dio dio = Dio();
-//     final MarketRepository repository = MarketRepository(dio, baseUrl: 'http://172.30.1.64/api/v1/users/markets');
+//     final MarketRepository repository = MarketRepository(dio, baseUrl: '$SERVER_BASE_URL/users/markets');
 //     // final res = await repository.getMarket();
 //
 //   } catch(error) {

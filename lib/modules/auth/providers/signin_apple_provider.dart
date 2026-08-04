@@ -1,6 +1,7 @@
 ///Dio는 Dart 언어를 기반으로 작성된 HTTP 클라이언트 라이브러리
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:sip_app/core/config/app_config.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -85,9 +86,8 @@ class SigninStateNotifier extends StateNotifier<ServerStatusBase>{
 
           ],
           webAuthenticationOptions: WebAuthenticationOptions(
-            clientId: 'ioss.test.fluttersimple',
-            redirectUri: Uri.parse(
-                'https://wealthy-sedate-furniture.glitch.me/callbacks/sign_in_with_apple'),
+            clientId: AppConfig.appleServiceId,
+            redirectUri: Uri.parse(AppConfig.appleOAuthRedirectUrl),
           ),
         );
         final identityToken = appleCredential.identityToken;

@@ -7,12 +7,13 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
+import 'package:sip_app/constants/path.dart';
 import 'dart:async';
 import 'dart:io';
 
 class ImageUploader {
   static const _timeOutConnection = 15;
-  static const _host = 'http://ship-dev.ap-northeast-2.elasticbeanstalk.com/api/v1/users/experts/6/images';
+  static String get _host => '$SERVER_BASE_URL$PATH_IMAGE_UPLOAD';
 
   static List<XFile> images = [];
 

@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:sip_app/core/config/app_config.dart';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -323,7 +325,7 @@ class SigninForm extends ConsumerWidget {
                       ? await UserApi.instance.loginWithKakaoTalk()
                       : await UserApi.instance.loginWithKakaoAccount();
 
-                  final url = Uri.http('ship-dev.ap-northeast-2.elasticbeanstalk.com', '/api/v1/member/signup');
+                  final url = Uri.parse('$SERVER_BASE_URL/member/signup');
 
                   // final response = await http.post(
                   //   url,
@@ -411,20 +413,17 @@ class SigninForm extends ConsumerWidget {
 
                       ],
                       webAuthenticationOptions: WebAuthenticationOptions(
-                        clientId: 'ioss.test.fluttersimple',
-                        redirectUri: Uri.parse(
-                            'http://ship-dev.ap-northeast-2.elasticbeanstalk.com/api/v1/oauth/apple'),
+                        clientId: AppConfig.appleServiceId,
+                        redirectUri:
+                            Uri.parse(AppConfig.appleOAuthRedirectUrl),
                       ),
                     );
 
                     print(result);
 
-                    final signInWithAppleEndpoint = Uri(
-                      scheme: 'http',
-                      // host: 'wealthy-sedate-furniture.glitch.me',
-                      // path: '/callbacks/sign_in_with_apple',
-                      host: 'ship-dev.ap-northeast-2.elasticbeanstalk.com',
-                      path: '/api/v1/oauth/apple',
+                    final signInWithAppleEndpoint = Uri.parse(
+                      AppConfig.appleOAuthRedirectUrl,
+                    ).replace(
                       queryParameters: <String, String>{
                         'code': result.authorizationCode,
                         if (result.givenName != null)
@@ -442,7 +441,7 @@ class SigninForm extends ConsumerWidget {
                     );
                     // // 예시로 서버로 데이터를 POST하는 방법입니다.
                     // final response = await http.post(
-                    //   Uri.parse('http://ship-dev.ap-northeast-2.elasticbeanstalk.com/api/v1/oauth/apple'),
+                    //   Uri.parse(AppConfig.appleOAuthRedirectUrl),
                     //   body: {
                     //     'userIdentifier': AppleIDAuthorizationScopes.email,
                     //     'email':  AppleIDAuthorizationScopes.fullName,

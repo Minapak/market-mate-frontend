@@ -191,7 +191,7 @@ class ExpertImageUploadViewState extends State<ExpertImageUploadView> {
       });
 
       var response = await dio.put(
-        'http://ship-dev.ap-northeast-2.elasticbeanstalk.com/api/v1/users/experts/6/images',
+        '$SERVER_BASE_URL$PATH_IMAGE_UPLOAD',
         data: formData,
       );
 
