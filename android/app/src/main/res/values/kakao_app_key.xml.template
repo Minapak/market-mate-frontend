@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copy to kakao_app_key.xml and replace with your Kakao native app key.
+  kakao_app_key.xml is gitignored and must never be committed.
+  Get the key at https://developers.kakao.com > My Application > App Keys.
+-->
+<resources>
+    <string name="kakao_app_key">YOUR_KAKAO_NATIVE_APP_KEY</string>
+    <string name="kakao_native_key">kakaoYOUR_KAKAO_NATIVE_APP_KEY</string>
+</resources>

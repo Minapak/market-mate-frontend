@@ -32,3 +32,6 @@ Runner/GeneratedPluginRegistrant.*
 !default.mode2v3
 !default.pbxuser
 !default.perspectivev3
+
+# 로컬 시크릿 (실제 값 - 커밋 금지)
+Flutter/Secrets.xcconfig

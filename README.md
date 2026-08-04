@@ -368,6 +368,25 @@ flutter run --dart-define=API_BASE_URL=https://staging-api.example.com/v1
 In CI, provide the same keys as `--dart-define` arguments from your secret
 store rather than committing `env.json`.
 
+#### Platform-native configuration
+
+`--dart-define` reaches Dart code only. The Kakao SDK also needs its key in the
+Android and iOS build files, so those read from local, gitignored files:
+
+```bash
+# Android
+cp android/app/src/main/res/values/kakao_app_key.xml.template \
+   android/app/src/main/res/values/kakao_app_key.xml
+
+# iOS
+cp ios/Flutter/Secrets.xcconfig.template ios/Flutter/Secrets.xcconfig
+```
+
+Replace `YOUR_KAKAO_NATIVE_APP_KEY` in both with the native app key from
+[developers.kakao.com](https://developers.kakao.com) → My Application → App Keys.
+`AndroidManifest.xml` and `Info.plist` reference these values rather than
+embedding the key.
+
 ### Development Build
 
 ```bash

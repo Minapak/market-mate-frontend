@@ -11,3 +11,6 @@ GeneratedPluginRegistrant.java
 key.properties
 **/*.keystore
 **/*.jks
+
+# 카카오 네이티브 앱 키 (실제 값 - 커밋 금지)
+app/src/main/res/values/kakao_app_key.xml
